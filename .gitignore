@@ -1,0 +1,11 @@
+# Model fits (large, regenerate via scripts)
+fits/*.RData
+
+# Raw data (too large for GitHub — obtain separately)
+data/aves_predicts_passerines_dale_cooney_avonet.csv
+
+# R session files
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj

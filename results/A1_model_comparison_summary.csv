@@ -1,0 +1,4 @@
+response,best_model,elpd_diff,se_diff
+meancolcooney,fits_reduced[[resp]],-133.44599709406455,15.864409421123968
+dichrocooney,fits_reduced[[resp]],-230.57326354232532,23.471604040789842
+malecolcooney,fits_reduced[[resp]],-124.21875405166399,15.062941585589286
