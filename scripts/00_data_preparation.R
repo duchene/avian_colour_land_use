@@ -3,13 +3,11 @@
 # Prepare analytical dataset from raw PREDICTS + trait data
 # ============================================================
 #
-# Input:  Raw merged CSV (not included in repo due to size).
-#         Expected at ../aves_predicts_passerines_dale_cooney_avonet.csv
-#         (parent predicts/ folder).
+# Input:  data/aves_predicts_passerines_dale_cooney_avonet.csv.gz
 # Output: data/present.csv  (analytical dataset)
 # ============================================================
 
-fulldat <- read.csv("../aves_predicts_passerines_dale_cooney_avonet.csv")
+fulldat <- read.csv(gzfile("data/aves_predicts_passerines_dale_cooney_avonet.csv.gz"))
 
 # ----------------------------------------------------------
 # Compute colour response variables (Cooney UVS metrics)

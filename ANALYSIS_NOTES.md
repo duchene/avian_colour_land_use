@@ -2,9 +2,13 @@
 
 ## Data
 
-Source: PREDICTS database (site-level bird surveys across land-use types worldwide) merged with Cooney spectrophotometric plumage data (UVS visual model) and Avonet traits (body mass, trophic niche, habitat).
+### Raw data
 
-Filtered to passerines with non-zero abundance from studies that include primary vegetation plus at least one other land-use type. N = 34,653 records.
+Source: PREDICTS database (site-level bird surveys across land-use types worldwide) merged with Cooney spectrophotometric plumage data (UVS visual model) and Avonet traits (body mass, trophic niche, habitat). Stored as `data/aves_predicts_passerines_dale_cooney_avonet.csv.gz` (gzipped, 32MB; 216,834 records, 1,703 species). R reads directly via `read.csv(gzfile(...))`.
+
+### Analytical dataset (A1/A2)
+
+Filtered to passerines with non-zero abundance from studies that include primary vegetation plus at least one other land-use type. N = 34,653 records. Stored as `data/present.csv`.
 
 ### Colour variables (computed in `00_data_preparation.R`)
 
@@ -13,6 +17,10 @@ Filtered to passerines with non-zero abundance from studies that include primary
 - `malecolcooney`: male LociUVS (male conspicuousness)
 
 All use LociUVS (ultraviolet-sensitive visual model loci counts) from Cooney et al. Dale scores were excluded.
+
+### Land-use levels (`Predominant_simple`)
+
+Cropland (39,482 records), Pasture (32,407), Plantation forest (38,868), Primary vegetation (55,452), Secondary (50,625).
 
 ## Analysis 1: Colour ~ Land-use
 
@@ -100,7 +108,45 @@ All three models converged.
 - **Primary vegetation:** negative interaction — similar to plantation forest (credible for all three, estimates -0.03 to -0.05).
 - **Secondary:** no credible interaction.
 
-## Summary interpretation
+## Analysis 3: Phylogenetic regression — Colour ~ land-use association
+
+### Question
+
+At the species level, and accounting for shared ancestry, do species that are more associated with particular land-use types differ in colouration? This complements A1 (site-level) by asking whether evolutionary lineages with stronger affinity for degraded or pristine habitats have distinct colour profiles.
+
+### Species-level data (computed in `A3_01_setup.R`)
+
+From the full raw dataset (216,834 records, 1,703 species), for each species and each level of `Predominant_simple`, a **land-use proportion score** is computed as:
+
+```
+proportion = (records of species i in land-use j) / (total records in dataset)
+```
+
+This gives 5 predictor variables per species: `prop_Cropland`, `prop_Pasture`, `prop_Plantation_forest`, `prop_Primary_vegetation`, `prop_Secondary`. Some species may have 0 for certain land uses.
+
+Colour variables are species-level traits (same value per record of a given species), so the first non-NA value per species is used.
+
+### Models
+
+Bayesian phylogenetic regression via brms/CmdStan. For each colour response:
+
+```
+colour ~ prop_Cropland + prop_Pasture + prop_Plantation_forest +
+         prop_Primary_vegetation + prop_Secondary +
+         (1 | gr(phylo, cov = A))
+```
+
+- `A`: phylogenetic covariance matrix from `ape::vcv.phylo()` (correlation form).
+- Tree trimmed to species present in both data and tree using `ape::drop.tip()`.
+- Family: lognormal (all three responses).
+- Priors: Normal(0, 2) on intercept, Normal(0, 1) on fixed effects (wider than A1/A2 because predictors are proportions on a different scale), Exponential(2) on SD and sigma.
+- 4 chains, 4000 iterations (2000 warmup), adapt_delta = 0.95 (phylogenetic models need more careful sampling).
+
+### Status
+
+Scripts written (`A3_01_setup.R`, `A3_02_fit_models.R`, `A3_03_diagnostics_summary.R`). Awaiting phylogenetic tree file to be placed in `data/` — update `tree_file` variable in `A3_01_setup.R` with the filename.
+
+## Summary interpretation (A1 + A2)
 
 Land use does not directly shift community colour in a simple way. Effects are mediated by trophic ecology and habitat context:
 
@@ -111,7 +157,7 @@ Land use does not directly shift community colour in a simple way. Effects are m
 
 ## Next steps
 
+- Run A3 once phylogenetic tree is provided.
 - Investigate the plantation forest × frugivore interaction more deeply.
-- Consider whether phylogenetic non-independence should be accounted for.
 - Explore spatial patterns (biome-specific effects).
 - Sensitivity analyses: effect of abundance threshold, alternative colour metrics (VolumeUVS).

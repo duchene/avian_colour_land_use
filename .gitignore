@@ -1,7 +1,7 @@
 # Model fits (large, regenerate via scripts)
 fits/*.RData
 
-# Raw data (too large for GitHub — obtain separately)
+# Uncompressed raw data (use .gz version)
 data/aves_predicts_passerines_dale_cooney_avonet.csv
 
 # R session files
