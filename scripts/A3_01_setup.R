@@ -98,36 +98,118 @@ cat("\nTree loaded:", length(tree$tip.label), "tips\n")
 # ============================================================
 # TAXONOMIC MATCHING
 # ============================================================
-# Tree uses Jetz-era taxonomy. Match species using:
-#   1. jetz_sp column (primary — matches Jetz taxonomy)
+# BBtree2 uses Jetz-era taxonomy but is a 9,072-tip subset.
+# Many species in the data have valid Jetz names that are
+# simply absent from this tree. We match in three stages:
+#   1. jetz_sp column (primary)
 #   2. Best_guess_binomial with underscores (fallback)
+#   3. Known genus-level synonyms (same species, different
+#      genus name due to taxonomic reclassification)
+#
+# We do NOT graft missing species onto congeners because
+# that introduces arbitrary branch lengths that distort
+# the phylogenetic covariance matrix.
 
+# --- Stage 3 synonym table ---
+# Each entry: jetz_sp name (not in tree) -> tree tip name (in tree).
+# All are the same biological species under a reclassified genus.
+synonyms <- c(
+  Taeniopygia_bichenovii    = "Taenopygia_bichenovii",
+  Macronous_ptilosus        = "Macronus_ptilosus",
+  Macronous_gularis         = "Mixornis_gularis",
+  Pygochelidon_cyanoleuca   = "Notiochelidon_cyanoleuca",
+  Hodgsonius_phaenicuroides = "Luscinia_phaenicuroides",
+  Conostoma_oemodium        = "Paradoxornis_aemodium",
+  Hyloctistes_subulatus     = "Automolus_subulatus",
+  Dioptrornis_fischeri      = "Melaenornis_fischeri",
+  Trichastoma_bicolor       = "Pellorneum_bicolor",
+  Trichastoma_celebense     = "Pellorneum_celebense",
+  Trichastoma_rostratum     = "Pellorneum_rostratum",
+  Speirops_lugubris         = "Zosterops_lugubris",
+  Babax_lanceolatus         = "Pterorhinus_lanceolatus",
+  Rhinomyias_umbratilis     = "Cyornis_umbratilis",
+  Rhopocichla_atriceps      = "Dumetia_atriceps"
+)
+
+# Verify all synonym targets are in the tree
+stopifnot(all(synonyms %in% tree$tip.label))
+
+# Verify no synonym target is already claimed by another species
+# (would create duplicate tips in the dataset)
+
+# --- Stage 1: jetz_sp ---
 spdat$binom_u <- gsub(" ", "_", spdat$Best_guess_binomial)
 
 spdat$phylo <- ifelse(
-  spdat$jetz_sp %in% tree$tip.label, spdat$jetz_sp,
+  spdat$jetz_sp %in% tree$tip.label, spdat$jetz_sp, NA
+)
+n_jetz <- sum(!is.na(spdat$phylo))
+
+# --- Stage 2: Best_guess_binomial ---
+spdat$phylo <- ifelse(
+  !is.na(spdat$phylo), spdat$phylo,
   ifelse(spdat$binom_u %in% tree$tip.label, spdat$binom_u, NA)
 )
+n_binom <- sum(!is.na(spdat$phylo)) - n_jetz
 
-n_matched <- sum(!is.na(spdat$phylo))
-n_jetz    <- sum(spdat$jetz_sp %in% tree$tip.label)
-n_binom   <- n_matched - n_jetz
+# --- Stage 3: synonym lookup ---
+unmatched_idx <- which(is.na(spdat$phylo))
+syn_match <- synonyms[spdat$jetz_sp[unmatched_idx]]
+syn_match <- syn_match[!is.na(syn_match)]
+
+# Check no synonym target duplicates an already-matched tip
+already_matched <- spdat$phylo[!is.na(spdat$phylo)]
+dupes <- syn_match[syn_match %in% already_matched]
+if (length(dupes) > 0) {
+  cat("WARNING: dropping", length(dupes), "synonym matches that duplicate existing tips\n")
+  syn_match <- syn_match[!(syn_match %in% already_matched)]
+}
+
+for (jetz_name in names(syn_match)) {
+  idx <- which(spdat$jetz_sp == jetz_name & is.na(spdat$phylo))
+  if (length(idx) == 1) spdat$phylo[idx] <- syn_match[[jetz_name]]
+}
+n_synonym <- sum(!is.na(spdat$phylo)) - n_jetz - n_binom
 
 cat("\nTaxonomic matching:\n")
-cat("  Matched via jetz_sp:", n_jetz, "\n")
-cat("  Additional via Best_guess_binomial:", n_binom, "\n")
-cat("  Total matched:", n_matched, "of", nrow(spdat), "\n")
+cat("  Stage 1 — jetz_sp:", n_jetz, "\n")
+cat("  Stage 2 — Best_guess_binomial:", n_binom, "\n")
+cat("  Stage 3 — synonym lookup:", n_synonym, "\n")
+cat("  Total matched:", sum(!is.na(spdat$phylo)), "of", nrow(spdat), "\n")
 cat("  Unmatched (dropped):", sum(is.na(spdat$phylo)), "\n")
 
-# Drop unmatched species
-spdat <- spdat %>% filter(!is.na(phylo))
+# --- Write synonym table ---
+synonym_table <- data.frame(
+  jetz_sp    = names(synonyms),
+  tree_tip   = unname(synonyms),
+  used       = names(synonyms) %in% names(syn_match),
+  stringsAsFactors = FALSE
+)
+dir.create("results", showWarnings = FALSE)
+write.csv(synonym_table, "results/A3_synonym_table.csv", row.names = FALSE)
+cat("Synonym table written to results/A3_synonym_table.csv\n")
+
+# Drop unmatched species and helper column
+spdat <- spdat %>% filter(!is.na(phylo)) %>% select(-binom_u)
+
+# --- Drop duplicate phylo labels ---
+# Some BirdLife species map to the same Jetz species (taxonomic lumping).
+# Rather than merging ambiguous cases, we exclude both members of each
+# duplicate pair to keep the dataset clean.
+if (any(duplicated(spdat$phylo))) {
+  dup_labels <- unique(spdat$phylo[duplicated(spdat$phylo)])
+  cat("\nDropping", sum(spdat$phylo %in% dup_labels),
+      "rows with ambiguous phylo labels:\n")
+  for (d in dup_labels) {
+    rows <- spdat %>% filter(phylo == d)
+    cat("  ", d, ":", paste(rows$Best_guess_binomial, collapse = " / "), "\n")
+  }
+  spdat <- spdat %>% filter(!(phylo %in% dup_labels))
+}
 
 # Trim tree to matched species
 tree <- drop.tip(tree, setdiff(tree$tip.label, spdat$phylo))
 cat("Trimmed tree:", length(tree$tip.label), "tips\n")
-
-# Drop helper column
-spdat <- spdat %>% select(-binom_u)
 
 cat("Final dataset:", nrow(spdat), "species\n")
 
