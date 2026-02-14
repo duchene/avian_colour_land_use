@@ -27,11 +27,19 @@ cat("Unique species:", length(unique(fulldat$Best_guess_binomial)), "\n")
 # ============================================================
 # COMPUTE LAND-USE PROPORTION SCORES (species-level)
 # ============================================================
-# For each species x land-use level: count of records / total dataset size
+# For each species x land-use level: count of records in that
+# land use / total records of that species. This gives within-
+# species relative proportions (sum to 1 per species), removing
+# the confound with overall species prevalence.
+#
+# Because they sum to 1, we drop Cropland as the reference level
+# (matching A1) to avoid perfect multicollinearity.
 
 lu_counts <- fulldat %>%
   count(Best_guess_binomial, Predominant_simple) %>%
-  mutate(proportion = n / n_total)
+  group_by(Best_guess_binomial) %>%
+  mutate(proportion = n / sum(n)) %>%
+  ungroup()
 
 # Pivot to one column per land-use level
 lu_wide <- lu_counts %>%
@@ -45,6 +53,9 @@ lu_wide <- lu_counts %>%
 
 # Clean column names (remove spaces)
 names(lu_wide) <- gsub(" ", "_", names(lu_wide))
+
+# Drop Cropland (reference level) to avoid compositional constraint
+lu_wide <- lu_wide %>% select(-prop_Cropland)
 
 cat("\nLand-use proportion columns:\n")
 cat(names(lu_wide)[-1], sep = "\n")

@@ -125,13 +125,13 @@ At the species level, and accounting for shared ancestry, do species that are mo
 
 ### Species-level data (computed in `A3_01_setup.R`)
 
-From the full raw dataset (216,834 records, 1,703 species), for each species and each level of `Predominant_simple`, a **land-use proportion score** is computed as:
+From the full raw dataset (216,834 records, 1,703 species), for each species and each level of `Predominant_simple`, a **within-species land-use proportion** is computed as:
 
 ```
-proportion = (records of species i in land-use j) / (total records in dataset)
+proportion = (records of species i in land-use j) / (total records of species i)
 ```
 
-This gives 5 predictor variables per species: `prop_Cropland`, `prop_Pasture`, `prop_Plantation_forest`, `prop_Primary_vegetation`, `prop_Secondary`. Some species may have 0 for certain land uses.
+These are relative proportions that sum to 1 per species, removing the confound with overall species prevalence (dividing by total dataset size would conflate "how common is this species" with "which land uses does it prefer"). Because the 5 proportions sum to 1, Cropland is dropped as the reference level (matching A1) to avoid perfect multicollinearity. This gives 4 predictor variables per species: `prop_Plantation_forest`, `prop_Primary_vegetation`, `prop_Pasture`, `prop_Secondary`, each interpretable as the fraction of that species' records occurring in that land-use type relative to Cropland. VIFs for these predictors are 3.4-4.1 (acceptable).
 
 Colour variables are species-level traits (same value per record of a given species), so the first non-NA value per species is used.
 
@@ -154,11 +154,12 @@ The crosswalk files `birdlife-birdtree_crosswalk.csv` and `clements_jetz_crosswa
 Bayesian phylogenetic regression via brms/CmdStan. For each of the three colour responses:
 
 ```
-colour ~ prop_Cropland + prop_Pasture + prop_Plantation_forest +
-         prop_Primary_vegetation + prop_Secondary +
+colour ~ prop_Plantation_forest + prop_Primary_vegetation +
+         prop_Pasture + prop_Secondary +
          (1 | gr(phylo, cov = A))
 ```
 
+- Cropland is the reference level (implicit intercept).
 - `A`: phylogenetic covariance matrix from `ape::vcv.phylo()` (correlation form).
 - `(1 | gr(phylo, cov = A))`: phylogenetic random effect accounting for shared ancestry.
 - Tree trimmed to species present in both data and tree using `ape::drop.tip()`.
@@ -171,29 +172,34 @@ Scripts: `A3_01_setup.R`, `A3_02_fit_models.R`, `A3_03_diagnostics_summary.R`.
 
 ### Convergence
 
-All three models converged: 0 divergences, max Rhat <= 1.003, min bulk ESS >= 1,305, min tail ESS >= 2,524. The malecolcooney model produced an E-BFMI < 0.3 warning (common with large phylogenetic covariance matrices) but Rhat and ESS values were satisfactory.
+All three models converged: 0 divergences, max Rhat <= 1.003, min bulk ESS >= 1,418, min tail ESS >= 2,669.
 
 ### Key results
 
-**Variance explained:** R² = 89.2% (meancolcooney, 95% CI: 85.3-92.4%), 86.7% (malecolcooney, 82.5-90.3%), 46.7% (dichrocooney, 37.2-56.7%). The high R² is driven almost entirely by the phylogenetic random effect (shared ancestry), not the land-use predictors.
+**Variance explained:** R² = 88.8% (meancolcooney, 95% CI: 84.9-92.1%), 86.4% (malecolcooney, 82.1-90.2%), 47.1% (dichrocooney, 37.5-57.3%). The high R² is driven almost entirely by the phylogenetic random effect (shared ancestry).
 
-**Land-use proportion effects:** No land-use proportion score is a credible predictor of any colour metric. All estimates are near zero (range -0.07 to +0.07) with very wide 95% credible intervals spanning approximately +/-2. The phylogenetic signal dominates -- closely related species have similar colouration regardless of which land-use types they occupy.
+**Land-use proportion effects (relative to Cropland):**
+- **Pasture:** credible negative effect on mean colour (-0.25, 95% CI: -0.42 to -0.08) and male colour (-0.23, 95% CI: -0.43 to -0.03). Species more associated with pastures are less colourful than those associated with cropland, after accounting for phylogeny.
+- **Primary vegetation:** negative trend for mean colour (-0.09, CI: -0.23 to 0.04) and male colour (-0.09, CI: -0.24 to 0.07), but 95% CIs include zero.
+- **Plantation forest:** small negative trend (-0.07 mean, -0.06 male), CIs include zero.
+- **Secondary:** near zero (-0.05 mean, -0.06 male), CIs include zero.
+- **Dichromatism:** no land-use proportion is a credible predictor (all estimates within -0.03 to +0.03, CIs include zero).
 
 **Phylogenetic signal:** The phylogenetic SD is large relative to the residual: sd(phylo) = 0.52 (meancolcooney), 0.56 (malecolcooney), 0.26 (dichrocooney), compared to sigma = 0.14, 0.17, 0.17 respectively. This confirms strong phylogenetic conservatism in plumage colouration, especially for overall colourfulness. Dichromatism shows weaker (but still substantial) phylogenetic signal.
 
 ## Summary interpretation (A1 + A2 + A3)
 
-Land use does not directly shift community colour in a simple way. Effects are mediated by trophic ecology and habitat context, and there is no evolutionary signal linking land-use affinity to colour:
+Land use does not directly shift community colour in a simple way. Effects are mediated by trophic ecology and habitat context:
 
 1. **Trophic niche is a much stronger predictor of colour than land use** (A1). Nectarivores and frugivores are the most colourful guilds.
 2. **Plantation forests filter against colourful frugivores** (A1). The plantation forest x frugivore interaction is the strongest in the dataset.
 3. **Colourful species are slightly more abundant overall, but this advantage is land-use dependent** (A2). The positive colour-abundance relationship disappears in forested land uses (plantation + primary) and is amplified in pastures.
 4. **Larger-bodied birds are consistently less colourful** (A1).
-5. **Plumage colour is strongly phylogenetically conserved** (A3). After accounting for shared ancestry, species-level land-use association has no detectable effect on colouration. The community-level patterns in A1/A2 reflect ecological filtering (which species occur where) rather than evolutionary divergence in colour linked to land-use affinity.
+5. **Plumage colour is strongly phylogenetically conserved** (A3). R² from phylogeny alone is 87-89% for colourfulness and 47% for dichromatism.
+6. **Pasture-associated species are less colourful after accounting for phylogeny** (A3). This is the only land-use effect that survives phylogenetic correction, and it applies to overall and male colourfulness but not to dichromatism. This is consistent with A2's finding that colourful species are disproportionately abundant in pastures at the community level -- the A3 result suggests a phylogenetic component: lineages associated with open/pastoral habitats tend to be less colourful.
 
 ## Next steps
 
 - Investigate the plantation forest x frugivore interaction more deeply (e.g., which frugivore lineages are most affected).
 - Explore spatial patterns (biome-specific effects).
 - Sensitivity analyses: effect of abundance threshold, alternative colour metrics (VolumeUVS).
-- Consider whether the A3 proportion score could be refined (e.g., relative to total records per species rather than total dataset size).
