@@ -28,7 +28,7 @@ dat <- read.csv("data/present.csv", stringsAsFactors = FALSE)
 
 dat <- dat %>%
   mutate(
-    Predominant_simple = factor(Predominant_simple),
+    Predominant_simple = relevel(factor(Predominant_simple), ref = "Primary vegetation"),
     Habitat            = factor(Habitat),
     Biome              = factor(Biome),
     Trophic.Niche      = factor(Trophic.Niche),

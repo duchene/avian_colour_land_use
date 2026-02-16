@@ -28,7 +28,7 @@ dat <- read.csv("data/present.csv", stringsAsFactors = FALSE)
 
 dat <- dat %>%
   mutate(
-    Predominant_simple = factor(Predominant_simple),
+    Predominant_simple = relevel(factor(Predominant_simple), ref = "Primary vegetation"),
     SSBS = factor(SSBS),
     abundance = Effort_corrected_measurement
   )

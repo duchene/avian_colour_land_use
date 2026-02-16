@@ -54,8 +54,8 @@ lu_wide <- lu_counts %>%
 # Clean column names (remove spaces)
 names(lu_wide) <- gsub(" ", "_", names(lu_wide))
 
-# Drop Cropland (reference level) to avoid compositional constraint
-lu_wide <- lu_wide %>% select(-prop_Cropland)
+# Drop Primary_vegetation (reference level) to avoid compositional constraint
+lu_wide <- lu_wide %>% select(-prop_Primary_vegetation)
 
 cat("\nLand-use proportion columns:\n")
 cat(names(lu_wide)[-1], sep = "\n")
