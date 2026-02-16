@@ -143,7 +143,7 @@ From the full raw dataset (216,834 records, 1,703 species), for each species and
 proportion = (records of species i in land-use j) / (total records of species i)
 ```
 
-These are relative proportions that sum to 1 per species, removing the confound with overall species prevalence (dividing by total dataset size would conflate "how common is this species" with "which land uses does it prefer"). Because the 5 proportions sum to 1, Primary vegetation is dropped as the reference level (matching A1) to avoid perfect multicollinearity. This gives 4 predictor variables per species: `prop_Cropland`, `prop_Plantation_forest`, `prop_Pasture`, `prop_Secondary`, each interpretable as the fraction of that species' records occurring in that land-use type relative to Primary vegetation. VIFs for these predictors are 3.4-4.1 (acceptable).
+These are relative proportions that sum to 1 per species, removing the confound with overall species prevalence (dividing by total dataset size would conflate "how common is this species" with "which land uses does it prefer"). All 5 proportions (`prop_Cropland`, `prop_Pasture`, `prop_Plantation_forest`, `prop_Primary_vegetation`, `prop_Secondary`) are included as predictors in a no-intercept model. Since the proportions sum to 1, removing the intercept resolves the compositional constraint and each coefficient is interpretable as the expected colour for a species found exclusively in that land-use type.
 
 Colour variables are species-level traits (same value per record of a given species), so the first non-NA value per species is used.
 
@@ -166,17 +166,17 @@ The crosswalk files `birdlife-birdtree_crosswalk.csv` and `clements_jetz_crosswa
 Bayesian phylogenetic regression via brms/CmdStan. For each of the three colour responses:
 
 ```
-colour ~ prop_Cropland + prop_Plantation_forest +
-         prop_Pasture + prop_Secondary +
+colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest +
+         prop_Primary_vegetation + prop_Secondary +
          (1 | gr(phylo, cov = A))
 ```
 
-- Primary vegetation is the reference level (implicit intercept).
+- No intercept (`0 +`): because the 5 proportions sum to 1 per species, they span the intercept. Each coefficient represents the expected colour for a species found exclusively in that land-use type.
 - `A`: phylogenetic covariance matrix from `ape::vcv.phylo()` (correlation form).
 - `(1 | gr(phylo, cov = A))`: phylogenetic random effect accounting for shared ancestry.
 - Tree trimmed to species present in both data and tree using `ape::drop.tip()`.
 - Family: lognormal (all three responses).
-- Priors: Normal(0, 2) on intercept, Normal(0, 1) on fixed effects (wider than A1/A2 because predictors are proportions on a different scale), Exponential(2) on SD and sigma.
+- Priors: Normal(0, 5) on fixed effects (wide, since coefficients represent absolute levels on the log scale), Exponential(2) on SD and sigma.
 - 4 chains, 4,000 iterations (2,000 warmup), adapt_delta = 0.95, max_treedepth = 12, threading enabled (4 threads per chain).
 - N = 1,254 species per model (after excluding species with missing colour data).
 
@@ -184,18 +184,22 @@ Scripts: `A3_01_setup.R`, `A3_02_fit_models.R`, `A3_03_diagnostics_summary.R`.
 
 ### Convergence
 
-All three models converged: 0 divergences, max Rhat <= 1.003, min bulk ESS >= 1,418, min tail ESS >= 2,669.
+All three models converged: 0 divergences, max Rhat <= 1.01, min bulk ESS >= 378, min tail ESS >= 796. ESS is adequate for all parameters.
 
 ### Key results
 
-**Variance explained:** R² = 88.8% (meancolcooney, 95% CI: 84.9-92.1%), 86.4% (malecolcooney, 82.1-90.2%), 47.1% (dichrocooney, 37.5-57.3%). The high R² is driven almost entirely by the phylogenetic random effect (shared ancestry).
+**Variance explained:** R² = 88.6% (meancolcooney, 95% CI: 84.7-91.9%), 86.3% (malecolcooney, 82.0-90.0%), 46.7% (dichrocooney, 37.4-56.6%). The high R² is driven almost entirely by the phylogenetic random effect (shared ancestry).
 
-**Land-use proportion effects (relative to Primary vegetation):**
-- **Pasture:** credible negative effect on mean colour (-0.15, 95% CI: -0.26 to -0.04) and male colour (-0.15, 95% CI: -0.27 to -0.03). Species more associated with pastures are less colourful than those associated with primary vegetation, after accounting for phylogeny.
-- **Cropland:** positive trend for mean colour (+0.10, CI: -0.04 to 0.23) and male colour (+0.09, CI: -0.07 to 0.24), but 95% CIs include zero.
-- **Plantation forest:** near zero (+0.02 mean, +0.02 male), CIs include zero.
-- **Secondary:** near zero (+0.04 mean, +0.03 male), CIs include zero.
-- **Dichromatism:** no land-use proportion is a credible predictor (all estimates within -0.05 to +0.01, CIs include zero).
+**Expected log-colour by land-use association (mean colour / male colour):**
+- **Cropland:** 4.68 / 4.69 (highest)
+- **Secondary:** 4.62 / 4.63
+- **Plantation forest:** 4.60 / 4.62
+- **Primary vegetation:** 4.58 / 4.60
+- **Pasture:** 4.43 / 4.45 (lowest)
+
+All 95% CIs are wide and overlap due to the dominant phylogenetic variance, but the Pasture coefficient is consistently lowest. The Pasture-Primary vegetation difference (~-0.15 on log scale) is consistent with the previous parameterization's credible negative effect.
+
+**Dichromatism:** All 5 coefficients are near zero (0.04-0.10) with wide overlapping CIs. No land-use association predicts dichromatism.
 
 **Phylogenetic signal:** The phylogenetic SD is large relative to the residual: sd(phylo) = 0.52 (meancolcooney), 0.56 (malecolcooney), 0.26 (dichrocooney), compared to sigma = 0.14, 0.17, 0.17 respectively. This confirms strong phylogenetic conservatism in plumage colouration, especially for overall colourfulness. Dichromatism shows weaker (but still substantial) phylogenetic signal.
 

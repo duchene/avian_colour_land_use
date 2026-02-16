@@ -32,8 +32,11 @@ cat("Unique species:", length(unique(fulldat$Best_guess_binomial)), "\n")
 # species relative proportions (sum to 1 per species), removing
 # the confound with overall species prevalence.
 #
-# Because they sum to 1, we drop Cropland as the reference level
-# (matching A1) to avoid perfect multicollinearity.
+# Because they sum to 1, we remove the intercept from the model
+# formula (0 + ...) rather than dropping one proportion. This way
+# all 5 land-use proportions are included and each coefficient
+# represents the expected colour for a species found exclusively
+# in that land-use type.
 
 lu_counts <- fulldat %>%
   count(Best_guess_binomial, Predominant_simple) %>%
@@ -53,9 +56,6 @@ lu_wide <- lu_counts %>%
 
 # Clean column names (remove spaces)
 names(lu_wide) <- gsub(" ", "_", names(lu_wide))
-
-# Drop Primary_vegetation (reference level) to avoid compositional constraint
-lu_wide <- lu_wide %>% select(-prop_Primary_vegetation)
 
 cat("\nLand-use proportion columns:\n")
 cat(names(lu_wide)[-1], sep = "\n")
@@ -241,9 +241,10 @@ cat("\nPredictors:", paste(lu_predictors, collapse = " + "), "\n")
 # PRIORS
 # ============================================================
 
+# No intercept (0 + formula): b coefficients represent absolute
+# levels on the log scale, so use a wider prior than usual.
 priors_A3 <- c(
-  prior(normal(0, 2), class = "Intercept"),
-  prior(normal(0, 1), class = "b"),
+  prior(normal(0, 5), class = "b"),
   prior(exponential(2), class = "sd"),
   prior(exponential(2), class = "sigma")
 )

@@ -23,17 +23,20 @@ dir.create("fits", showWarnings = FALSE)
 # ============================================================
 # MODEL FORMULA
 # ============================================================
-# Colour ~ land-use proportions + (1|gr(phylo, cov = A))
+# Colour ~ 0 + land-use proportions + (1|gr(phylo, cov = A))
+# No intercept because the 5 proportions sum to 1 per species,
+# so they span the intercept. Each coefficient represents the
+# expected colour for a species found exclusively in that land use.
 # The phylogenetic random effect accounts for shared ancestry.
 
 predictor_string <- paste(lu_predictors, collapse = " + ")
 
 make_formula <- function(response) {
   if (!is.null(A)) {
-    bf(as.formula(paste0(response, " ~ ", predictor_string,
+    bf(as.formula(paste0(response, " ~ 0 + ", predictor_string,
                          " + (1 | gr(phylo, cov = A))")))
   } else {
-    bf(as.formula(paste0(response, " ~ ", predictor_string)))
+    bf(as.formula(paste0(response, " ~ 0 + ", predictor_string)))
   }
 }
 
