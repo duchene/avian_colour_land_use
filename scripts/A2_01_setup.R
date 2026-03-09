@@ -1,7 +1,8 @@
 # ============================================================
 # A2_01_setup.R
-# Analysis 2: Abundance ~ Colour x Land-use
+# Analysis 2: Relative Abundance ~ Colour x Land-use
 # Setup: packages, data, formulas, priors
+# Response: species abundance / total site abundance (per SSBS)
 # ============================================================
 
 library(tidyverse)
@@ -29,27 +30,39 @@ dat <- read.csv("data/present.csv", stringsAsFactors = FALSE)
 dat <- dat %>%
   mutate(
     Predominant_simple = relevel(factor(Predominant_simple), ref = "Primary vegetation"),
-    SSBS = factor(SSBS),
-    abundance = Effort_corrected_measurement
+    SSBS = factor(SSBS)
   )
+
+# Compute total abundance per SSBS (site-level community total),
+# then express each record as its proportion of the site total.
+ssbs_totals <- dat %>%
+  group_by(SSBS) %>%
+  summarise(total_N_SSBS = sum(Effort_corrected_measurement, na.rm = TRUE),
+            .groups = "drop")
+
+dat <- dat %>%
+  left_join(ssbs_totals, by = "SSBS") %>%
+  mutate(abundance = Effort_corrected_measurement / total_N_SSBS)
 
 # Standardize colour predictors for comparable effect sizes
 dat <- dat %>%
   mutate(
     z_meancolcooney = as.numeric(scale(meancolcooney)),
     z_dichrocooney  = as.numeric(scale(dichrocooney)),
-    z_malecolcooney = as.numeric(scale(malecolcooney))
+    z_malecolcooney = as.numeric(scale(malecolcooney)),
+    z_dichrodiff    = as.numeric(scale(dichrodiff))
   )
 
 cat("Data loaded. Rows:", nrow(dat), "\n")
-cat("Abundance summary:\n")
+cat("Relative abundance summary (abundance / site total N):\n")
 print(summary(dat$abundance))
 
 # ============================================================
 # RESPONSE AND COLOUR PREDICTORS
 # ============================================================
 
-colour_vars <- c("z_meancolcooney", "z_dichrocooney", "z_malecolcooney")
+colour_vars <- c("z_meancolcooney", "z_dichrocooney", "z_malecolcooney",
+                  "z_dichrodiff")
 
 cat("\nColour predictor sample sizes (non-NA abundance + colour):\n")
 for (cv in colour_vars) {

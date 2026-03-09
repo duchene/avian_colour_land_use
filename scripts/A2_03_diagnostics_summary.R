@@ -10,7 +10,7 @@ library(loo)
 
 # Load data and fits
 load("fits/A2_model_setup.RData")
-load("fits/A2_all_fits.RData")
+load("fits/A2_all_fits_relabund.RData")
 
 dir.create("results", showWarnings = FALSE)
 dir.create("figures", showWarnings = FALSE)
@@ -113,7 +113,6 @@ cat("\nGenerating posterior predictive checks...\n")
 for (cv in names(fits_A2)) {
   p <- pp_check(fits_A2[[cv]], ndraws = 50, type = "dens_overlay") +
     ggtitle(paste("PP Check:", cv)) +
-    coord_cartesian(xlim = c(-5, 10)) +
     theme_minimal()
 
   ggsave(paste0("figures/A2_pp_check_", cv, ".png"), p,
@@ -133,7 +132,7 @@ for (cv in names(fits_A2)) {
   p <- plot(ce, plot = FALSE)[[1]] +
     labs(title = paste("Abundance ~", cv, "x Land-use"),
          x = paste(cv, "(standardized)"),
-         y = "Predicted Abundance") +
+         y = "Predicted Relative Abundance") +
     theme_minimal()
 
   ggsave(paste0("figures/A2_conditional_", cv, ".png"), p,
@@ -190,7 +189,7 @@ p_compare <- ggplot(colour_main, aes(x = Estimate, y = colour_predictor)) +
                      name = "95% CI\nexcludes 0") +
   labs(title = "Effect of Colour on Abundance (across metrics)",
        subtitle = "Main effect of standardized colour predictor",
-       x = "Effect on log(Abundance)", y = NULL) +
+       x = "Effect on log(Relative Abundance)", y = NULL) +
   theme_minimal() +
   theme(legend.position = "bottom")
 

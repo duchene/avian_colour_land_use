@@ -82,7 +82,11 @@ for (i in seq_len(nrow(response_specs))) {
     next
   }
 
-  priors <- if (fam == "student") student_priors else base_priors
+  priors <- switch(fam,
+    "student"  = student_priors,
+    "gaussian" = gaussian_priors,
+    base_priors
+  )
 
   fit <- fit_brms_model(
     data = dat, response = resp,
@@ -116,7 +120,11 @@ for (i in seq_len(nrow(response_specs))) {
     next
   }
 
-  priors <- if (fam == "student") student_priors else base_priors
+  priors <- switch(fam,
+    "student"  = student_priors,
+    "gaussian" = gaussian_priors,
+    base_priors
+  )
 
   fit <- fit_brms_model(
     data = dat, response = resp,

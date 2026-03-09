@@ -59,15 +59,20 @@ for (resp in responses) {
   d <- spdat %>% filter(!is.na(.data[[resp]]))
   f <- make_formula(resp)
 
-  cat("\nFitting:", resp, "| N =", nrow(d), "\n")
+  # Select family and priors per response
+  fam_name <- response_families[[resp]]
+  fam <- if (fam_name == "gaussian") gaussian() else lognormal()
+  pr  <- if (fam_name == "gaussian") priors_A3_gaussian else priors_A3
+
+  cat("\nFitting:", resp, "| Family:", fam_name, "| N =", nrow(d), "\n")
 
   if (!is.null(A)) {
     fit <- brm(
       formula  = f,
       data     = d,
       data2    = list(A = A),
-      family   = lognormal(),
-      prior    = priors_A3,
+      family   = fam,
+      prior    = pr,
       chains   = 4,
       cores    = 4,
       iter     = 4000,
@@ -81,8 +86,8 @@ for (resp in responses) {
     fit <- brm(
       formula  = f,
       data     = d,
-      family   = lognormal(),
-      prior    = priors_A3,
+      family   = fam,
+      prior    = pr,
       chains   = 4,
       cores    = 4,
       iter     = 3000,

@@ -15,12 +15,21 @@ Filtered to passerines with non-zero abundance from studies that include primary
 - `meancolcooney`: mean of male + female LociUVS (overall colourfulness)
 - `dichrocooney`: male / female LociUVS ratio (sexual dichromatism)
 - `malecolcooney`: male LociUVS (male conspicuousness)
+- `dichrodiff`: male minus female LociUVS (arithmetic difference in dichromatism; can be negative when females are more colourful than males)
 
 All use LociUVS (ultraviolet-sensitive visual model loci counts) from Cooney et al. Dale scores were excluded.
 
+### Biome classification (`Biome4`, computed in `00_data_preparation.R`)
+
+Simplified from the original 11-level `Biome` to 4 categories:
+- **Tropical Forest**: Tropical & Subtropical Moist Broadleaf Forests, Tropical & Subtropical Dry Broadleaf Forests, Tropical & Subtropical Coniferous Forests (reference level)
+- **Tropical Open**: Tropical & Subtropical Grasslands, Savannas & Shrublands; Flooded Grasslands & Savannas; Deserts & Xeric Shrublands; Mangroves
+- **Temperate Forest**: Temperate Broadleaf & Mixed Forests, Temperate Conifer Forests
+- **Temperate Open**: Temperate Grasslands, Savannas & Shrublands; Mediterranean Forests, Woodlands & Scrub; Montane Grasslands & Shrublands; Boreal Forests/Taiga
+
 ### Land-use levels (`Predominant_simple`)
 
-Cropland (39,482 records), Pasture (32,407), Plantation forest (38,868), Primary vegetation (55,452), Secondary (50,625).
+In the analytical dataset: Primary vegetation (10,920 records), Secondary (8,603), Plantation forest (7,122), Cropland (4,577), Pasture (3,431). Total: 34,653.
 
 ### Phylogenetic tree
 
@@ -30,104 +39,195 @@ BigBirdTree (BBtree2) from [evolucionario/BigBirdTree](https://github.com/evoluc
 
 ### Question
 
-Does plumage colouration differ across land-use types after accounting for body mass, habitat, biome, and trophic niche?
+Does plumage colouration differ across land-use types after accounting for body mass, biome, and trophic niche?
 
 ### Methods
 
-Bayesian GLMMs via brms/CmdStan. For each of the three colour responses:
+Bayesian GLMMs via brms/CmdStan. For each of the four colour responses:
 
+**Reduced model** (preferred):
 ```
-colour ~ Predominant_simple + z_logMass + Habitat + Biome + Trophic.Niche +
+colour ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
          Predominant_simple:z_logMass +
-         Predominant_simple:Habitat +
+         Predominant_simple:Biome4 +
+         Predominant_simple:Trophic.Niche +
+         (1 | SSBS)
+```
+
+**Minimal model** (drops `Predominant_simple:Biome4` interaction):
+```
+colour ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
+         Predominant_simple:z_logMass +
          Predominant_simple:Trophic.Niche +
          (1 | SSBS)
 ```
 
 - `Predominant_simple`: land-use category (reference = Primary vegetation). Levels: Cropland, Secondary, Pasture, Plantation forest.
 - `z_logMass`: standardized log body mass.
+- `Biome4`: 4-category simplified biome (reference = Tropical Forest).
 - `SSBS`: site nested within study nested within block (random intercept).
-- All three responses fitted with **lognormal** family. Dichrocooney was initially fitted with Student-t family but had severe non-convergence (Rhat 1.5-1.7, ESS < 10); the ratio data were well-behaved (range 0.43-4.44) and lognormal resolved convergence completely.
-- Priors: Normal(0, 2) on intercept, Normal(0, 0.5) on fixed effects, Exponential(2) on SD and sigma.
+- Lognormal family for meancolcooney, dichrocooney, and malecolcooney. Gaussian family for dichrodiff (which can be negative).
+- Priors (lognormal responses): Normal(0, 2) on intercept, Normal(0, 0.5) on fixed effects, Exponential(2) on SD and sigma.
+- Priors (gaussian/dichrodiff): Normal(0, 50) on intercept, Normal(0, 20) on fixed effects, Exponential(2) on SD and sigma.
 - 4 chains, 3,000 iterations (1,500 warmup), adapt_delta = 0.90, threading enabled.
-
-A **minimal** model (drops Habitat interaction) was also fitted for LOO-CV comparison.
 
 Scripts: `A1_01_setup.R`, `A1_02_fit_models.R`, `A1_03_model_comparison.R`, `A1_04_diagnostics.R`, `A1_05_summarize.R`.
 
 ### Model comparison
 
-Reduced (with Habitat interaction) preferred over Minimal for all three responses by LOO-CV.
+Reduced model (with Biome4 interaction) strongly preferred over Minimal for all four responses by LOO-CV:
+
+| Response | elpd_diff | SE |
+|---|---|---|
+| malecolcooney | -126.2 | 14.9 |
+| meancolcooney | -122.2 | 14.7 |
+| dichrodiff | -89.9 | 13.6 |
+| dichrocooney | -67.6 | 12.9 |
 
 ### Convergence
 
-All models converged (Rhat < 1.01, ESS > 400, 0 divergences), except dichrocooney minimal which was borderline (Rhat 1.011).
+All 8 models converged (max Rhat <= 1.007, min ESS bulk >= 535, 0 divergences for all models).
+
+### Reference levels
+
+- **Land use** (`Predominant_simple`): Primary vegetation (reference). Effects of Cropland, Pasture, Plantation forest, and Secondary are relative to Primary.
+- **Biome** (`Biome4`): Tropical Forest (reference). Effects of Temperate Forest, Temperate Open, and Tropical Open are relative to Tropical Forest.
+- **Trophic niche** (`Trophic.Niche`): Aquatic predator (reference, N = 49 records). Most comparisons of interest are among the common guilds (Invertivore N = 21,374; Omnivore N = 6,574; Granivore N = 3,097; Frugivore N = 2,966; Nectarivore N = 591; Herbivore terrestrial N = 2).
+- **Body mass** (`z_logMass`): standardized log body mass centered at zero.
+
+The intercept represents the expected colour for an Aquatic predator species of mean body mass in Primary vegetation in a Tropical Forest biome.
 
 ### Key results
 
-**Variance explained:** R² = 17.8% (meancolcooney), 16.0% (malecolcooney), 12.5% (dichrocooney).
+No land-use category has a credible main effect (95% CI excluding zero) for any response. Land use alone does not shift community colour. Effects emerge through interactions with biome, trophic niche, and body mass.
 
-**Land-use main effects (relative to Primary vegetation):** No land-use category has a 95% CI excluding zero for any colour metric. Land use alone does not shift community colour.
+#### meancolcooney (overall colourfulness; lognormal family)
 
-**Body mass:** Consistent negative effect across all three metrics (estimate -0.112 mean colour, -0.123 male colour, -0.024 dichromatism). Larger birds are less colourful. The negative effect is weaker in cropland and pasture (positive interactions with body mass: Pasture +0.055 mean, +0.061 male, credible; Cropland +0.029 mean, +0.031 male, credible).
+R² = 16.2%.
 
-**Trophic niche (in primary vegetation):**
-- Frugivores are significantly more colourful (+0.18 mean colour), and significantly less dichromatic (-0.25).
-- Invertivores are significantly less dichromatic (-0.37), and males are less colourful (-0.18).
-- Omnivores are significantly less dichromatic (-0.27).
+**Body mass:** Credibly negative (-0.115 [-0.122, -0.108]). Larger birds are less colourful. This effect is weakened in Pasture (+0.052, credible) and Cropland (+0.022, credible).
 
-**Trophic interactions (relative to Primary vegetation):**
-- Pasture x Frugivore: frugivores in pasture are significantly more colourful than in primary vegetation (+0.30 mean, +0.34 male, credible).
-- Pasture x Nectarivore: nectarivores in pasture are significantly more colourful (+0.36 mean, +0.34 male, credible).
-- Plantation forest x Frugivore: frugivores in plantations trend less colourful (-0.25 mean, borderline -- 95% CI just includes zero).
-- Plantation forest x Nectarivore: nectarivores in plantations are significantly more dichromatic (+0.33, credible).
-- Plantation forest x Invertivore/Omnivore: both guilds are significantly more dichromatic in plantations (+0.21 and +0.25 respectively, credible).
+**Biome main effects:** All non-tropical-forest biomes are less colourful: Temperate Forest -0.12, Temperate Open -0.27, Tropical Open -0.20 (all credible).
 
-**Habitat interactions (relative to Primary vegetation):**
-- Cropland x Human Modified: species from human-modified habitats are significantly more colourful in croplands (+0.22 mean, +0.25 male, credible).
-- Plantation forest x Grassland: grassland species are significantly less colourful in plantations (-0.25 mean, -0.25 male, credible).
-- Plantation forest x Wetland: wetland species are significantly less colourful in plantations (-0.24 mean, -0.32 male, credible).
-- Cropland x Grassland: grassland species are significantly more dichromatic in cropland (+0.20, credible).
-- Plantation forest x Riverine: riverine species are significantly more dichromatic in plantations (+0.35, credible).
-- Cropland x Woodland: woodland species are significantly more dichromatic in cropland (+0.14, credible).
+**Biome x Land-use interactions:**
+- Temperate Forest: Cropland -0.09 and Plantation -0.11 credibly negative (communities even less colourful than the biome main effect alone would predict). Secondary -0.04 credible.
+- Temperate Open: Secondary +0.20 and Pasture +0.12 credibly positive (communities more colourful than expected).
+- Tropical Open: Plantation +0.17 and Cropland +0.08 credibly positive.
 
-## Analysis 2: Abundance ~ Colour x Land-use
+**Trophic niche:** Frugivores are the most colourful guild (+0.20, credible). Other guilds not credibly different from reference.
+
+**Trophic x Land-use interactions:** Plantation x Frugivore -0.35 (credible: frugivores are less colourful in plantations). Pasture x Frugivore +0.22, Pasture x Nectarivore +0.25 (both borderline).
+
+#### malecolcooney (male conspicuousness; lognormal family)
+
+R² = 14.6%.
+
+Results closely parallel meancolcooney. **Body mass** -0.125 (credible), weakened in Pasture (+0.064, credible) and Cropland (+0.032, credible).
+
+**Biome main effects:** Temperate Forest -0.07, Temperate Open -0.23, Tropical Open -0.20 (all credible).
+
+**Biome x Land-use interactions:** Same pattern as meancolcooney. Temperate Forest: Cropland -0.14 and Plantation -0.14 (credible). Temperate Open: Secondary +0.19 (credible). Tropical Open: Plantation +0.17, Cropland +0.10 (credible).
+
+**Trophic niche:** Frugivores +0.16 (credible). Invertivores -0.10 (borderline).
+
+**Trophic x Land-use interactions:** Plantation x Frugivore -0.36 (credible). Pasture x Frugivore +0.22, Pasture x Nectarivore +0.25 (both borderline).
+
+#### dichrocooney (sexual dichromatism ratio; lognormal family)
+
+R² = 10.4%.
+
+**Body mass:** Credibly negative (-0.023 [-0.027, -0.019]). Larger birds are less dichromatic. Interactions: Pasture +0.030 and Cropland +0.024 (credible positive — the mass effect weakens). Plantation -0.015 and Secondary -0.011 (credible negative — the mass effect strengthens in these land uses).
+
+**Biome main effects:** Temperate Forest +0.12 and Temperate Open +0.08 (both credible: *more* dichromatic than Tropical Forest, the opposite direction from colour). Tropical Open near zero (-0.005, not credible).
+
+**Biome x Land-use interactions:**
+- Temperate Forest: Cropland -0.10, Pasture -0.08, Plantation -0.07 (all credible). Land-use conversion in temperate forests erodes the elevated baseline dichromatism. Secondary -0.001 (not credible: secondary vegetation retains the temperate forest dichromatism pattern).
+- Temperate Open: Cropland -0.06 (credible), Pasture -0.05 (borderline). Others not credible.
+- Tropical Open: Cropland +0.04 (credible). Others near zero.
+
+**Trophic niche:** Frugivores -0.10 (credible), Invertivores -0.22 (credible), Omnivores -0.13 (credible). These guilds are less dichromatic than the reference in primary vegetation.
+
+**Trophic x Land-use interactions:** Plantation x Nectarivore +0.21 (credible: nectarivores are more dichromatic in plantations). Other interactions not credible.
+
+#### dichrodiff (sexual dichromatism difference; Gaussian family)
+
+R² = 14.1%.
+
+This response is on the raw LociUVS difference scale (male minus female), not log-transformed. Effects are therefore much larger in magnitude than the lognormal responses.
+
+**Body mass:** Credibly negative (-4.19 [-4.78, -3.61]). Larger birds have smaller sex differences. Interactions: Pasture +4.4 and Cropland +2.6 (credible positive). Plantation -1.2 (credible negative — larger species in plantations are relatively *more* sexually different).
+
+**Biome main effects:** Temperate Forest +11.5 (credible: communities in temperate forests have much larger male-female differences). Tropical Open -4.1 (credible: smaller sex differences). Temperate Open +4.1 (borderline).
+
+**Biome x Land-use interactions:**
+- Temperate Forest: Cropland -11.2, Pasture -10.1, Plantation -12.0 (all credible). Land-use conversion in temperate forests strongly erodes the elevated sex differences. Secondary -2.3 (borderline).
+- Tropical Open: Cropland +7.6 and Pasture +3.2 (both credible: land-use conversion in tropical open habitats increases sex differences).
+- Temperate Open: not credible.
+
+**Trophic niche:** Nectarivores +33.1 (credible: very large sex difference). Invertivores -20.1 and Omnivores -9.1 (both credible: smaller sex differences). Frugivores near zero.
+
+**Trophic x Land-use interactions:** Pasture x Frugivore +20.3 (credible: male frugivores in pasture are much more colourful relative to females). Pasture x Nectarivore -19.7 (credible: the large baseline nectarivore sex difference is eroded in pasture). Secondary x Nectarivore -17.4 (credible). Pasture x Invertivore +11.1 (borderline).
+
+## Analysis 2: Relative Abundance ~ Colour x Land-use
 
 ### Question
 
-Do more colourful species have different abundance across land-use types?
+Do more colourful species have different relative abundance across land-use types?
 
 ### Methods
 
-Bayesian GLMMs via brms/CmdStan. For each standardized colour predictor (z_meancolcooney, z_dichrocooney, z_malecolcooney):
+Bayesian GLMMs via brms/CmdStan. Response is **relative abundance**: each species' effort-corrected count divided by the total effort-corrected count at that SSBS (site-level community total). For each standardized colour predictor (z_meancolcooney, z_dichrocooney, z_malecolcooney, z_dichrodiff):
 
 ```
-abundance ~ z_colour * Predominant_simple + (1 | SSBS)
+relative_abundance ~ z_colour * Predominant_simple + (1 | SSBS)
 ```
 
 - Family: lognormal.
 - Priors: Normal(0, 2) on intercept, Normal(0, 0.5) on fixed effects, Exponential(2) on SD and sigma.
 - 4 chains, 3,000 iterations (1,500 warmup), adapt_delta = 0.90, threading enabled.
+- SSBS retained as random intercept to account for residual site-level non-independence after normalisation.
+- Checkpoint files: `fits/A2_fit_relabund_<cv>.RData`; combined: `fits/A2_all_fits_relabund.RData`.
 
 Scripts: `A2_01_setup.R`, `A2_02_fit_models.R`, `A2_03_diagnostics_summary.R`.
 
+### Reference levels
+
+- **Land use** (`Predominant_simple`): Primary vegetation (reference). The intercept represents expected log-relative-abundance in Primary vegetation at the mean value of the colour predictor.
+- **Colour predictors**: each is standardized (z-scored), so the main colour effect represents the change in log-relative-abundance per 1 SD increase in colour in Primary vegetation. The interaction terms represent how this slope changes in each modified land use relative to Primary.
+
 ### Convergence
 
-All three models converged (Rhat < 1.01, ESS > 400, 0 divergences), except malecolcooney which was borderline (Rhat 1.010).
+Three models converged cleanly (max Rhat ≤ 1.008, min ESS > 500, 0 divergences). z_dichrodiff marginal (max Rhat = 1.014, 0 divergences) — interpret with caution.
 
 ### Key results
 
-**Variance explained:** R² ~11% for all models (land use drives most abundance variation).
+R² ≈ 50.8% for all four models (vs. 11.1% with raw abundance).
 
-**Main colour effect (in Primary vegetation):** Near zero and not credible for any metric (mean: -0.003, dichro: -0.018, male: -0.010). In primary vegetation, colour does not predict abundance.
+**Land-use main effects (shared across models):** Cropland +0.45, Pasture +0.62–0.63, Secondary +0.22 (all credible). Plantation forest ~0.00 (not credible) — no overall difference from primary vegetation once site effort is normalised.
 
-**Land-use main effects:** All modified land uses have credibly higher abundance than primary vegetation (Cropland +0.16, Pasture +0.13, Plantation forest +0.35, Secondary +0.17, all credible).
+#### z_meancolcooney (overall colourfulness)
 
-**Colour x land-use interactions (relative to Primary vegetation):**
-- **Cropland:** positive interaction -- colourful species are disproportionately more abundant in croplands relative to primary vegetation (credible for all three metrics: mean +0.034, dichro +0.049, male +0.039).
-- **Pasture:** strongest positive interaction -- colourful species are disproportionately more abundant in pastures (credible for all three: mean +0.063, dichro +0.090, male +0.084).
-- **Plantation forest:** near-zero interaction -- no colour-abundance advantage in plantations (mean -0.023 borderline, dichro +0.000 not credible, male -0.020 borderline).
-- **Secondary:** positive interaction -- colourful species relatively more abundant (credible for dichro +0.027 and male +0.028; mean +0.024 borderline).
+**Main colour effect in Primary vegetation:** -0.01 [-0.02, +0.01] (not credible).
+
+**Colour x Land-use interactions:** Pasture +0.06 [+0.02, +0.10] (credible). Plantation -0.04 [-0.06, -0.01] (credible — colourful species are less relatively abundant in plantations). Cropland +0.02 [-0.01, +0.05] (not credible). Secondary +0.02 [-0.01, +0.04] (not credible).
+
+#### z_malecolcooney (male conspicuousness)
+
+**Main colour effect in Primary vegetation:** -0.01 [-0.02, 0.00] (borderline).
+
+**Colour x Land-use interactions:** Pasture +0.07 [+0.04, +0.11] (credible). Plantation -0.03 [-0.05, -0.01] (credible). Secondary +0.02 [0.00, +0.05] (borderline). Cropland +0.02 [-0.01, +0.05] (not credible).
+
+#### z_dichrocooney (sexual dichromatism ratio)
+
+**Main colour effect in Primary vegetation:** -0.00 [-0.02, +0.01] (not credible). Unlike raw-abundance analysis, no credible negative effect of dichromatism in primary vegetation.
+
+**Colour x Land-use interactions:** Pasture +0.06 [+0.02, +0.09] (credible). Cropland +0.03 [+0.01, +0.06] (credible). Secondary +0.03 [+0.01, +0.06] (credible). Plantation +0.01 [-0.02, +0.03] (not credible).
+
+#### z_dichrodiff (sexual dichromatism difference)
+
+**Main colour effect in Primary vegetation:** -0.01 [-0.03, 0.00] (borderline). No longer credibly negative as in raw-abundance analysis.
+
+**Colour x Land-use interactions:** Pasture +0.10 [+0.06, +0.14] (credible — strongest single interaction). Secondary +0.04 [+0.01, +0.06] (credible). Cropland +0.02 [-0.01, +0.05] (not credible). Plantation -0.00 [-0.02, +0.02] (not credible).
 
 ## Analysis 3: Phylogenetic regression -- Colour ~ land-use association
 
@@ -163,7 +263,7 @@ The crosswalk files `birdlife-birdtree_crosswalk.csv` and `clements_jetz_crosswa
 
 ### Methods
 
-Bayesian phylogenetic regression via brms/CmdStan. For each of the three colour responses:
+Bayesian phylogenetic regression via brms/CmdStan. For each of the four colour responses:
 
 ```
 colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest +
@@ -175,48 +275,99 @@ colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest +
 - `A`: phylogenetic covariance matrix from `ape::vcv.phylo()` (correlation form).
 - `(1 | gr(phylo, cov = A))`: phylogenetic random effect accounting for shared ancestry.
 - Tree trimmed to species present in both data and tree using `ape::drop.tip()`.
-- Family: lognormal (all three responses).
-- Priors: Normal(0, 5) on fixed effects (wide, since coefficients represent absolute levels on the log scale), Exponential(2) on SD and sigma.
+- Lognormal family for meancolcooney, dichrocooney, and malecolcooney. Gaussian family for dichrodiff.
+- Priors (lognormal): Normal(0, 5) on fixed effects, Exponential(2) on SD and sigma.
+- Priors (gaussian/dichrodiff): Normal(0, 100) on fixed effects, Exponential(2) on SD and sigma.
 - 4 chains, 4,000 iterations (2,000 warmup), adapt_delta = 0.95, max_treedepth = 12, threading enabled (4 threads per chain).
 - N = 1,254 species per model (after excluding species with missing colour data).
 
 Scripts: `A3_01_setup.R`, `A3_02_fit_models.R`, `A3_03_diagnostics_summary.R`.
 
+### Reference levels
+
+There is no categorical reference level for land use. The no-intercept model with 5 compositional proportions (summing to 1 per species) means each coefficient is directly interpretable as the expected colour for a hypothetical species found exclusively in that land-use type. Coefficients can be compared pairwise, but no single land use is parameterized as the reference.
+
 ### Convergence
 
-All three models converged: 0 divergences, max Rhat <= 1.01, min bulk ESS >= 378, min tail ESS >= 796. ESS is adequate for all parameters.
+All four models converged: 0 divergences, max Rhat <= 1.01, ESS adequate for all parameters. Note: the dichrodiff model produced an E-BFMI warning (< 0.3 for all 4 chains), suggesting potential issues with the energy distribution, though the model otherwise converged.
 
 ### Key results
 
-**Variance explained:** R² = 88.6% (meancolcooney, 95% CI: 84.7-91.9%), 86.3% (malecolcooney, 82.0-90.0%), 46.7% (dichrocooney, 37.4-56.6%). The high R² is driven almost entirely by the phylogenetic random effect (shared ancestry).
+#### meancolcooney (overall colourfulness; lognormal family)
 
-**Expected log-colour by land-use association (mean colour / male colour):**
-- **Cropland:** 4.68 / 4.69 (highest)
-- **Secondary:** 4.62 / 4.63
-- **Plantation forest:** 4.60 / 4.62
-- **Primary vegetation:** 4.58 / 4.60
-- **Pasture:** 4.43 / 4.45 (lowest)
+R² = 88.6% (95% CI: 84.6-91.8%), driven almost entirely by phylogenetic signal.
 
-All 95% CIs are wide and overlap due to the dominant phylogenetic variance, but the Pasture coefficient is consistently lowest. The Pasture-Primary vegetation difference (~-0.15 on log scale) is consistent with the previous parameterization's credible negative effect.
+**Expected log-colour by land-use association:**
+- Cropland: 4.67 [4.31, 5.03]
+- Secondary: 4.61 [4.27, 4.97]
+- Plantation forest: 4.59 [4.26, 4.96]
+- Primary vegetation: 4.57 [4.23, 4.93]
+- Pasture: 4.42 [4.07, 4.79] (lowest)
 
-**Dichromatism:** All 5 coefficients are near zero (0.04-0.10) with wide overlapping CIs. No land-use association predicts dichromatism.
+All CIs overlap due to dominant phylogenetic variance, but Pasture is consistently lowest. The Pasture-Primary difference (~-0.15 on log scale) is the most prominent pattern.
 
-**Phylogenetic signal:** The phylogenetic SD is large relative to the residual: sd(phylo) = 0.52 (meancolcooney), 0.56 (malecolcooney), 0.26 (dichrocooney), compared to sigma = 0.14, 0.17, 0.17 respectively. This confirms strong phylogenetic conservatism in plumage colouration, especially for overall colourfulness. Dichromatism shows weaker (but still substantial) phylogenetic signal.
+**Phylogenetic signal:** sd(phylo) = 0.52 vs sigma = 0.14. Strong conservatism — closely related species have similar colourfulness.
+
+#### malecolcooney (male conspicuousness; lognormal family)
+
+R² = 86.2% (81.8-89.9%).
+
+**Expected log-colour by land-use association:**
+- Cropland: 4.68 [4.29, 5.07]
+- Secondary: 4.62 [4.25, 4.99]
+- Plantation forest: 4.61 [4.24, 4.99]
+- Primary vegetation: 4.59 [4.22, 4.97]
+- Pasture: 4.44 [4.05, 4.83] (lowest)
+
+Pattern matches meancolcooney. Pasture-associated lineages have dullest males.
+
+**Phylogenetic signal:** sd(phylo) = 0.56 vs sigma = 0.17. Strongest phylogenetic conservatism of all four responses.
+
+#### dichrocooney (sexual dichromatism ratio; lognormal family)
+
+R² = 46.6% (37.1-57.1%). Lower than colour metrics — dichromatism ratio is less phylogenetically conserved.
+
+**Expected log-dichromatism by land-use association:**
+- Pasture: 0.10 [-0.09, 0.28]
+- Primary vegetation: 0.08 [-0.09, 0.25]
+- Cropland: 0.07 [-0.13, 0.26]
+- Plantation forest: 0.06 [-0.11, 0.24]
+- Secondary: 0.04 [-0.13, 0.21]
+
+All near zero with wide overlapping CIs. No land-use association predicts dichromatism ratio.
+
+**Phylogenetic signal:** sd(phylo) = 0.26 vs sigma = 0.17. Weaker but still substantial phylogenetic signal.
+
+#### dichrodiff (sexual dichromatism difference; Gaussian family)
+
+R² = 65.6% (57.9-72.9%). Intermediate phylogenetic signal — the arithmetic magnitude of sex differences is partially labile across lineages.
+
+**Expected dichrodiff by land-use association:**
+- Pasture: 11.5 [-13.4, 36.8]
+- Primary vegetation: 11.3 [-12.1, 35.2]
+- Cropland: 7.9 [-17.7, 33.5]
+- Plantation forest: 6.2 [-16.8, 30.1]
+- Secondary: 5.3 [-17.7, 28.6]
+
+All CIs are extremely wide (~50 units) and heavily overlap. No land-use association credibly predicts the arithmetic dichromatism difference. The E-BFMI warning for this model suggests these estimates should be interpreted cautiously.
+
+**Phylogenetic signal:** dichrodiff phylogenetic SD is large but so is the residual, giving intermediate R² (66% vs 87-89% for colour).
 
 ## Summary interpretation (A1 + A2 + A3)
 
-All analyses use Primary vegetation as the reference level. Land use does not directly shift community colour in a simple way. Effects are mediated by trophic ecology and habitat context:
+All analyses use Primary vegetation as the reference level. Land use does not directly shift community colour in a simple way. Effects are mediated by biome, trophic ecology, and body mass. Colourfulness (mean/male colour) and sexual dichromatism (dichro ratio, dichrodiff) often show contrasting patterns:
 
-1. **Trophic niche is a much stronger predictor of colour than land use** (A1). Frugivores are the most colourful guild in primary vegetation, while invertivores and omnivores are the least dichromatic.
-2. **Pastures favour colourful frugivores and nectarivores** (A1). The Pasture x Frugivore and Pasture x Nectarivore interactions are the strongest in the dataset: these guilds are significantly more colourful in pasture than in primary vegetation.
-3. **Plantation forests disadvantage grassland and wetland species** (A1). Grassland and wetland species are significantly less colourful in plantations relative to primary vegetation. Plantation forest x Frugivore also trends negative (borderline).
-4. **Colour does not predict abundance in primary vegetation, but does in modified land uses** (A2). In primary vegetation, the colour-abundance relationship is near zero. In croplands, pastures, and secondary vegetation, colourful species are disproportionately more abundant. The advantage is strongest in pasture. Plantation forests show no colour-abundance advantage.
-5. **Larger-bodied birds are consistently less colourful** (A1), with the negative body mass effect weakened in croplands and pastures.
-6. **Plumage colour is strongly phylogenetically conserved** (A3). R² from phylogeny alone is 87-89% for colourfulness and 47% for dichromatism.
-7. **Pasture-associated species are less colourful after accounting for phylogeny** (A3). This is the only land-use effect that survives phylogenetic correction relative to primary vegetation, and it applies to overall and male colourfulness but not to dichromatism. Together with A2's finding that colourful species are disproportionately abundant in pastures at the community level, this suggests a sorting process: while colourful individuals gain an abundance advantage in pastures (A2), the lineages evolutionarily associated with open/pastoral habitats are inherently less colourful (A3).
+1. **Trophic niche and biome are stronger predictors of colour than land use** (A1). Frugivores are the most colourful guild. Temperate and open biomes have less colourful communities than tropical forests, but temperate forests have *more* sexually dichromatic communities — a dissociation between overall colour and sex differences.
+2. **Colour and dichromatism respond differently to biome and land use** (A1). Temperate forest communities are duller but more dichromatic. When those communities are then modified by land-use change (cropland, plantations), both the colour deficit *and* the dichromatism surplus are eroded — land-use conversion in temperate forests homogenizes communities toward the tropical baseline. In tropical open biomes, the pattern reverses: plantations have more colourful communities.
+3. **Plantation forests are unfavourable for frugivores** (A1). The Plantation forest x Frugivore interaction is credibly negative for mean and male colour (-0.35, -0.36). This is the strongest trophic interaction in the dataset.
+4. **Pastures favour colourful frugivores but reduce nectarivore sex differences** (A1). Male frugivores in pasture are much more colourful relative to females (dichrodiff +20.3, credible). But nectarivores show the opposite: their large baseline sex difference is eroded in pasture (dichrodiff -19.7, credible). The two dichromatism measures capture different aspects of this: dichrodiff (arithmetic) detects large-magnitude shifts that dichro ratio (proportional) does not always reflect.
+5. **Sexually dichromatic and colourful species have higher relative abundance in open modified land uses** (A2; response = relative abundance per SSBS). No credible main colour effect in primary vegetation. In Pasture, species with larger male-female colour differences (dichrodiff × Pasture +0.10) and more colourful males (malecolcooney × Pasture +0.07) are disproportionately more relatively abundant. Cropland and Secondary show credible positive interactions for dichromatism. Unlike the raw-abundance analysis, there is no credible negative dichromatism–abundance relationship in primary vegetation once site effort is normalised (R² ~51%).
+6. **Plantation forests credibly reduce relative abundance of colourful species** (A2). meancolcooney × Plantation (-0.04) and malecolcooney × Plantation (-0.03) are both credibly negative — colourful species make up a smaller fraction of communities in plantations. This was only borderline in the raw-abundance analysis and is the clearest new finding from the relative-abundance approach. Plantation forest shows no positive colour-abundance effect for any metric.
+7. **Larger-bodied birds are consistently less colourful and less dichromatic** (A1). The negative body mass effect is weakened in croplands and pastures for all metrics. In plantations, larger species are relatively *more* dichromatic (opposite direction), suggesting body-size-dependent filtering of sex differences across land-use types.
+8. **Plumage colour is strongly phylogenetically conserved** (A3). R² from phylogeny alone is 86-89% for colourfulness, 66% for dichrodiff, and 47% for dichromatism ratio. Dichrodiff shows intermediate phylogenetic signal, suggesting the arithmetic magnitude of sex differences is partially labile.
+9. **Pasture-associated species are less colourful after accounting for phylogeny** (A3). This is the only land-use effect that emerges from the phylogenetic analysis, applying to overall and male colourfulness but not to either dichromatism measure. Together with A2's finding that colourful species are disproportionately abundant in pastures at the community level, this suggests a sorting process: while colourful individuals gain an abundance advantage in pastures (A2), the lineages evolutionarily associated with open/pastoral habitats are inherently less colourful (A3). The absence of a phylogenetic signal for dichromatism suggests that sex-difference patterns across land uses (A1, A2) arise from community reassembly rather than deep evolutionary association.
 
 ## Next steps
 
 - Investigate the plantation forest x frugivore interaction more deeply (e.g., which frugivore lineages are most affected).
-- Explore spatial patterns (biome-specific effects).
 - Sensitivity analyses: effect of abundance threshold, alternative colour metrics (VolumeUVS).

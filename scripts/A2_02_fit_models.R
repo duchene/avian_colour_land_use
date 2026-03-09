@@ -23,7 +23,7 @@ dir.create("fits", showWarnings = FALSE)
 fits_A2 <- list()
 
 for (cv in colour_vars) {
-  checkpoint_file <- paste0("fits/A2_fit_", cv, ".RData")
+  checkpoint_file <- paste0("fits/A2_fit_relabund_", cv, ".RData")
 
   if (file.exists(checkpoint_file)) {
     cat("\nLoading existing fit for:", cv, "\n")
@@ -66,5 +66,5 @@ for (cv in colour_vars) {
 # SAVE ALL FITS
 # ============================================================
 
-save(fits_A2, file = "fits/A2_all_fits.RData")
-cat("\nAll A2 models saved to fits/A2_all_fits.RData\n")
+save(fits_A2, file = "fits/A2_all_fits_relabund.RData")
+cat("\nAll A2 models saved to fits/A2_all_fits_relabund.RData\n")

@@ -29,8 +29,7 @@ dat <- read.csv("data/present.csv", stringsAsFactors = FALSE)
 dat <- dat %>%
   mutate(
     Predominant_simple = relevel(factor(Predominant_simple), ref = "Primary vegetation"),
-    Habitat            = factor(Habitat),
-    Biome              = factor(Biome),
+    Biome4             = relevel(factor(Biome4), ref = "Tropical Forest"),
     Trophic.Niche      = factor(Trophic.Niche),
     SSBS               = factor(SSBS)
   )
@@ -51,12 +50,13 @@ cat("Data loaded. Rows:", nrow(dat), "\n")
 # - meancolcooney: Lognormal (heavily right-skewed, all positive)
 # - dichrocooney: Lognormal (positive ratio, mildly right-skewed)
 # - malecolcooney: Lognormal (right-skewed, all positive)
+# - dichrodiff: Gaussian (difference can be negative)
 
-responses <- c("meancolcooney", "dichrocooney", "malecolcooney")
+responses <- c("meancolcooney", "dichrocooney", "malecolcooney", "dichrodiff")
 
 response_specs <- tibble(
   response = responses,
-  family = c("lognormal", "lognormal", "lognormal")
+  family = c("lognormal", "lognormal", "lognormal", "gaussian")
 )
 
 cat("\nResponse specifications:\n")
@@ -66,18 +66,18 @@ print(response_specs)
 # MODEL FORMULAS
 # ============================================================
 
-# REDUCED model (recommended - drops Biome interaction)
+# FULL model (all interactions including Biome4)
 formula_reduced <- bf(
-  y ~ Predominant_simple + z_logMass + Habitat + Biome + Trophic.Niche +
+  y ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
       Predominant_simple:z_logMass +
-      Predominant_simple:Habitat +
+      Predominant_simple:Biome4 +
       Predominant_simple:Trophic.Niche +
       (1 | SSBS)
 )
 
-# MINIMAL model (only Mass and Trophic.Niche interactions)
+# MINIMAL model (drops Biome4 interaction)
 formula_minimal <- bf(
-  y ~ Predominant_simple + z_logMass + Habitat + Biome + Trophic.Niche +
+  y ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
       Predominant_simple:z_logMass +
       Predominant_simple:Trophic.Niche +
       (1 | SSBS)
@@ -85,7 +85,7 @@ formula_minimal <- bf(
 
 # MAIN effects only (baseline for comparison)
 formula_main <- bf(
-  y ~ Predominant_simple + z_logMass + Habitat + Biome + Trophic.Niche +
+  y ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
       (1 | SSBS)
 )
 
@@ -98,6 +98,15 @@ base_priors <- c(
   prior(normal(0, 0.5), class = "b"),
   prior(exponential(2), class = "sd"),
   prior(exponential(2), class = "sigma")
+)
+
+# Wider priors for Gaussian responses (dichrodiff is on the raw
+# LociUVS scale, ~-50 to +100, so coefficients are much larger)
+gaussian_priors <- c(
+  prior(normal(0, 50), class = "Intercept"),
+  prior(normal(0, 20), class = "b"),
+  prior(exponential(0.05), class = "sd"),
+  prior(exponential(0.05), class = "sigma")
 )
 
 # Stronger priors for student-t models (helps convergence)
@@ -114,7 +123,7 @@ student_priors <- c(
 # ============================================================
 save(dat, responses, response_specs,
      formula_reduced, formula_minimal, formula_main,
-     base_priors, student_priors, nthreads,
+     base_priors, gaussian_priors, student_priors, nthreads,
      file = "fits/A1_model_setup.RData")
 
 cat("\nSetup complete. Saved to fits/A1_model_setup.RData\n")

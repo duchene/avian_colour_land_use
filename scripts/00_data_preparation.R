@@ -18,12 +18,39 @@ fulldat$meancolcooney <- rowMeans(fulldat[, c("LociUVS_male_cooney",
                                                "LociUVS_female_cooney")],
                                    na.rm = TRUE)
 
-# Sexual dichromatism (male / female ratio)
+# Sexual dichromatism — ratio (male / female)
 fulldat$dichrocooney <- fulldat$LociUVS_male_cooney /
                         fulldat$LociUVS_female_cooney
 
+# Sexual dichromatism — absolute difference (male - female)
+fulldat$dichrodiff <- fulldat$LociUVS_male_cooney -
+                      fulldat$LociUVS_female_cooney
+
 # Male plumage colour only
 fulldat$malecolcooney <- fulldat$LociUVS_male_cooney
+
+# ----------------------------------------------------------
+# Simplified biome classification (11 -> 4 levels)
+# ----------------------------------------------------------
+# Reduces parameter count and enables Biome x Land-use interaction
+fulldat$Biome4 <- ifelse(
+  fulldat$Biome %in% c("Tropical & Subtropical Moist Broadleaf Forests",
+                        "Tropical & Subtropical Dry Broadleaf Forests",
+                        "Tropical & Subtropical Coniferous Forests"),
+  "Tropical Forest",
+  ifelse(
+    fulldat$Biome %in% c("Tropical & Subtropical Grasslands, Savannas & Shrublands",
+                          "Mangroves"),
+    "Tropical Open",
+    ifelse(
+      fulldat$Biome %in% c("Temperate Broadleaf & Mixed Forests",
+                            "Temperate Conifer Forests",
+                            "Mediterranean Forests, Woodlands & Scrub"),
+      "Temperate Forest",
+      "Temperate Open"  # Temperate Grasslands, Montane Grasslands, Tundra
+    )
+  )
+)
 
 # ----------------------------------------------------------
 # Filter: keep studies that include Primary vegetation

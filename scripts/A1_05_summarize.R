@@ -121,26 +121,10 @@ for (resp in responses) {
 }
 
 # ============================================================
-# INTERACTION HEATMAPS (Land-use x Habitat)
+# INTERACTION HEATMAPS
 # ============================================================
 
 cat("\nGenerating interaction heatmaps...\n")
-
-extract_habitat_interactions <- function(fit, resp_name) {
-  fe <- as.data.frame(fixef(fit))
-  fe$param <- rownames(fe)
-
-  fe %>%
-    filter(grepl("Predominant_simple.*:Habitat", param)) %>%
-    mutate(
-      land_use = str_extract(param, "Predominant_simple[A-Za-z]+"),
-      land_use = str_remove(land_use, "Predominant_simple"),
-      habitat = str_extract(param, "Habitat[A-Za-z]+"),
-      habitat = str_remove(habitat, "Habitat"),
-      response = resp_name
-    ) %>%
-    select(response, land_use, habitat, Estimate, Q2.5, Q97.5)
-}
 
 extract_trophic_interactions <- function(fit, resp_name) {
   fe <- as.data.frame(fixef(fit))
@@ -158,25 +142,25 @@ extract_trophic_interactions <- function(fit, resp_name) {
     select(response, land_use, trophic, Estimate, Q2.5, Q97.5)
 }
 
+extract_biome_interactions <- function(fit, resp_name) {
+  fe <- as.data.frame(fixef(fit))
+  fe$param <- rownames(fe)
+
+  fe %>%
+    filter(grepl("Predominant_simple.*:Biome4", param)) %>%
+    mutate(
+      land_use = str_extract(param, "Predominant_simple[A-Za-z]+"),
+      land_use = str_remove(land_use, "Predominant_simple"),
+      biome = str_extract(param, "Biome4[A-Za-z ]+"),
+      biome = str_remove(biome, "Biome4"),
+      response = resp_name
+    ) %>%
+    select(response, land_use, biome, Estimate, Q2.5, Q97.5)
+}
+
 # Extract interactions for all responses
-habitat_effects <- map_dfr(responses, ~extract_habitat_interactions(fits_reduced[[.x]], .x))
 trophic_effects <- map_dfr(responses, ~extract_trophic_interactions(fits_reduced[[.x]], .x))
-
-# Land-use x Habitat heatmap (combined)
-p_habitat <- ggplot(habitat_effects, aes(x = habitat, y = land_use, fill = Estimate)) +
-  geom_tile(color = "white", linewidth = 0.3) +
-  geom_text(aes(label = sprintf("%.2f", Estimate)), size = 2) +
-  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B",
-                       midpoint = 0, name = "Effect") +
-  facet_wrap(~response, ncol = 2) +
-  labs(title = "Land-use x Habitat Interactions",
-       x = "Habitat", y = "Land-use Type") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
-        strip.text = element_text(face = "bold"))
-
-ggsave("figures/A1_heatmap_habitat_interactions.png", p_habitat,
-       width = 14, height = 10, dpi = 150)
+biome_effects <- map_dfr(responses, ~extract_biome_interactions(fits_reduced[[.x]], .x))
 
 # Land-use x Trophic heatmap (combined)
 p_trophic <- ggplot(trophic_effects, aes(x = trophic, y = land_use, fill = Estimate)) +
@@ -194,9 +178,25 @@ p_trophic <- ggplot(trophic_effects, aes(x = trophic, y = land_use, fill = Estim
 ggsave("figures/A1_heatmap_trophic_interactions.png", p_trophic,
        width = 12, height = 8, dpi = 150)
 
+# Land-use x Biome4 heatmap (combined)
+p_biome <- ggplot(biome_effects, aes(x = biome, y = land_use, fill = Estimate)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  geom_text(aes(label = sprintf("%.2f", Estimate)), size = 2.5) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B",
+                       midpoint = 0, name = "Effect") +
+  facet_wrap(~response, ncol = 2) +
+  labs(title = "Land-use x Biome Interactions",
+       x = "Biome", y = "Land-use Type") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        strip.text = element_text(face = "bold"))
+
+ggsave("figures/A1_heatmap_biome_interactions.png", p_biome,
+       width = 12, height = 8, dpi = 150)
+
 # Save interaction data
-write_csv(habitat_effects, "results/A1_habitat_interactions.csv")
 write_csv(trophic_effects, "results/A1_trophic_interactions.csv")
+write_csv(biome_effects, "results/A1_biome_interactions.csv")
 
 # ============================================================
 # CONDITIONAL EFFECTS (Land-use x Mass)
@@ -233,13 +233,12 @@ main_effects_df <- map_dfr(responses, function(resp) {
       significant = sign(Q2.5) == sign(Q97.5),
       category = case_when(
         grepl("Predominant", param) ~ "Land-use",
-        grepl("Habitat", param) ~ "Habitat",
-        grepl("Biome", param) ~ "Biome",
+        grepl("Biome4", param) ~ "Biome",
         grepl("Trophic", param) ~ "Trophic",
         param == "z_logMass" ~ "Mass",
         TRUE ~ "Other"
       ),
-      param_short = str_remove_all(param, "Predominant_simple|Habitat|Biome|Trophic.Niche")
+      param_short = str_remove_all(param, "Predominant_simple|Biome4|Trophic.Niche")
     )
 })
 

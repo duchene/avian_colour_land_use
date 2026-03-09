@@ -77,6 +77,9 @@ species_colour <- fulldat %>%
       LociUVS_male_cooney / LociUVS_female_cooney
     )),
     malecolcooney  = first(na.omit(LociUVS_male_cooney)),
+    dichrodiff     = first(na.omit(
+      LociUVS_male_cooney - LociUVS_female_cooney
+    )),
     Mass           = first(na.omit(Mass)),
     Trophic.Niche  = first(na.omit(Trophic.Niche)),
     .groups = "drop"
@@ -95,6 +98,7 @@ cat("\nNon-NA counts:\n")
 cat("  meancolcooney:", sum(!is.na(spdat$meancolcooney)), "\n")
 cat("  dichrocooney:", sum(!is.na(spdat$dichrocooney)), "\n")
 cat("  malecolcooney:", sum(!is.na(spdat$malecolcooney)), "\n")
+cat("  dichrodiff:", sum(!is.na(spdat$dichrodiff)), "\n")
 cat("  Mass:", sum(!is.na(spdat$Mass)), "\n")
 
 # ============================================================
@@ -231,7 +235,7 @@ A <- vcv.phylo(tree, corr = TRUE)
 # RESPONSE VARIABLES
 # ============================================================
 
-responses <- c("meancolcooney", "dichrocooney", "malecolcooney")
+responses <- c("meancolcooney", "dichrocooney", "malecolcooney", "dichrodiff")
 
 # Land-use proportion predictor names
 lu_predictors <- names(lu_wide)[-1]  # all prop_ columns
@@ -249,11 +253,27 @@ priors_A3 <- c(
   prior(exponential(2), class = "sigma")
 )
 
+# For dichrodiff (Gaussian, raw scale ~-50 to +100): wider priors
+priors_A3_gaussian <- c(
+  prior(normal(0, 50), class = "b"),
+  prior(exponential(0.05), class = "sd"),
+  prior(exponential(0.05), class = "sigma")
+)
+
+# Family mapping: lognormal for positive responses, gaussian for difference
+response_families <- c(
+  meancolcooney = "lognormal",
+  dichrocooney  = "lognormal",
+  malecolcooney = "lognormal",
+  dichrodiff    = "gaussian"
+)
+
 # ============================================================
 # SAVE SETUP
 # ============================================================
 
-save(spdat, responses, lu_predictors, priors_A3, nthreads, A, tree,
+save(spdat, responses, lu_predictors, priors_A3, priors_A3_gaussian,
+     response_families, nthreads, A, tree,
      file = "fits/A3_model_setup.RData")
 
 cat("\nA3 setup complete. Saved to fits/A3_model_setup.RData\n")
