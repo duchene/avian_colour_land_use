@@ -21,11 +21,13 @@ All use LociUVS (ultraviolet-sensitive visual model loci counts) from Cooney et 
 
 ### Biome classification (`Biome4`, computed in `00_data_preparation.R`)
 
-Simplified from the original 11-level `Biome` to 4 categories:
-- **Tropical Forest**: Tropical & Subtropical Moist Broadleaf Forests, Tropical & Subtropical Dry Broadleaf Forests, Tropical & Subtropical Coniferous Forests (reference level)
-- **Tropical Open**: Tropical & Subtropical Grasslands, Savannas & Shrublands; Flooded Grasslands & Savannas; Deserts & Xeric Shrublands; Mangroves
-- **Temperate Forest**: Temperate Broadleaf & Mixed Forests, Temperate Conifer Forests
-- **Temperate Open**: Temperate Grasslands, Savannas & Shrublands; Mediterranean Forests, Woodlands & Scrub; Montane Grasslands & Shrublands; Boreal Forests/Taiga
+Simplified from the original `Biome` field. The mapping **as actually coded in `00_data_preparation.R`** (verified against the data; only 11 biomes occur):
+- **Tropical Forest** (reference): Tropical & Subtropical Moist Broadleaf Forests; Dry Broadleaf Forests; Coniferous Forests
+- **Tropical Open**: Tropical & Subtropical Grasslands, Savannas & Shrublands; Mangroves
+- **Temperate Forest**: Temperate Broadleaf & Mixed Forests; Temperate Conifer Forests; **Mediterranean Forests, Woodlands & Scrub**
+- **Temperate Open** (`else` catch-all): Temperate Grasslands, Savannas & Shrublands; Montane Grasslands & Shrublands; Tundra (plus any unlisted biome — but none of Deserts & Xeric Shrublands, Flooded Grasslands, or Boreal Forests/Taiga occur in the analytical data)
+
+**Note (unresolved coding choice):** Mediterranean Forests, Woodlands & Scrub (690 records, ~2%) is placed in **Temperate Forest** by the code, and every analysis (A1, A1b, A2c, A2d) uses this coding. Mediterranean sclerophyll is genuinely borderline (its WWF name spans "Forests" and "Woodlands & Scrub"). If a reviewer prefers Mediterranean → Temperate Open, `Biome4` must be recomputed in `00_data_preparation.R` and the affected analyses rerun.
 
 ### Land-use levels (`Predominant_simple`)
 
@@ -229,6 +231,88 @@ R² ≈ 50.8% for all four models (vs. 11.1% with raw abundance).
 
 **Colour x Land-use interactions:** Pasture +0.10 [+0.06, +0.14] (credible — strongest single interaction). Secondary +0.04 [+0.01, +0.06] (credible). Cropland +0.02 [-0.01, +0.05] (not credible). Plantation -0.00 [-0.02, +0.02] (not credible).
 
+## Analysis 2b: Paired-difference — Abundance change ~ Colour × Land-use
+
+### Question
+
+Do colourful or sexually dichromatic species gain or lose relative abundance when habitats are converted from primary vegetation to other land uses? This complements A2 by using a paired-difference design that (a) includes the full dataset (presences and absences), (b) explicitly anchors each species' abundance to its own primary-vegetation baseline within each study, and (c) removes uninformative zeros (species absent from both primary and modified sites).
+
+### Motivation
+
+A2 used only the "present" dataset (non-zero abundance records) with a lognormal family, which excluded absences entirely. Because ~82% of records in the full primary-veg-filtered dataset are zeros, A2 could only ask "among species that are present, does colour predict relative dominance?" and could not detect species being filtered out of communities altogether. A paired-difference approach sidesteps the zero-inflation problem: differences of exactly zero (species absent from both primary and modified) are excluded as uninformative, while species that disappeared (negative difference) or appeared (positive difference) are retained as ecologically meaningful signals.
+
+### Data preparation (computed in `A2b_01_setup.R`)
+
+Starting from the full raw dataset (216,834 records, 1,703 species):
+
+1. **Filter to qualifying studies:** studies containing Primary vegetation plus at least one other land-use type → 143,071 records.
+2. **Compute relative abundance per SSBS:** each species' effort-corrected measurement divided by the total effort-corrected measurement at that SSBS.
+3. **Compute primary-vegetation baseline:** for each species × study combination, the mean relative abundance across all primary-vegetation SSBS within that study (2,336 species × study combinations; median number of primary sites per combination = 48).
+4. **Paired differences:** for each non-primary SSBS record, subtract the species' primary-vegetation baseline → 87,605 paired differences.
+5. **Exclude zero differences:** remove records where the difference is exactly zero (species absent from both primary and modified sites) → **66,831 non-zero differences** (54,529 negative, 12,302 positive).
+6. **Colour data availability:** 62,975 records with non-NA malecolcooney and dichrodiff.
+
+### Sample structure
+
+- 38 studies, 1,441 SSBS, 1,434 species.
+- Land-use breakdown: Plantation forest (26,857), Secondary (23,816), Cropland (12,269), Pasture (3,889).
+- Response median: -0.004 (slight net loss relative to primary, as expected).
+- 82% of non-zero differences are negative (species lost abundance relative to primary).
+
+### Methods
+
+Bayesian GLMMs via brms/CmdStan. For each of two colour predictors (z_malecolcooney, z_dichrodiff):
+
+```
+diff_abund ~ z_colour * Predominant_simple + (1 | SSBS) + (1 | Reference)
+```
+
+- `diff_abund`: species relative abundance at modified SSBS minus mean relative abundance at primary-vegetation SSBS within the same study.
+- `Predominant_simple`: land-use category of the modified SSBS (Cropland, Pasture, Plantation forest, Secondary). Primary vegetation is absent — it is built into the response as the baseline.
+- `z_colour`: standardized colour predictor (z_malecolcooney or z_dichrodiff).
+- `(1 | SSBS)`: random intercept for site, accounting for within-site non-independence.
+- `(1 | Reference)`: random intercept for study, accounting for between-study variation in difference magnitudes.
+- Gaussian family (response can be negative, zero was excluded, positive).
+- Priors: Normal(0, 0.5) on intercept, Normal(0, 0.2) on fixed effects, Exponential(5) on SD and sigma.
+- 4 chains, 2,000 iterations (1,000 warmup), adapt_delta = 0.90, max_treedepth = 10, threading enabled.
+
+Scripts: `A2b_01_setup.R`, `A2b_02_fit_models.R`, `A2b_03_diagnostics_summary.R`.
+
+### Interpretation of parameters
+
+- **Intercept:** mean abundance change (modified minus primary) for the reference land-use level at mean colour.
+- **Land-use main effects:** how each land use's mean abundance change differs from the reference, at mean colour. Negative values indicate the land use causes greater abundance loss on average.
+- **Colour main effect:** does colour predict the magnitude of abundance change in the reference land use? A positive coefficient means more colourful species lose less (or gain more) abundance.
+- **Colour × land-use interactions:** does the colour effect on abundance change differ by land use?
+
+### Convergence
+
+All four models (2 interaction, 2 main-effects) converged: 0 divergences, max Rhat = 1.00, min ESS bulk >= 2466, min ESS tail >= 1846.
+
+### Key results
+
+R² is effectively zero for all four models (0.01–0.05%), indicating that colour explains negligible variance in paired abundance differences.
+
+#### z_malecolcooney (male conspicuousness)
+
+**Main-effects model:** Main colour effect -0.0003 [-0.0007, +0.0002] (not credible). No land-use main effects credible.
+
+**Interaction model:** No credible effects. All coefficients on the order of 0.0001–0.0007 with CIs spanning zero.
+
+**Random effects:** sd(Reference) = 0.0003, sd(SSBS) = 0.0002, sigma = 0.060. Residual variance dominates entirely.
+
+#### z_dichrodiff (sexual dichromatism difference)
+
+**Main-effects model:** Main colour effect **+0.0011 [+0.0007, +0.0016]** (credible). Species with larger male-female colour differences lose slightly less relative abundance across all modified land uses. No land-use main effects credible.
+
+**Interaction model:** Main colour effect +0.0013 [+0.0002, +0.0025] (credible, but wider CI as it applies only to the reference land use). No interactions credible: the dichrodiff effect does not differ meaningfully across land-use types.
+
+**Random effects:** sd(Reference) = 0.0003, sd(SSBS) = 0.0002, sigma = 0.060. Same as malecolcooney.
+
+#### Interpretation
+
+The paired-difference approach, while conceptually sound for including absences, yields extremely low signal-to-noise. Most species × site differences are near-zero, and the colour signal is swamped by residual noise. The one credible finding — more dichromatic species losing slightly less abundance — is consistent in direction with A2's finding that dichromatic species are disproportionately abundant in modified land uses, but the magnitude is negligible (~0.1 percentage point per SD of dichrodiff). The absence of any malecolcooney effect contrasts with A2's credible Pasture and Plantation interactions, suggesting those patterns are detectable only when conditioning on presence.
+
 ## Analysis 3: Phylogenetic regression -- Colour ~ land-use association
 
 ### Question
@@ -353,7 +437,107 @@ All CIs are extremely wide (~50 units) and heavily overlap. No land-use associat
 
 **Phylogenetic signal:** dichrodiff phylogenetic SD is large but so is the residual, giving intermediate R² (66% vs 87-89% for colour).
 
-## Summary interpretation (A1 + A2 + A3)
+## Extended analyses: phylogenetic models with full PREDICTS random structure (A1b, A2c, A2d)
+
+**Status:** A1b finalised as a **no-phylogeny** model (a feasibility fit on 2026-06-23 showed the phylogenetic term is not identifiable when colour is the response — see "A1b — note on complexity" below); A1b and A2c fitted 2026-06-25 (results in their subsections below — A2c overturns A2's colour × land-use findings); A2d fitted 2026-07-02, refit at higher resolution 2026-07-03 (results below; converged — Rhat ≤ 1.015, elevated only on the global intercept). Proposed by collaborator. These extend A1/A2/A2b by adding the canonical PREDICTS nested random structure, biome as an interacting factor, and — for the abundance models A2c/A2d only — a phylogenetic random effect. The aim is to test whether the earlier land-use patterns survive control for the full study/block/site hierarchy and (for the abundance models) shared ancestry.
+
+### Design decisions common to A1b, A2c, A2d
+
+- **Random structure (canonical PREDICTS):** `(1 | SS) + (1 | SSB) + (1 | SSBS)` — study / block-within-study / site-within-block. This replaces the single `(1 | SSBS)` of A1/A2 and the `(1|SSBS) + (1|Reference)` of A2b. Confirmed in `present.csv`: 59 studies (SS) → 361 blocks (SSB) → 3,716 sites (SSBS), cleanly nested. **`SS`** (the PREDICTS study code, 59 levels) is used as the study grouping, not `Reference` (the citation, 54 levels — a few citations contain two studies). Because SSBS is globally unique and nested, `(1|SS) + (1|SSB) + (1|SSBS)` is the nested structure directly — no `/` nesting syntax is needed.
+- **Phylogenetic random effect (A2c / A2d only — dropped from A1b; see the A1b complexity note):** `(1 | gr(phylo, cov = A))`, with `A` = `vcv.phylo()` correlation matrix from BBtree2, reusing A3's 3-stage taxonomic matching (jetz_sp → Best_guess_binomial underscored → synonym table `results/A3_synonym_table.csv`). Species absent from BBtree2 are dropped (no grafting). In `present.csv` this retains 1,348 of 1,681 species and 26,951 of 34,653 records (77.8%). Coverage is re-checked per dataset at setup.
+- **Interactions: 2-way only — no 3-way terms anywhere.** A `colour × biome × land-use` design is reduced to all main effects plus the three pairwise interactions; the three-way `colour:Biome:land-use` term is omitted.
+- **Sparse-cell collapse.** Biome × land-use cells too sparse to support an interaction estimate (threshold ≈ <50 records / <15 species) are collapsed. In `present.csv` the only such cell is **Temperate Open × Plantation forest (42 records, 12 species)**, which is reclassified to Temperate Open × Secondary (the nearest non-primary woody land use). *Take clear note:* this is the only collapse applied, it affects 42 of 34,653 records, and it is re-verified for the A2d dataset at setup. Alternative if preferred: drop those 42 records rather than merge.
+- **Families** unchanged from parent analyses: lognormal for malecolcooney / meancolcooney / dichrocooney and for relative abundance; Gaussian for dichrodiff and for the A2d paired difference.
+- **Colour / dichromatism metrics:** primary runs use **malecolcooney** (colour) and **dichrodiff** (dichromatism), matching A2b; meancolcooney and dichrocooney are extensions if the primary models fit cleanly.
+- **Expected phylogeny–trait confound.** Colour, trophic niche, and body mass are all strongly phylogenetically conserved (A3: colour R² 86–89%). Where colour/niche/mass enter as *predictors* (A2c, A2d), the phylogenetic random effect competes with them for the same species-level variance; their fixed-effect estimates are expected to shrink and should be read as effects *beyond phylogeny*. Biome × land-use effects vary *within* species (a species spans biomes/land-uses) and are not subject to this confound.
+
+### A1b — Community colour/dichromatism ~ biome × land-use (no phylogeny)
+
+Extends **A1**. Dataset: `present.csv` (occurrence records of present species) — **all** of them: A1b has no phylogenetic term, so unlike A2c/A2d no species are dropped for tree-matching. Each model is fitted to the 33,210 records with a non-missing response (of 34,653 in present.csv; vs the ~27k phylo-matched subset used by A2c/A2d, which drop species absent from BBtree2). The response is continuous community colour — this is a community-weighted-trait model, **not** an occupancy/presence-absence (0/1) model. Two variants per response:
+
+```
+(base)      colour ~ Biome4 * Predominant_simple
+                     + (1|SS) + (1|SSB) + (1|SSBS)
+(covariate) colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
+                     + (1|SS) + (1|SSB) + (1|SSBS)
+```
+
+`Biome4 * Predominant_simple` expands to both main effects plus their 2-way interaction. `Trophic.Niche` and `z_logMass` enter as **main effects only** — A1's `land-use × trophic` and `land-use × mass` interactions are intentionally dropped (decision: keep only the biome × land-use interaction). Consequently A1b will *not* recover A1's Plantation × Frugivore (-0.35/-0.36) or mass × land-use results. Reference levels as in A1 (Primary vegetation; Tropical Forest). Relative to A1, the only changes are the restructured fixed effects (a single biome × land-use interaction) and the full PREDICTS random hierarchy `(1|SS) + (1|SSB) + (1|SSBS)` in place of A1's single `(1|SSBS)`.
+
+#### A1b — note on complexity (why there is no phylogenetic term)
+
+A1b was originally specified *with* a phylogenetic random effect `(1 | gr(phylo, cov = A))`, matching the collaborator's proposal and the A2c/A2d structure. A feasibility fit (malecolcooney, base model; 2 chains × 1,000 iterations; 2026-06-23) showed this specification is **not identifiable**, and the term was dropped.
+
+**Why it fails.** Plumage colour is a *species-level trait* — identical across all of a species' occurrence records (A3 treats it the same way). The phylogenetic term has one level per species (1,242 levels in this dataset), so it behaves as a per-species random intercept fitted to a response with *zero within-species variance*. The phylogenetic effect therefore absorbs essentially all between-species variation, while the site/study random effects (`SS`, `SSB`, `SSBS`), the residual `sigma`, and every biome × land-use fixed effect collapse toward zero. Diagnostics confirmed structural degeneracy rather than slow mixing: sd(phylo) = 0.35 while sd(SS) = sd(SSB) = sd(SSBS) = sigma ≈ 0; Rhat 1.8–3.0 and bulk ESS 2–7 across nearly all parameters (despite 0 divergences); wall time ≈ 69 min for the reduced 2-chain run.
+
+**Contrast.** A1 worked without a phylogenetic term because the species-constant response was absorbed by the fixed effects + site random effects + a substantial residual (R² ≈ 15%). A3 places a phylogenetic term on colour legitimately because it is fitted at the *species level* (one row per species), where the covariance matrix `A` constrains the phylogenetic effect and `sigma` captures the iid residual. The degeneracy is specific to putting a per-species phylogenetic intercept on a within-species-constant response at the *record* level.
+
+**Consequence for the study.** The phylogenetic angle on colour ↔ environment is handled at the species level by **A3** (and could be extended there to include biome if desired). A1b is therefore the community-level (record-weighted) model *without* phylogeny, differing from A3 by being record-level / occurrence-weighted with categorical biome × land-use and site random effects. The phylogenetic random effect is retained only in the abundance models A2c/A2d, where the response (abundance) genuinely varies within species. This split — community level without phylogeny, species level with phylogeny — is the only identifiable way to ask both questions.
+
+#### A1b — results (fitted 2026-06-25)
+
+All 8 models (4 responses × {base, +trophic/mass}) converged: 0 divergences, max Rhat ≤ 1.017, min bulk ESS ≥ 467. Tables: `results/A1b_{convergence,fixed_effects,r2_summary}.csv` (the empty Temperate Open × Plantation cell is flagged in the fixed-effects table).
+
+Bayesian R²: meancolcooney 10.2% (base) / 16.8% (+covariate); malecolcooney 7.7% / 15.0%; dichrocooney 6.2% / 11.0%; dichrodiff 6.8% / 15.6%. Adding trophic niche + body mass roughly **doubles** R² over the biome × land-use-only base, and the +covariate R² closely matches A1 (16.2 / 14.6 / 10.4 / 14.1%) — i.e. A1b reproduces A1's explanatory power despite the restructured fixed effects (single biome × land-use interaction) and the full PREDICTS random hierarchy.
+
+### A2c — Relative abundance ~ colour × biome × land-use (2-way; phylogenetic)
+
+Extends **A2**. Dataset: `present.csv`, response = relative abundance per SSBS (lognormal), as in A2. Per standardized colour predictor:
+
+```
+relabund ~ z_colour + Biome4 + Predominant_simple
+           + z_colour:Biome4 + z_colour:Predominant_simple + Biome4:Predominant_simple
+           + (1|SS) + (1|SSB) + (1|SSBS) + (1 | gr(phylo, cov = A))
+```
+
+All three pairwise interactions; **no** `z_colour:Biome4:Predominant_simple`. Adds biome and the phylogenetic/PREDICTS structure to A2. Phylogeny–colour confound applies (see common decisions).
+
+#### A2c — results (fitted 2026-06-25; z_malecolcooney, z_dichrodiff)
+
+Both models converged: 0 divergences, max Rhat ≤ 1.005, min bulk ESS ≥ 1,003. R² = 51% for both (≈ A2; carried by the random structure, not colour). Variance components (near-identical across both): sd(phylo) = 0.91, sd(SS) = 0.95, sd(SSB) = 0.23, sd(SSBS) = 0.26, sigma = 0.67 — relative abundance carries strong phylogenetic **and** study-level structure. Tables: `results/A2c_{convergence,fixed_effects,variance_components,r2_summary}.csv`.
+
+**Key finding — A2's colour × land-use effects do not survive.** Adding biome, phylogeny, and the full PREDICTS random structure erases every credible A2 colour × land-use interaction. These are well-estimated zeros (bulk ESS ~1,000, tight CIs), not low power:
+
+- malecolcooney × Pasture: A2 +0.07 (credible) → A2c −0.02 [−0.06, 0.03] (ns)
+- malecolcooney × Plantation: A2 −0.03 (credible) → A2c 0.00 [−0.03, 0.03] (ns)
+- dichrodiff × Pasture: A2 +0.10 (credible; A2's strongest interaction) → A2c −0.01 [−0.06, 0.04] (ns)
+- dichrodiff × Secondary: A2 +0.04 (credible) → A2c +0.02 [−0.01, 0.04] (ns)
+
+What survives is a **colour × biome** effect: malecolcooney × Tropical Open = **−0.09 [−0.15, −0.03] (credible)** — more colourful males are *less* relatively abundant in tropical-open communities. (dichrodiff × Temperate Open = −0.09 [−0.18, 0.00] is borderline.) Colour main effects sit at ~0 (the phylogenetic term absorbs the conserved between-species colour variance). The colour × biome effect survives because biome varies *within* species and so is not confounded with the per-species phylogenetic term.
+
+**Interpretation:** the A2 colour–abundance–land-use associations are confounded with biome and phylogeny. The only robust colour–abundance signal is biome-level (colourful species rarer in tropical-open communities), not land-use-level. This **supersedes Synthesis points 5–6** below.
+
+### A2d — Paired-difference abundance change ~ colour × biome × land-use (2-way; phylogenetic)
+
+Extends **A2b**. Dataset: the A2b paired-difference data (Gaussian; Primary vegetation is the baseline, so `Predominant_simple` has 4 levels: Cropland, Pasture, Plantation forest, Secondary). Per standardized colour predictor:
+
+```
+diff_abund ~ z_colour + Biome4 + Predominant_simple
+             + z_colour:Biome4 + z_colour:Predominant_simple + Biome4:Predominant_simple
+             + (1|SS) + (1|SSB) + (1|SSBS) + (1 | gr(phylo, cov = A))
+```
+
+Adds biome, the phylogenetic random effect, and the full PREDICTS hierarchy (A2b used `(1|SSBS) + (1|Reference)`; A2d switches the study grouping to the canonical `SS`/`SSB`/`SSBS`). A2b's R² was ≈ 0, so biome/phylogeny are unlikely to rescue strong signal — this is primarily a robustness check. Same phylogeny–colour confound as A2c.
+
+#### A2d — results (fitted 2026-07-02; z_malecolcooney, z_dichrodiff)
+
+Data: study unit = `SS` throughout (qualifying filter and primary-veg baseline computed per SS × species); 40 studies, 66,787 non-zero paired differences; final set 54,003 records / 1,167 tips (per-model NA subsetting → malecol n = 50,972). Data-driven collapse: Temperate Open × Plantation has 242 records here (>50) so it was **not** collapsed; Temperate Open × Cropland is **empty (0 records)** → its interaction coefficient is prior-only and flagged in the fixed-effects table. Tables: `results/A2d_{convergence,fixed_effects,variance_components,r2_summary}.csv`.
+
+**Convergence** (refit 2026-07-03 at 4 chains × 3,500 iter, warmup 1,500, adapt_delta 0.95, max_treedepth 12): 0 divergences; min bulk ESS ≈ 615–635. Max Rhat = 1.015, elevated **only on the global Intercept** (ESS 615 — a benign intercept ↔ random-intercept trade-off with four random-intercept levels); every colour, biome, and land-use parameter has Rhat ≤ 1.01. Point estimates were essentially identical to the initial run, so the credible interactions below are **confirmed, not provisional**. (Initial marginal run: max Rhat 1.03, ESS ~340.)
+
+**R² = 22.6% (both models)** — a large jump from A2b's ≈ 0%, driven almost entirely by the phylogenetic random effect: sd(phylo) = 0.072 > sigma = 0.050 > sd(SS) = 0.015 ≫ sd(SSB), sd(SSBS). Abundance *change* relative to primary carries phylogenetic (lineage-level) structure that A2b (no phylo) could not capture — but this is a lineage effect, **not** a colour effect.
+
+**Colour effects are tiny.** On the paired-difference scale (sigma ≈ 0.05; response ~ ±0.06), a few colour × biome interactions are credible but minuscule: malecolcooney × Tropical Open +0.009 [0.004, 0.014]; malecolcooney × Temperate Forest +0.009 [0.003, 0.015]; dichrodiff × Tropical Open +0.011 [0.006, 0.015]; malecolcooney × Plantation +0.002 [0.000, 0.003] (barely). All colour main effects and all other colour × land-use interactions are not credible. A2b's one credible finding (dichrodiff main +0.0011) does not clearly replicate in A2d's interaction model (+0.0011 [−0.0017, 0.0038], ns).
+
+**Interpretation:** consistent with A2b, colour barely predicts net abundance change; the credible colour × biome terms are negligible in magnitude. A2d's substantive addition is that abundance change is phylogenetically structured (a lineage-level pattern), independent of colour. Note the sign contrast with A2c on Tropical Open (A2c: colourful males *less* abundant in standing tropical-open communities, −0.09; A2d: colourful species lose slightly *less* abundance relative to baseline there, +0.009) — these are different responses (standing relative abundance vs change from primary baseline), so not directly contradictory.
+
+### Scripts and run status
+
+`A1b_01_setup.R / _02_fit_models.R / _03_diagnostics_summary.R`; likewise `A2c_*` and `A2d_*`. A2c/A2d setup scripts reuse A3's tree-matching block (`A3_01_setup.R`); A1b needs no tree matching (no phylogenetic term). **All three analyses have been fitted** (A1b + A2c: 2026-06-25; A2d: 2026-07-02, refit at higher resolution 2026-07-03). Model objects are gitignored (`fits/*.RData`) — regenerate via the scripts. Runtimes (this machine, 16 cores): the 8 no-phylo A1b models run in the low hours total; each phylogenetic production fit (A2c/A2d, 4 chains) takes ≈ 2–4 h.
+
+**Outstanding:** optionally extend A2c/A2d to meancolcooney + dichrocooney (confirm the pattern across all four metrics); the manuscript (`draft_methods_results.txt`) and `README.md` still describe only A1/A2 and need updating for A1b/A2c/A2d.
+
+## Summary interpretation (A1 + A2 + A2b + A3)
 
 All analyses use Primary vegetation as the reference level. Land use does not directly shift community colour in a simple way. Effects are mediated by biome, trophic ecology, and body mass. Colourfulness (mean/male colour) and sexual dichromatism (dichro ratio, dichrodiff) often show contrasting patterns:
 
@@ -361,11 +545,12 @@ All analyses use Primary vegetation as the reference level. Land use does not di
 2. **Colour and dichromatism respond differently to biome and land use** (A1). Temperate forest communities are duller but more dichromatic. When those communities are then modified by land-use change (cropland, plantations), both the colour deficit *and* the dichromatism surplus are eroded — land-use conversion in temperate forests homogenizes communities toward the tropical baseline. In tropical open biomes, the pattern reverses: plantations have more colourful communities.
 3. **Plantation forests are unfavourable for frugivores** (A1). The Plantation forest x Frugivore interaction is credibly negative for mean and male colour (-0.35, -0.36). This is the strongest trophic interaction in the dataset.
 4. **Pastures favour colourful frugivores but reduce nectarivore sex differences** (A1). Male frugivores in pasture are much more colourful relative to females (dichrodiff +20.3, credible). But nectarivores show the opposite: their large baseline sex difference is eroded in pasture (dichrodiff -19.7, credible). The two dichromatism measures capture different aspects of this: dichrodiff (arithmetic) detects large-magnitude shifts that dichro ratio (proportional) does not always reflect.
-5. **Sexually dichromatic and colourful species have higher relative abundance in open modified land uses** (A2; response = relative abundance per SSBS). No credible main colour effect in primary vegetation. In Pasture, species with larger male-female colour differences (dichrodiff × Pasture +0.10) and more colourful males (malecolcooney × Pasture +0.07) are disproportionately more relatively abundant. Cropland and Secondary show credible positive interactions for dichromatism. Unlike the raw-abundance analysis, there is no credible negative dichromatism–abundance relationship in primary vegetation once site effort is normalised (R² ~51%).
-6. **Plantation forests credibly reduce relative abundance of colourful species** (A2). meancolcooney × Plantation (-0.04) and malecolcooney × Plantation (-0.03) are both credibly negative — colourful species make up a smaller fraction of communities in plantations. This was only borderline in the raw-abundance analysis and is the clearest new finding from the relative-abundance approach. Plantation forest shows no positive colour-abundance effect for any metric.
-7. **Larger-bodied birds are consistently less colourful and less dichromatic** (A1). The negative body mass effect is weakened in croplands and pastures for all metrics. In plantations, larger species are relatively *more* dichromatic (opposite direction), suggesting body-size-dependent filtering of sex differences across land-use types.
-8. **Plumage colour is strongly phylogenetically conserved** (A3). R² from phylogeny alone is 86-89% for colourfulness, 66% for dichrodiff, and 47% for dichromatism ratio. Dichrodiff shows intermediate phylogenetic signal, suggesting the arithmetic magnitude of sex differences is partially labile.
-9. **Pasture-associated species are less colourful after accounting for phylogeny** (A3). This is the only land-use effect that emerges from the phylogenetic analysis, applying to overall and male colourfulness but not to either dichromatism measure. Together with A2's finding that colourful species are disproportionately abundant in pastures at the community level, this suggests a sorting process: while colourful individuals gain an abundance advantage in pastures (A2), the lineages evolutionarily associated with open/pastoral habitats are inherently less colourful (A3). The absence of a phylogenetic signal for dichromatism suggests that sex-difference patterns across land uses (A1, A2) arise from community reassembly rather than deep evolutionary association.
+5. **Sexually dichromatic and colourful species have higher relative abundance in open modified land uses** (A2; response = relative abundance per SSBS). No credible main colour effect in primary vegetation. In Pasture, species with larger male-female colour differences (dichrodiff × Pasture +0.10) and more colourful males (malecolcooney × Pasture +0.07) are disproportionately more relatively abundant. Cropland and Secondary show credible positive interactions for dichromatism. Unlike the raw-abundance analysis, there is no credible negative dichromatism–abundance relationship in primary vegetation once site effort is normalised (R² ~51%). **[Superseded by A2c (2026-06-25): these colour × land-use interactions are confounded with biome and phylogeny and are no longer credible once both are included — see Extended analyses › A2c results.]**
+6. **Plantation forests credibly reduce relative abundance of colourful species** (A2). meancolcooney × Plantation (-0.04) and malecolcooney × Plantation (-0.03) are both credibly negative — colourful species make up a smaller fraction of communities in plantations. This was only borderline in the raw-abundance analysis and is the clearest new finding from the relative-abundance approach. Plantation forest shows no positive colour-abundance effect for any metric. **[Superseded by A2c (2026-06-25): the malecolcooney × Plantation effect is not credible under the biome + phylogeny model — see Extended analyses › A2c results.]**
+7. **Colour–abundance relationships operate among present species, not through wholesale filtering** (A2b). When absences are included via a paired-difference design (modified minus primary baseline), only a single weak effect survives: more dichromatic species lose marginally less abundance (+0.0011 per SD dichrodiff; credible but negligible R²). No male-colour effect is detectable. This indicates that the A2 patterns (colour predicting relative dominance) reflect reshuffling of community proportions among species that persist, rather than differential extirpation of colourful species.
+8. **Larger-bodied birds are consistently less colourful and less dichromatic** (A1). The negative body mass effect is weakened in croplands and pastures for all metrics. In plantations, larger species are relatively *more* dichromatic (opposite direction), suggesting body-size-dependent filtering of sex differences across land-use types.
+9. **Plumage colour is strongly phylogenetically conserved** (A3). R² from phylogeny alone is 86-89% for colourfulness, 66% for dichrodiff, and 47% for dichromatism ratio. Dichrodiff shows intermediate phylogenetic signal, suggesting the arithmetic magnitude of sex differences is partially labile.
+10. **Pasture-associated species are less colourful after accounting for phylogeny** (A3). This is the only land-use effect that emerges from the phylogenetic analysis, applying to overall and male colourfulness but not to either dichromatism measure. Together with A2's finding that colourful species are disproportionately abundant in pastures at the community level, this suggests a sorting process: while colourful individuals gain an abundance advantage in pastures (A2), the lineages evolutionarily associated with open/pastoral habitats are inherently less colourful (A3). The absence of a phylogenetic signal for dichromatism suggests that sex-difference patterns across land uses (A1, A2) arise from community reassembly rather than deep evolutionary association.
 
 ## Next steps
 
