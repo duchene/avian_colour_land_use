@@ -439,7 +439,7 @@ All CIs are extremely wide (~50 units) and heavily overlap. No land-use associat
 
 ## Extended analyses: phylogenetic models with full PREDICTS random structure (A1b, A2c, A2d)
 
-**Status:** A1b finalised as a **no-phylogeny** model (a feasibility fit on 2026-06-23 showed the phylogenetic term is not identifiable when colour is the response — see "A1b — note on complexity" below); A1b and A2c fitted 2026-06-25 (results in their subsections below — A2c overturns A2's colour × land-use findings); A2d fitted 2026-07-02, refit at higher resolution 2026-07-03 (results below; converged — Rhat ≤ 1.015, elevated only on the global intercept). Proposed by collaborator. These extend A1/A2/A2b by adding the canonical PREDICTS nested random structure, biome as an interacting factor, and — for the abundance models A2c/A2d only — a phylogenetic random effect. The aim is to test whether the earlier land-use patterns survive control for the full study/block/site hierarchy and (for the abundance models) shared ancestry.
+**Status:** A1b finalised as a **no-phylogeny** model (a feasibility fit on 2026-06-23 showed the phylogenetic term is not identifiable when colour is the response — see "A1b — note on complexity" below); A1b and A2c fitted 2026-06-25 (results in their subsections below — A2c overturns A2's colour × land-use findings); A2d fitted 2026-07-02, refit at higher resolution 2026-07-03 (results below; converged — Rhat ≤ 1.015, elevated only on the global intercept). Proposed by collaborator. These extend A1/A2/A2b by adding the canonical PREDICTS nested random structure, biome as an interacting factor, and — for the abundance models A2c/A2d only — a phylogenetic random effect. The aim is to test whether the earlier land-use patterns survive control for the full study/block/site hierarchy and (for the abundance models) shared ancestry. A three-way-interaction sensitivity check (**A2e/A2f**, 2026-07-08) confirms the 2-way abundance models are the appropriate reported models — see their subsection.
 
 ### Design decisions common to A1b, A2c, A2d
 
@@ -531,9 +531,24 @@ Data: study unit = `SS` throughout (qualifying filter and primary-veg baseline c
 
 **Interpretation:** consistent with A2b, colour barely predicts net abundance change; the credible colour × biome terms are negligible in magnitude. A2d's substantive addition is that abundance change is phylogenetically structured (a lineage-level pattern), independent of colour. Note the sign contrast with A2c on Tropical Open (A2c: colourful males *less* abundant in standing tropical-open communities, −0.09; A2d: colourful species lose slightly *less* abundance relative to baseline there, +0.009) — these are different responses (standing relative abundance vs change from primary baseline), so not directly contradictory.
 
+### A2e / A2f — three-way interaction sensitivity checks (fitted 2026-07-08)
+
+To justify reporting the 2-way models, the **full three-way** interaction `z_colour * Biome4 * Predominant_simple` was fitted for **malecolcooney** and compared to the reported 2-way model by LOO. **A2e** extends A2c (relative abundance, lognormal); **A2f** extends A2d (paired difference, Gaussian). Same data, priors, and sampler settings as the 2-way parents, so the comparison is fair. Both converged (0 divergences; A2e max Rhat 1.006, A2f 1.009). Tables: `results/A2e_* results/A2f_*` (incl. `_loo_compare.csv`); fits gitignored.
+
+**LOO comparison (2-way vs 3-way):**
+- **A2e (relative abundance):** the 2-way is preferred — the 3-way is credibly *worse* (elpd_diff = −10.9, SE 4.2; ≈ 2.6 SE).
+- **A2f (paired difference):** the two are statistically indistinguishable (elpd_diff = −3.4, SE 4.5; < 1 SE) — the 3-way adds no predictive value, so parsimony favours the 2-way.
+- Caveat: a handful of high Pareto-k observations (8–26 of ~27k–51k), so LOO is slightly optimistic, but the ordering is clear.
+
+**Three-way term credibility:**
+- **A2e:** *none* of the 12 three-way terms is credible (all CIs span zero; the Temperate Open cells are very wide, e.g. malecol × Temperate Open × Pasture = −0.24 [−0.52, 0.03]). The empty Temperate Open × Plantation cell is prior-only (flagged).
+- **A2f:** 8 of 9 three-way terms not credible; a single boundary-credible term (malecol × Temperate Forest × Plantation = +0.008 [0.0003, 0.017]) — negligible on the ±0.06 difference scale, at the CI boundary, expected by chance across 9 tests, and *not* supported by LOO. The empty Temperate Open × Cropland cell is prior-only (flagged).
+
+**Conclusion:** the three-way interaction is not favoured by LOO and yields no robust three-way effect, for either response. The **2-way models (A2c/A2d) are the appropriate reported models**; A2e/A2f stand as the documented sensitivity check. (Check used malecolcooney only; extend to dichrodiff if an all-metric statement is required.)
+
 ### Scripts and run status
 
-`A1b_01_setup.R / _02_fit_models.R / _03_diagnostics_summary.R`; likewise `A2c_*` and `A2d_*`. A2c/A2d setup scripts reuse A3's tree-matching block (`A3_01_setup.R`); A1b needs no tree matching (no phylogenetic term). **All three analyses have been fitted** (A1b + A2c: 2026-06-25; A2d: 2026-07-02, refit at higher resolution 2026-07-03). Model objects are gitignored (`fits/*.RData`) — regenerate via the scripts. Runtimes (this machine, 16 cores): the 8 no-phylo A1b models run in the low hours total; each phylogenetic production fit (A2c/A2d, 4 chains) takes ≈ 2–4 h.
+`A1b_01_setup.R / _02_fit_models.R / _03_diagnostics_summary.R`; likewise `A2c_*` and `A2d_*`. The 3-way sensitivity checks are single scripts: `A2e_3way_sensitivity.R` and `A2f_3way_sensitivity.R` (each reuses its parent's setup RData and adds LOO). A2c/A2d setup scripts reuse A3's tree-matching block (`A3_01_setup.R`); A1b needs no tree matching (no phylogenetic term). **All three analyses have been fitted** (A1b + A2c: 2026-06-25; A2d: 2026-07-02, refit at higher resolution 2026-07-03). Model objects are gitignored (`fits/*.RData`) — regenerate via the scripts. Runtimes (this machine, 16 cores): the 8 no-phylo A1b models run in the low hours total; each phylogenetic production fit (A2c/A2d, 4 chains) takes ≈ 2–4 h.
 
 **Outstanding:** optionally extend A2c/A2d to meancolcooney + dichrocooney (confirm the pattern across all four metrics); the manuscript (`draft_methods_results.txt`) and `README.md` still describe only A1/A2 and need updating for A1b/A2c/A2d.
 
