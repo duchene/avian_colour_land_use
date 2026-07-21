@@ -39,6 +39,14 @@ BigBirdTree (BBtree2) from [evolucionario/BigBirdTree](https://github.com/evoluc
 
 ## Analysis 1: Colour ~ Land-use
 
+> **Superseded.** This section documents the original Analysis 1 (a single `(1 | SSBS)`
+> random intercept), whose scripts and result files were removed. It is replaced by two
+> models with the full PREDICTS random structure, both under "Extended analyses" below:
+> **A1b** (primary, biome × land-use only) and **A1a** (the refit of this model, adding
+> land-use × trophic niche and land-use × body mass interactions). The A1a refit
+> reproduces the findings below (for example plantation × frugivore) under the correct
+> random structure. The numbers in this section are from the original random structure.
+
 ### Question
 
 Does plumage colouration differ across land-use types after accounting for body mass, biome, and trophic niche?
@@ -73,7 +81,7 @@ colour ~ Predominant_simple + z_logMass + Biome4 + Trophic.Niche +
 - Priors (gaussian/dichrodiff): Normal(0, 50) on intercept, Normal(0, 20) on fixed effects, Exponential(2) on SD and sigma.
 - 4 chains, 3,000 iterations (1,500 warmup), adapt_delta = 0.90, threading enabled.
 
-Scripts: `A1_01_setup.R`, `A1_02_fit_models.R`, `A1_03_model_comparison.R`, `A1_04_diagnostics.R`, `A1_05_summarize.R`.
+Scripts: removed. Superseded by `A1a_01_setup.R` / `A1a_02_fit_models.R` / `A1a_03_diagnostics_summary.R` (see Extended analyses › A1a below).
 
 ### Model comparison
 
@@ -437,9 +445,9 @@ All CIs are extremely wide (~50 units) and heavily overlap. No land-use associat
 
 **Phylogenetic signal:** dichrodiff phylogenetic SD is large but so is the residual, giving intermediate R² (66% vs 87-89% for colour).
 
-## Extended analyses: phylogenetic models with full PREDICTS random structure (A1b, A2c, A2d)
+## Extended analyses: phylogenetic models with full PREDICTS random structure (A1a, A1b, A2c, A2d)
 
-**Status:** A1b finalised as a **no-phylogeny** model (a feasibility fit on 2026-06-23 showed the phylogenetic term is not identifiable when colour is the response — see "A1b — note on complexity" below); A1b and A2c fitted 2026-06-25 (results in their subsections below — A2c overturns A2's colour × land-use findings); A2d fitted 2026-07-02, refit at higher resolution 2026-07-03 (results below; converged — Rhat ≤ 1.015, elevated only on the global intercept). Proposed by collaborator. These extend A1/A2/A2b by adding the canonical PREDICTS nested random structure, biome as an interacting factor, and — for the abundance models A2c/A2d only — a phylogenetic random effect. The aim is to test whether the earlier land-use patterns survive control for the full study/block/site hierarchy and (for the abundance models) shared ancestry. A three-way-interaction sensitivity check (**A2e/A2f**, 2026-07-08) confirms the 2-way abundance models are the appropriate reported models — see their subsection.
+**Status:** A1b finalised as a **no-phylogeny** model (a feasibility fit on 2026-06-23 showed the phylogenetic term is not identifiable when colour is the response — see "A1b — note on complexity" below); A1b and A2c fitted 2026-06-25 (results in their subsections below — A2c overturns A2's colour × land-use findings); A2d fitted 2026-07-02, refit at higher resolution 2026-07-03 (results below; converged — Rhat ≤ 1.015, elevated only on the global intercept). Proposed by collaborator. These extend A1/A2/A2b by adding the canonical PREDICTS nested random structure, biome as an interacting factor, and — for the abundance models A2c/A2d only — a phylogenetic random effect. The aim is to test whether the earlier land-use patterns survive control for the full study/block/site hierarchy and (for the abundance models) shared ancestry. A three-way-interaction sensitivity check (**A2e/A2f**, 2026-07-08) confirms the 2-way abundance models are the appropriate reported models — see their subsection. **A1a** (the refit of the original Analysis 1 with A1b's full random structure, adding land-use × trophic niche and land-use × body mass interactions) was fitted 2026-07-20 and is favoured over A1b by LOO for all four responses (see the A1a subsection).
 
 ### Design decisions common to A1b, A2c, A2d
 
@@ -479,6 +487,56 @@ A1b was originally specified *with* a phylogenetic random effect `(1 | gr(phylo,
 All 8 models (4 responses × {base, +trophic/mass}) converged: 0 divergences, max Rhat ≤ 1.017, min bulk ESS ≥ 467. Tables: `results/A1b_{convergence,fixed_effects,r2_summary}.csv` (the empty Temperate Open × Plantation cell is flagged in the fixed-effects table).
 
 Bayesian R²: meancolcooney 10.2% (base) / 16.8% (+covariate); malecolcooney 7.7% / 15.0%; dichrocooney 6.2% / 11.0%; dichrodiff 6.8% / 15.6%. Adding trophic niche + body mass roughly **doubles** R² over the biome × land-use-only base, and the +covariate R² closely matches A1 (16.2 / 14.6 / 10.4 / 14.1%) — i.e. A1b reproduces A1's explanatory power despite the restructured fixed effects (single biome × land-use interaction) and the full PREDICTS random hierarchy.
+
+### A1a — Community colour/dichromatism ~ biome × land-use + land-use × trophic + land-use × mass (no phylogeny)
+
+Extends **A1b** and refits the original Analysis 1 under the full PREDICTS structure.
+Same data (`present.csv`), sparse-cell collapse, priors, sampler and random structure as
+A1b, plus the two interaction families A1b omits:
+
+```
+colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
+         + Predominant_simple:z_logMass + Predominant_simple:Trophic.Niche
+         + (1|SS) + (1|SSB) + (1|SSBS)
+```
+
+A1a is a nested superset of the A1b covariate model, so LOO adjudicates whether the
+guild- and size-specific interactions add predictive value. Scripts: `A1a_01_setup.R` /
+`A1a_02_fit_models.R` / `A1a_03_diagnostics_summary.R` (the last also runs the LOO
+comparison and needs the A1b covariate fits). Tables:
+`results/A1a_{convergence,fixed_effects,r2_summary}.csv` and `results/A1a_vs_A1b_loo.csv`.
+Publication Figure 3 derives the trophic and mass interactions by filtering
+`A1a_fixed_effects.csv`.
+
+#### A1a — results (fitted 2026-07-20)
+
+All four models converged: 0 divergences, max Rhat ≤ 1.01, min bulk ESS ≥ 846. Bayesian
+R² rises over A1b in every response: meancolcooney 16.8 → 18.7%, malecolcooney 15.0 →
+17.1%, dichrocooney 11.0 → 13.2%, dichrodiff 15.6 → 17.5%.
+
+**LOO (A1a full vs A1b covariate), A1a favoured for all four responses.** elpd_diff
+(A1a minus A1b): meancolcooney +294 (SE 33), malecolcooney +322 (SE 33), dichrocooney
++419 (SE 35), dichrodiff +343 (SE 34), each about 9 to 12 SE. The interaction set earns
+its place.
+
+**Trophic × land-use (the headline, all survive the refit under the full structure):**
+- Plantation × Frugivore: meancolcooney -0.29 [-0.55, -0.03], malecolcooney -0.31
+  [-0.58, -0.03] (credible). Frugivores much duller in plantation forest.
+- dichrodiff: Pasture × Frugivore +20.7 [5.9, 35.1], Pasture × Nectarivore -18.1
+  [-33.4, -3.4], Secondary × Nectarivore -15.7 [-28.6, -3.1] (all credible).
+- dichrocooney: Plantation × Nectarivore +0.20 [0.01, 0.38] (credible).
+
+**Mass × land-use:** the negative mass slope (larger birds duller and less dichromatic)
+weakens in Pasture and Cropland (malecolcooney +0.059 and +0.026 per SD log mass, both
+credible) and strengthens for dichromatism in Plantation and Secondary (dichrocooney
+-0.017 and -0.011, dichrodiff Plantation -1.38, all credible).
+
+**Biome × land-use:** A1a's biome × land-use terms differ from A1b's because they now
+condition on the trophic and mass interactions, and some flip sign (for example
+meancolcooney Temperate Forest × Plantation is +0.08 credible in A1b but not credible in
+A1a). Biome × land-use is therefore reported from A1b, and A1a contributes the guild and
+size interactions. Herbivore terrestrial (N=2) land-use interactions are prior-only and
+flagged (`sparse_trophic`) in the fixed-effects table.
 
 ### A2c — Relative abundance ~ colour × biome × land-use (2-way; phylogenetic)
 
@@ -550,7 +608,7 @@ To justify reporting the 2-way models, the **full three-way** interaction `z_col
 
 `A1b_01_setup.R / _02_fit_models.R / _03_diagnostics_summary.R`; likewise `A2c_*` and `A2d_*`. The 3-way sensitivity checks are single scripts: `A2e_3way_sensitivity.R` and `A2f_3way_sensitivity.R` (each reuses its parent's setup RData and adds LOO). A2c/A2d setup scripts reuse A3's tree-matching block (`A3_01_setup.R`); A1b needs no tree matching (no phylogenetic term). **All three analyses have been fitted** (A1b + A2c: 2026-06-25; A2d: 2026-07-02, refit at higher resolution 2026-07-03). Model objects are gitignored (`fits/*.RData`) — regenerate via the scripts. Runtimes (this machine, 16 cores): the 8 no-phylo A1b models run in the low hours total; each phylogenetic production fit (A2c/A2d, 4 chains) takes ≈ 2–4 h.
 
-**Outstanding:** optionally extend A2c/A2d to meancolcooney + dichrocooney (confirm the pattern across all four metrics); the manuscript (`draft_methods_results.txt`) and `README.md` still describe only A1/A2 and need updating for A1b/A2c/A2d.
+**Outstanding:** optionally extend A2c/A2d to meancolcooney + dichrocooney (confirm the pattern across all four metrics). The manuscript (`draft_methods_results.txt`) and `README.md` now cover A1a, A1b, A2c, A2d, and A3, with A1a as Figure 3.
 
 ## Summary interpretation (A1 + A2 + A2b + A3)
 

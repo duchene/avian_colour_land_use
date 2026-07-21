@@ -111,9 +111,70 @@ try_fig({
 })
 
 # ============================================================
-# Figure 3 — Colour x land-use effects vanish once biome + phylogeny added
+# Figure 3 — A1a: guild- and size-specific colour responses to land use
+#            (land use x trophic niche and land use x body mass). A1a is
+#            favoured over A1b by LOO for all four responses; these are the
+#            interactions A1b's main-effects-only structure cannot capture.
 # ============================================================
 message("Figure 3 ...")
+try_fig({
+  a1a <- read.csv("results/A1a_fixed_effects.csv") |>
+    mutate(response = factor(resp_lab[model], levels = resp_order),
+           credible = sign(Q2.5) == sign(Q97.5))
+
+  # (a) body mass x land use
+  massint <- a1a |>
+    filter(str_detect(parameter, "^Predominant_simple[A-Za-z]+:z_logMass")) |>
+    mutate(land_use = parameter |> str_extract("Predominant_simple[A-Za-z]+") |>
+             str_remove("Predominant_simple") |> pretty_lu(),
+           land_use = factor(land_use,
+             levels = rev(c("Cropland","Pasture","Plantation forest","Secondary"))))
+  p_mass <- ggplot(massint, aes(Estimate, land_use, colour = credible, shape = credible)) +
+    geom_vline(xintercept = 0, linetype = "dashed", colour = "grey70") +
+    geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), height = 0.25, linewidth = 0.5) +
+    geom_point(size = 2) +
+    facet_wrap(~response, scales = "free_x", nrow = 1) +
+    scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
+    scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
+    labs(x = "Body mass x land-use interaction (per SD log mass)", y = NULL,
+         subtitle = "(a) Body mass x land use") +
+    theme(legend.position = "none", axis.text.y = element_text(size = 8))
+
+  # (b) trophic niche x land use (Herbivore terrestrial, N=2, excluded: prior-only)
+  lu_ord    <- c("Cropland","Pasture","Plantation forest","Secondary")
+  guild_ord <- c("Frugivore","Granivore","Invertivore","Nectarivore","Omnivore")
+  ylev <- as.vector(t(outer(lu_ord, guild_ord,
+                            function(a, b) paste0(a, ": ", b))))
+  trophint <- a1a |>
+    filter(str_detect(parameter, "^Predominant_simple[A-Za-z]+:Trophic\\.Niche"),
+           !sparse_trophic) |>
+    mutate(land_use = parameter |> str_extract("Predominant_simple[A-Za-z]+") |>
+             str_remove("Predominant_simple") |> pretty_lu(),
+           guild = parameter |> str_extract("Trophic\\.Niche[A-Za-z]+") |>
+             str_remove("Trophic.Niche"),
+           ylab = factor(paste0(land_use, ": ", guild), levels = rev(ylev)))
+  p_troph <- ggplot(trophint, aes(Estimate, ylab, colour = credible, shape = credible)) +
+    geom_vline(xintercept = 0, linetype = "dashed", colour = "grey70") +
+    geom_errorbarh(aes(xmin = Q2.5, xmax = Q97.5), height = 0.25, linewidth = 0.45) +
+    geom_point(size = 1.8) +
+    facet_wrap(~response, scales = "free_x", nrow = 1) +
+    scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
+    scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
+    labs(x = "Trophic niche x land-use interaction", y = NULL,
+         subtitle = "(b) Trophic niche x land use") +
+    theme(legend.position = "bottom", axis.text.y = element_text(size = 7))
+
+  fig3 <- (p_mass / p_troph) +
+    plot_layout(heights = c(1, 4)) +
+    plot_annotation(
+      title = "A1a - guild- and size-specific colour responses to land use")
+  save_fig(fig3, "Figure_3_A1a_trophic_mass", mm2in(220), mm2in(200))
+})
+
+# ============================================================
+# Figure 4 — Colour x land-use effects vanish once biome + phylogeny added
+# ============================================================
+message("Figure 4 ...")
 try_fig({
   get_cxlu <- function(path, cpcol, label) {
     read.csv(path) |> rename(cp = all_of(cpcol)) |>
@@ -141,13 +202,13 @@ try_fig({
     labs(x = "Colour x land-use interaction on relative abundance", y = NULL,
          title = "Colour x land-use effects disappear once biome and phylogeny are included") +
     theme(legend.position = "bottom")
-  save_fig(fig3, "Figure_3_A2_vs_A2c_vanishing", mm2in(200), mm2in(110))
+  save_fig(fig3, "Figure_4_A2_vs_A2c_vanishing", mm2in(200), mm2in(110))
 })
 
 # ============================================================
-# Figure 4 — Colour effects on abundance: null (A2c) / negligible (A2d)
+# Figure 5 — Colour effects on abundance: null (A2c) / negligible (A2d)
 # ============================================================
-message("Figure 4 ...")
+message("Figure 5 ...")
 try_fig({
   term_levels <- c("main effect","x Temperate Forest","x Temperate Open","x Tropical Open",
                    "x Cropland","x Pasture","x Plantation forest","x Secondary")
@@ -173,13 +234,13 @@ try_fig({
     labs(x = "Colour effect on abundance / abundance change", y = NULL,
          title = "Colour effects on abundance are null (A2c) or negligible (A2d)") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 8))
-  save_fig(fig4, "Figure_4_A2c_A2d_colour_terms", mm2in(200), mm2in(140))
+  save_fig(fig4, "Figure_5_A2c_A2d_colour_terms", mm2in(200), mm2in(140))
 })
 
 # ============================================================
-# Figure 5 — Abundance variance components (phylogeny/study dominate)
+# Figure 6 — Abundance variance components (phylogeny/study dominate)
 # ============================================================
-message("Figure 5 ...")
+message("Figure 6 ...")
 try_fig({
   vc <- bind_rows(read.csv("results/A2c_variance_components.csv") |> mutate(analysis="A2c (relative abundance)"),
                   read.csv("results/A2d_variance_components.csv") |> mutate(analysis="A2d (abundance change)")) |>
@@ -195,13 +256,13 @@ try_fig({
     labs(x = NULL, y = "Random-effect / residual SD",
          title = "Abundance variance is dominated by phylogeny and study, not colour") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  save_fig(fig5, "Figure_5_variance_components", mm2in(180), mm2in(130))
+  save_fig(fig5, "Figure_6_variance_components", mm2in(180), mm2in(130))
 })
 
 # ============================================================
-# Figure 6 — A3 radial phylogenies with ancestral colour states
+# Figure 7 — A3 radial phylogenies with ancestral colour states
 # ============================================================
-message("Figure 6 (contMap; ~1-2 min) ...")
+message("Figure 7 (contMap; ~1-2 min) ...")
 try_fig({
   load("fits/A3_model_setup.RData")   # tree, spdat
   x_mal <- setNames(spdat$malecolcooney, spdat$phylo); x_mal <- x_mal[!is.na(x_mal)]
@@ -230,15 +291,15 @@ try_fig({
                   digits = 1, x = 0.05, y = 0.6, lwd = 10, fsize = 0.9, prompt = FALSE, subtitle = "")
   }
   dir.create("figures/pub", showWarnings = FALSE, recursive = TRUE)
-  pdf("figures/pub/Figure_6_A3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
-  png("figures/pub/Figure_6_A3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
-  message("Saved Figure_6_A3_phylogeny")
+  pdf("figures/pub/Figure_7_A3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
+  png("figures/pub/Figure_7_A3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
+  message("Saved Figure_7_A3_phylogeny")
 })
 
 # ============================================================
-# Figure 7 — A3 expected colour by land-use association
+# Figure 8 — A3 expected colour by land-use association
 # ============================================================
-message("Figure 7 ...")
+message("Figure 8 ...")
 try_fig({
   a3 <- read.csv("results/A3_fixed_effects.csv") |>
     mutate(land_use = str_remove(parameter, "^prop_") |> str_replace_all("_", " "),
@@ -252,7 +313,7 @@ try_fig({
     labs(x = "Expected colour for a species found exclusively in that land use", y = NULL,
          title = "A3 - phylogenetic association of colour with land use") +
     theme(axis.text.y = element_text(size = 8))
-  save_fig(fig7, "Figure_7_A3_landuse_association", mm2in(200), mm2in(140))
+  save_fig(fig7, "Figure_8_A3_landuse_association", mm2in(200), mm2in(140))
 })
 
 message("\nDone. Figures in figures/pub/")

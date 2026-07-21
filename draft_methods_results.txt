@@ -1,5 +1,5 @@
 METHODS AND RESULTS
-Draft — avian plumage colour and land-use change
+Draft: avian plumage colour and land-use change
 ================================================================================
 Four analyses (community colour, colour-abundance, colour-abundance change, and a
 phylogenetic test). Model codes in parentheses map to scripts and ANALYSIS_NOTES.md.
@@ -13,30 +13,30 @@ We combined the PREDICTS database (site-level bird survey records from studies
 spanning multiple land-use types worldwide) with Cooney et al.'s spectrophotometric
 plumage measurements (ultraviolet-sensitive [UVS] visual model, LociUVS scores) and
 AVONET traits (body mass, trophic niche). The merged dataset comprised 216,834
-records from 1,703 passerine species; all colour metrics used the UVS model (Dale
+records from 1,703 passerine species. All colour metrics used the UVS model (Dale
 scores excluded). We derived four species-level colour variables: mean colourfulness
 (mean of male and female LociUVS), male conspicuousness (male LociUVS), the sexual
 dichromatism ratio (male / female LociUVS), and the sexual dichromatism difference
 (male minus female LociUVS, which can be negative).
 
 Site-level analyses used records from studies containing primary vegetation plus at
-least one other land use (n = 34,653; "present.csv"). Land use (five levels) was
+least one other land use (n = 34,653, "present.csv"). Land use (five levels) was
 Primary vegetation (reference), Secondary, Plantation forest, Cropland, and Pasture.
 We collapsed the original WWF biome field into four categories (Biome4): Tropical
-Forest (moist/dry broadleaf and coniferous forests; reference), Tropical Open
+Forest (moist/dry broadleaf and coniferous forests, reference), Tropical Open
 (tropical grasslands/savannas/shrublands, mangroves), Temperate Forest (temperate
 broadleaf/mixed and conifer forests, and Mediterranean forests/woodlands/scrub), and
 Temperate Open (temperate and montane grasslands, tundra). Body mass was
-log-transformed and standardised (z_logMass); trophic niche (AVONET) entered as a
+log-transformed and standardised (z_logMass). Trophic niche (AVONET) entered as a
 fixed factor (Aquatic predator reference).
 
-All models used the canonical PREDICTS nested random structure — study, block within
-study, and site within block (SS, SSB, SSBS; 59 studies / 361 blocks / 3,716 sites),
-which because these identifiers are hierarchically coded is fully nested. Analyses 2-4
-additionally included a phylogenetic random effect from the BigBirdTree tree (BBtree2;
+All models used the canonical PREDICTS nested random structure: study, block within
+study, and site within block (SS, SSB, SSBS, 59 studies / 361 blocks / 3,716 sites),
+which is fully nested because these identifiers are hierarchically coded. Analyses 2 to
+4 additionally included a phylogenetic random effect from the BigBirdTree tree (BBtree2,
 9,072 tips, Jetz taxonomy) as a Brownian-motion covariance matrix A (ape::vcv.phylo,
-correlation form). Species were matched to tips in three stages (jetz_sp; then
-Best_guess_binomial; then a curated genus-synonym table), with no grafting; three
+correlation form). Species were matched to tips in three stages (jetz_sp, then
+Best_guess_binomial, then a curated genus-synonym table), with no grafting. Three
 BirdLife names mapping to a single tip were dropped. Matching retained 1,348 of 1,681
 species (26,951 records, 77.8%) in present.csv, and 1,391 species (1,254 with colour
 data) at the species level.
@@ -44,65 +44,78 @@ data) at the species level.
 Statistical framework
 
 Models were fitted in brms/CmdStan. Colourfulness and dichromatism-ratio responses,
-and relative abundance, used a lognormal family; the dichromatism difference and the
+and relative abundance, used a lognormal family. The dichromatism difference and the
 paired abundance difference used a Gaussian family. Effects are termed credible when
-the 95% posterior credible interval (CI) excludes zero; Bayesian R2 is reported as
+the 95% posterior credible interval (CI) excludes zero. Bayesian R2 is reported as
 posterior median [95% CI].
 
-Analysis 1 — Community plumage colour across biomes and land uses (A1b)
+Analysis 1: Community plumage colour across biomes and land uses (A1b, A1a)
 
 For each of the four colour responses (community-weighted over occurrence records,
-n = 33,210 with non-missing colour), we fitted
+n = 33,210 with non-missing colour), we fitted two nested models that share the same
+data, priors, sampler, and random structure. The primary model (A1b) was
 
-    colour ~ Biome4 * Predominant_simple (+ Trophic.Niche + z_logMass)
+    colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
              + (1 | SS) + (1 | SSB) + (1 | SSBS)
 
-as two variants: a base model (biome x land use only) and a covariate model adding
-trophic niche and body mass as main effects. We report the covariate model. Priors:
-Normal(0,2) intercept, Normal(0,0.5) fixed effects, Exponential(2) SDs/sigma
-(lognormal); Normal(0,50)/Normal(0,20)/Exponential(2) for the Gaussian response.
-4 chains x 3,000 iterations (1,500 warmup), adapt_delta = 0.90. No phylogenetic term
-was included: because colour is a species-level constant (no within-species variance),
-a per-species phylogenetic intercept is not identifiable at the record level (it
-absorbs all variance and collapses the residual and site terms); the phylogenetic
-question is addressed at the species level in Analysis 4. All eight models converged
-(0 divergences; maximum Rhat <= 1.017; minimum bulk ESS >= 467).
+We ran A1b in two variants, a base model with biome x land use only and a covariate
+model that adds trophic niche and body mass as main effects, and we report the
+covariate model. The extension (A1a) adds two interaction families to the A1b
+covariate model, land use x trophic niche and land use x body mass:
 
-Analysis 2 — Colour as a predictor of relative abundance (A2c)
+    colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
+             + Predominant_simple:z_logMass + Predominant_simple:Trophic.Niche
+             + (1 | SS) + (1 | SSB) + (1 | SSBS)
+
+A1a is therefore a nested superset of A1b, and we compared the two by leave-one-out
+cross-validation (LOO) to test whether the guild- and size-specific interactions earn
+their place. Priors were Normal(0,2) on the intercept, Normal(0,0.5) on fixed effects,
+and Exponential(2) on the standard deviations and sigma for the lognormal responses,
+and Normal(0,50), Normal(0,20), Exponential(2) for the Gaussian response. We ran 4
+chains for 3,000 iterations (1,500 warmup) at adapt_delta = 0.90. No phylogenetic term
+was included. Because colour is a species-level constant with no within-species
+variance, a per-species phylogenetic intercept is not identifiable at the record level,
+where it absorbs all between-species variance and collapses the residual and site
+terms. The phylogenetic question is addressed at the species level in Analysis 4. All
+models converged with no divergences. For A1b the maximum Rhat was 1.017 and the
+minimum bulk effective sample size (ESS) was 467. For A1a the maximum Rhat was 1.01 and
+the minimum bulk ESS was 846.
+
+Analysis 2: Colour as a predictor of relative abundance (A2c)
 
 We tested whether colour predicts a species' share of its community, and whether that
 depends on biome or land use. Relative abundance was each species' effort-corrected
-count divided by its site (SSBS) total; each colour metric was standardised. For male
-conspicuousness and the dichromatism difference we fitted (lognormal)
+count divided by its site (SSBS) total, and each colour metric was standardised. For
+male conspicuousness and the dichromatism difference we fitted (lognormal)
 
     relative_abundance ~ z_colour * Biome4 + z_colour * Predominant_simple
                          + Biome4 * Predominant_simple
                          + (1|SS) + (1|SSB) + (1|SSBS) + (1 | gr(phylo, cov = A))
 
-i.e. all three two-way interactions but no three-way term. Priors as in Analysis 1
-(lognormal); 4 chains x 2,000 iterations (1,000 warmup), adapt_delta = 0.90. Because
-colour and trophic/mass are themselves phylogenetically conserved, the colour main
-effect is interpreted as an effect beyond phylogeny. As a sensitivity check we also
+i.e. all three two-way interactions but no three-way term. Priors were as in Analysis 1
+(lognormal), with 4 chains x 2,000 iterations (1,000 warmup) at adapt_delta = 0.90.
+Because colour and trophic/mass are themselves phylogenetically conserved, the colour
+main effect is interpreted as an effect beyond phylogeny. As a sensitivity check we also
 fitted the full three-way interaction (model A2e) and compared it to the two-way model
-by LOO. Both models converged (0 divergences; maximum Rhat <= 1.005; minimum bulk
+by LOO. Both models converged (0 divergences, maximum Rhat <= 1.005, minimum bulk
 ESS >= 1,003).
 
-Analysis 3 — Colour and abundance change following land-use conversion (A2d)
+Analysis 3: Colour and abundance change following land-use conversion (A2d)
 
 To include absences and anchor each species to its own baseline, we computed, per
 study, each species' mean relative abundance across primary-vegetation sites, and
-subtracted it from that species' relative abundance at each modified site (paired
-difference; exact-zero differences, i.e. species absent from both, were dropped as
-uninformative). Primary vegetation is thus absorbed into the response (four land-use
+subtracted it from that species' relative abundance at each modified site (the paired
+difference). Exact-zero differences, meaning species absent from both, were dropped as
+uninformative. Primary vegetation is thus absorbed into the response (four land-use
 levels remain). For the same two colour metrics we fitted the same two-way structure
-as Analysis 2 with a Gaussian family (n = 50,972 for male conspicuousness; priors
-Normal(0,0.5)/Normal(0,0.2)/Exponential(5); 4 chains x 3,500 iterations, 1,500 warmup,
-adapt_delta = 0.95, max_treedepth = 12). The three-way interaction was again fitted as
-a sensitivity check (model A2f) and compared by LOO. Models converged with no
-divergences; the maximum Rhat (1.015) was elevated only on the global intercept, with
-all colour, biome, and land-use terms at Rhat <= 1.01.
+as Analysis 2 with a Gaussian family (n = 50,972 for male conspicuousness). Priors were
+Normal(0,0.5), Normal(0,0.2), and Exponential(5), and we ran 4 chains for 3,500
+iterations (1,500 warmup) at adapt_delta = 0.95, max_treedepth = 12. The three-way
+interaction was again fitted as a sensitivity check (model A2f) and compared by LOO.
+Models converged with no divergences. The maximum Rhat (1.015) was elevated only on the
+global intercept, with all colour, biome, and land-use terms at Rhat <= 1.01.
 
-Analysis 4 — Phylogenetic association of colour with land use (A3)
+Analysis 4: Phylogenetic association of colour with land use (A3)
 
 At the species level, we regressed each colour response on the within-species
 proportion of records in each land use (five compositional proportions summing to 1),
@@ -112,81 +125,102 @@ species recorded exclusively in that land use:
     colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest
                 + prop_Primary_vegetation + prop_Secondary + (1 | gr(phylo, cov = A))
 
-Priors were broadened for species-level data (Normal(0,5) fixed effects for lognormal;
-Normal(0,100) for the Gaussian response; Exponential(2) SDs/sigma); 4 chains x 4,000
-iterations (2,000 warmup), adapt_delta = 0.95, max_treedepth = 12; n = 1,254 species.
-All models converged (0 divergences; maximum Rhat <= 1.01), though the dichromatism
-difference showed low E-BFMI and is interpreted cautiously.
+Priors were broadened for species-level data: Normal(0,5) fixed effects for the
+lognormal responses, Normal(0,100) for the Gaussian response, and Exponential(2) on SDs
+and sigma. We ran 4 chains for 4,000 iterations (2,000 warmup) at adapt_delta = 0.95,
+max_treedepth = 12, for n = 1,254 species. All models converged (0 divergences, maximum
+Rhat <= 1.01), though the dichromatism difference showed low E-BFMI and is interpreted
+cautiously.
 
 
 ================================================================================
 RESULTS
 ================================================================================
 
-Analysis 1 — Community plumage colour (A1b)
+Analysis 1: Community plumage colour (A1b, A1a)
 
 Community colour was shaped mainly by biome, body mass, and trophic niche, with a
 modest land-use effect. All four modified land uses held credibly less colourful
 communities than primary vegetation (mean colourfulness: Cropland -0.08, Pasture
--0.08, Plantation -0.05, Secondary -0.04 on the log scale; male conspicuousness
+-0.08, Plantation -0.05, Secondary -0.04 on the log scale, with male conspicuousness
 comparable), but no land use shifted dichromatism on its own. Non-tropical-forest
-biomes were less colourful (Temperate Forest and Temperate Open each ~ -0.14 to -0.17
-for mean and male colour; Tropical Open credibly lower for male colour), yet biome and
-dichromatism dissociated: Temperate Forest communities were credibly *more* sexually
-dichromatic (ratio +0.07; difference +5.2 LociUVS units) while Tropical Open were less
-(-0.04; -6.2). Larger-bodied birds were consistently less colourful and less
-dichromatic (mean -0.11, male -0.12, ratio -0.023, difference -3.9). Among guilds,
-nectarivores stood out as both the most colourful and by far the most dichromatic
-(colour +0.17; difference +27.5), whereas invertivores were less colourful (male
--0.13) and, with omnivores and frugivores, less dichromatic. Biome x land-use
-interactions were mostly modest; the clearest were that plantation and cropland
+biomes were less colourful (Temperate Forest and Temperate Open each about -0.14 to
+-0.17 for mean and male colour, and Tropical Open credibly lower for male colour), yet
+biome and dichromatism dissociated. Temperate Forest communities were credibly *more*
+sexually dichromatic (ratio +0.07, difference +5.2 LociUVS units) while Tropical Open
+were less (ratio -0.04, difference -6.2). Larger-bodied birds were consistently less
+colourful and less dichromatic (mean -0.11, male -0.12, ratio -0.023, difference -3.9).
+Among guilds, nectarivores stood out as both the most colourful and by far the most
+dichromatic (colour +0.17, difference +27.5), whereas invertivores were less colourful
+(male -0.13) and, with omnivores and frugivores, less dichromatic. Biome x land-use
+interactions were mostly modest. The clearest were that plantation and cropland
 communities in Tropical Open biomes were more dichromatic than expected (difference
 +3.0 to +6.5), and Temperate Forest plantations slightly more colourful than the biome
 and land-use main effects alone predict. Bayesian R2 was 16.8% (mean colour), 15.0%
-(male), 11.0% (dichromatism ratio), and 15.6% (dichromatism difference); the base
+(male), 11.0% (dichromatism ratio), and 15.6% (dichromatism difference). The base
 (biome x land-use only) models explained roughly half as much, confirming that trophic
 niche and body mass carry much of the colour signal.
 
-Analysis 2 — Colour as a predictor of relative abundance (A2c)
+Allowing land use to interact with trophic niche and body mass (A1a) resolves guild-
+and size-specific responses that the community-average model cannot show, and LOO
+favours A1a over A1b for all four responses (expected log predictive density higher by
+294 to 419, each about 9 to 12 standard errors). Bayesian R2 rises accordingly, from
+16.8 to 18.7 percent for mean colour, 15.0 to 17.1 for male colour, 11.0 to 13.2 for
+the dichromatism ratio, and 15.6 to 17.5 for the difference. The clearest guild effect
+is that frugivores are far less colourful in plantation forest than the main effects
+predict (mean colour -0.29 [-0.55, -0.03], male colour -0.31 [-0.58, -0.03]). Sexual
+dichromatism responds by guild in the opposite direction to colourfulness. The large
+male-female difference of nectarivores collapses in pasture (-18.1 [-33.4, -3.4]) and
+secondary vegetation (-15.7 [-28.6, -3.1]), whereas frugivores become more dichromatic
+in pasture (+20.7 [+5.9, +35.1]) and nectarivores more dichromatic in plantation forest
+on the ratio scale (+0.20 [+0.01, +0.38]). Body size filters colour by land use as
+well. The usual pattern of larger birds being duller and less dichromatic weakens in
+pasture and cropland (for male colour, +0.06 and +0.03 per standard deviation of log
+mass) and strengthens for dichromatism in plantation forest and secondary vegetation.
+Because these interactions absorb part of the land-use signal, A1a's biome x land-use
+terms shift relative to A1b, so we report biome x land use from A1b and the guild and
+size interactions from A1a.
+
+Analysis 2: Colour as a predictor of relative abundance (A2c)
 
 Relative abundance was strongly structured by phylogeny and study (sd(phylo) = 0.91,
-sd(study) = 0.95; Bayesian R2 = 51%), but essentially not by colour. Neither colour
-main effect was credible, and — critically — no colour x land-use interaction was
+sd(study) = 0.95, Bayesian R2 = 51%), but essentially not by colour. Neither colour
+main effect was credible, and, critically, no colour x land-use interaction was
 credible for either metric. The only surviving colour effect was at the biome level:
 more conspicuous males were credibly less relatively abundant in Tropical Open
 communities (-0.089 [-0.147, -0.030]). Land-use and biome x land-use terms reflected
 community composition rather than colour (e.g. higher relative abundance in Pasture,
-+0.24; Temperate Open x Cropland +0.56).
++0.24, and Temperate Open x Cropland +0.56).
 
 This contrasts sharply with a simpler model of colour x land use alone (without biome
 or the phylogenetic and full study/site structure), which returned several credible
 colour x land-use interactions (e.g. male colour and dichromatism difference higher in
-Pasture, +0.07 and +0.10; colourful species scarcer in Plantation, -0.03). None of
+Pasture, +0.07 and +0.10, and colourful species scarcer in Plantation, -0.03). None of
 these survived the addition of biome and phylogeny, indicating they were confounded
 with biome distribution and shared ancestry. The full three-way colour x biome x
-land-use interaction (A2e) was not favoured by LOO — it was credibly worse than the
-two-way model (ELPD difference -10.9 +/- 4.2) — and contained no credible three-way
+land-use interaction (A2e) was not favoured by LOO. It was credibly worse than the
+two-way model (ELPD difference -10.9 +/- 4.2) and contained no credible three-way
 term, so we report the two-way model.
 
-Analysis 3 — Colour and abundance change following conversion (A2d)
+Analysis 3: Colour and abundance change following conversion (A2d)
 
 When abundance change relative to each species' primary-vegetation baseline was
 modelled (absences included), colour again explained little. Bayesian R2 was 22.7%,
 but this was driven almost entirely by the phylogenetic term (sd(phylo) = 0.072 vs.
 residual sigma = 0.050): abundance change carries lineage-level structure, not a colour
-signal. Colour main effects and all colour x land-use interactions were not credible;
-a few colour x biome interactions reached credibility but were negligible in magnitude
-(on the order of 0.01 on the +/-0.06 difference scale; e.g. male colour x Tropical
+signal. Colour main effects and all colour x land-use interactions were not credible. A
+few colour x biome interactions reached credibility but were negligible in magnitude
+(on the order of 0.01 on the +/-0.06 difference scale, e.g. male colour x Tropical
 Open +0.009, dichromatism difference x Tropical Open +0.011). The three-way sensitivity
 model (A2f) was statistically indistinguishable from the two-way model by LOO (ELPD
-difference -3.4 +/- 4.5) and again yielded no robust three-way effect; we report the
+difference -3.4 +/- 4.5) and again yielded no robust three-way effect. We report the
 two-way model.
 
-Analysis 4 — Phylogenetic association of colour with land use (A3)
+Analysis 4: Phylogenetic association of colour with land use (A3)
 
 Plumage colour was strongly phylogenetically conserved: Bayesian R2 was 88.6%
-(mean colour) and 86.2% (male), with phylogenetic SDs far exceeding residuals;
-dichromatism was less conserved (ratio 46.6%, difference 65.6%). Because phylogenetic
+(mean colour) and 86.2% (male), with phylogenetic SDs far exceeding residuals.
+Dichromatism was less conserved (ratio 46.6%, difference 65.6%). Because phylogenetic
 variance dominated, land-use proportion coefficients had wide, overlapping CIs, but a
 consistent pattern emerged for colourfulness: species associated with Pasture had the
 lowest expected colour (mean 4.42, male 4.44 on the log scale) and those associated
@@ -195,16 +229,22 @@ land-use association credibly predicted either dichromatism metric.
 
 Synthesis
 
-Plumage colour is a strongly phylogenetically conserved species trait (Analysis 4),
-and at the community level it is shaped more by biome, trophic ecology, and body mass
-than by land use — though modified land uses do hold modestly less colourful
-communities, and colour and dichromatism respond to biome in opposite directions
-(Analysis 1). Once biome and shared ancestry are accounted for, colour does not
+Plumage colour is a strongly phylogenetically conserved species trait (Analysis 4), and
+at the community level it is shaped more by biome, trophic ecology, and body mass than
+by land use. Modified land uses do hold modestly less colourful communities, and colour
+and dichromatism respond to biome in opposite directions (Analysis 1b). When land use
+is allowed to interact with guild and body size (Analysis 1a), a sharper filter appears.
+Frugivores are much duller in plantation forest, the strong sexual dichromatism of
+nectarivores erodes in pasture and secondary vegetation, and the size dependence of
+colour weakens in open land uses. These guild- and size-specific effects improve
+prediction over the community-average model, yet the main message holds. Land use
+reshapes colour through which guilds and body sizes it favours, not through a uniform
+shift. Once biome and shared ancestry are accounted for, colour does not
 predict a species' relative abundance across land uses (Analysis 2): the colour x
 land-use associations seen in simpler models are confounded artefacts, and the only
 robust colour-abundance signal is biome-level (conspicuous males are scarcer in
 tropical-open communities). Nor does colour predict how much abundance a species gains
-or loses under land-use conversion (Analysis 3); that change is governed by lineage
+or loses under land-use conversion (Analysis 3). That change is governed by lineage
 and study structure rather than colour. Together, the analyses provide little support
 for plumage colour itself acting as a filter on how passerine communities respond to
 land-use change, once the biome context and evolutionary non-independence of colour

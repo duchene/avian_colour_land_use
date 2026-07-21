@@ -8,13 +8,20 @@ sensitive visual model, LociUVS) and AVONET morphological traits.
 
 ## Analyses
 
-The manuscript focuses on four models. `ANALYSIS_NOTES.md` has the full methods and
-results, including the simpler earlier variants (A1, A2, A2b) that these supersede.
+The manuscript focuses on five models across four analyses. `ANALYSIS_NOTES.md` has
+the full methods and results, including the simpler earlier variants (A2, A2b) that
+these supersede.
 
 - **A1b** — Community plumage colour ~ biome × land use (+ trophic niche + body mass),
-  with the full PREDICTS random structure `(1|SS)+(1|SSB)+(1|SSBS)`. No phylogenetic
-  term: colour is a species-level constant, so a per-species phylogenetic intercept is
-  not identifiable at the record level (that question is answered by A3).
+  with the full PREDICTS random structure `(1|SS)+(1|SSB)+(1|SSBS)`. The primary
+  community-colour model. No phylogenetic term: colour is a species-level constant, so
+  a per-species phylogenetic intercept is not identifiable at the record level (that
+  question is answered by A3).
+- **A1a** — Extends A1b by adding land use × trophic niche and land use × body mass
+  interactions, resolving guild- and size-specific colour responses (e.g. frugivores
+  in plantation forest). Identical data, priors, sampler and random structure to A1b,
+  so it is a nested superset and LOO tests whether those interactions earn their place.
+  Biome × land use is reported from A1b.
 - **A2c** — Relative abundance ~ colour × biome × land use (all two-way interactions),
   with the PREDICTS random structure and a phylogenetic random effect.
 - **A2d** — Paired-difference abundance change (vs each species' primary-vegetation
@@ -32,7 +39,7 @@ sexual dichromatism ratio, and the sexual dichromatism difference.
 
 ```
 data/      Analytical dataset (present.csv), raw data (.csv.gz), phylogeny (BBtree2.tre)
-scripts/   R scripts: data prep, analyses (A1b / A2c / A2d / A3, + A2e/A2f), figures
+scripts/   R scripts: data prep, analyses (A1a / A1b / A2c / A2d / A3, + A2e/A2f), figures
 results/   Summary tables (CSV): convergence, fixed effects, variance components, R2, LOO
 figures/   Plots; figures/pub holds the publication figures
 fits/       brms model objects (gitignored — regenerate via the scripts)
@@ -52,8 +59,10 @@ finally the figures:
 ```r
 source("scripts/00_data_preparation.R")   # requires the raw .csv.gz in data/
 
-# A1b — community colour
+# A1b — community colour (primary; run before A1a so its fits exist for the LOO)
 source("scripts/A1b_01_setup.R"); source("scripts/A1b_02_fit_models.R"); source("scripts/A1b_03_diagnostics_summary.R")
+# A1a — community colour extension (land use x trophic and x mass); LOO vs A1b
+source("scripts/A1a_01_setup.R"); source("scripts/A1a_02_fit_models.R"); source("scripts/A1a_03_diagnostics_summary.R")
 # A2c — relative abundance (reuses A3 tree-matching)
 source("scripts/A2c_01_setup.R"); source("scripts/A2c_02_fit_models.R"); source("scripts/A2c_03_diagnostics_summary.R")
 # A2d — paired-difference abundance change
