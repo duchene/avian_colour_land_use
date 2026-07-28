@@ -30,6 +30,29 @@ fulldat$dichrodiff <- fulldat$LociUVS_male_cooney -
 fulldat$malecolcooney <- fulldat$LociUVS_male_cooney
 
 # ----------------------------------------------------------
+# Compute colour response variables (Dale metrics)
+# ----------------------------------------------------------
+# Dale male/female plumage scores (Dale et al. 2015), the parallel of
+# the Cooney UVS metrics above. Used by the B-family analyses (B1a, B1b,
+# B2c, B2d, B3), which mirror A1a/A1b/A2c/A2d/A3 with Dale colour.
+
+# Mean plumage colour (average of male + female)
+fulldat$meancoldale <- rowMeans(fulldat[, c("Male_plumage_score_dale",
+                                            "Female_plumage_score_dale")],
+                                na.rm = TRUE)
+
+# Sexual dichromatism, ratio (male / female)
+fulldat$dichrodale <- fulldat$Male_plumage_score_dale /
+                      fulldat$Female_plumage_score_dale
+
+# Sexual dichromatism, absolute difference (male - female)
+fulldat$dichrodiffdale <- fulldat$Male_plumage_score_dale -
+                          fulldat$Female_plumage_score_dale
+
+# Male plumage colour only
+fulldat$malecoldale <- fulldat$Male_plumage_score_dale
+
+# ----------------------------------------------------------
 # Simplified biome classification (11 -> 4 levels)
 # ----------------------------------------------------------
 # Reduces parameter count and enables Biome x Land-use interaction

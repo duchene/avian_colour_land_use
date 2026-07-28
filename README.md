@@ -35,11 +35,18 @@ are reported.
 Colour is summarised by four metrics: mean colourfulness, male conspicuousness, the
 sexual dichromatism ratio, and the sexual dichromatism difference.
 
+Every focal analysis has a Dale-colour counterpart, prefixed **B**: B1a, B1b, B2c, B2d,
+and B3 mirror A1a, A1b, A2c, A2d, and A3, with Dale et al. plumage scores in place of
+the Cooney UVS metrics. Same data, priors, sampler, random structure, and metric sets,
+differing only in the colour source and the `B`-prefixed outputs. This tests whether the
+findings hold under an independent colour-scoring system.
+
 ## Structure
 
 ```
 data/      Analytical dataset (present.csv), raw data (.csv.gz), phylogeny (BBtree2.tre)
-scripts/   R scripts: data prep, analyses (A1a / A1b / A2c / A2d / A3, + A2e/A2f), figures
+scripts/   R scripts: data prep, analyses (A1a / A1b / A2c / A2d / A3, + A2e/A2f),
+           Dale counterparts (B1a / B1b / B2c / B2d / B3), figures
 results/   Summary tables (CSV): convergence, fixed effects, variance components, R2, LOO
 figures/   Plots; figures/pub holds the publication figures
 fits/       brms model objects (gitignored — regenerate via the scripts)
@@ -72,6 +79,15 @@ source("scripts/A3_01_setup.R"); source("scripts/A3_02_fit_models.R"); source("s
 
 # Sensitivity checks (three-way interaction)
 source("scripts/A2e_3way_sensitivity.R"); source("scripts/A2f_3way_sensitivity.R")
+
+# --- Dale (B) family: the same analyses with Dale colour ---
+# 00_data_preparation.R (above) now also writes the Dale metrics into present.csv.
+# Run B1b before B1a (B1a's LOO needs the B1b fits), as with A1b/A1a.
+source("scripts/B1b_01_setup.R"); source("scripts/B1b_02_fit_models.R"); source("scripts/B1b_03_diagnostics_summary.R")
+source("scripts/B1a_01_setup.R"); source("scripts/B1a_02_fit_models.R"); source("scripts/B1a_03_diagnostics_summary.R")
+source("scripts/B2c_01_setup.R"); source("scripts/B2c_02_fit_models.R"); source("scripts/B2c_03_diagnostics_summary.R")
+source("scripts/B2d_01_setup.R"); source("scripts/B2d_02_fit_models.R"); source("scripts/B2d_03_diagnostics_summary.R")
+source("scripts/B3_01_setup.R"); source("scripts/B3_02_fit_models.R"); source("scripts/B3_03_diagnostics_summary.R")
 
 # Publication figures
 source("scripts/pub_figures.R")

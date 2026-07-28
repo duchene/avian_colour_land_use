@@ -610,6 +610,51 @@ To justify reporting the 2-way models, the **full three-way** interaction `z_col
 
 **Outstanding:** optionally extend A2c/A2d to meancolcooney + dichrocooney (confirm the pattern across all four metrics). The manuscript (`draft_methods_results.txt`) and `README.md` now cover A1a, A1b, A2c, A2d, and A3, with A1a as Figure 3.
 
+## B family: Dale-colour replication (B1a, B1b, B2c, B2d, B3)
+
+**Status:** prepared 2026-07-28, not yet fitted. All 15 scripts written and all five
+setups verified against their A counterparts.
+
+The B family repeats every focal analysis with Dale et al. (2015) plumage scores in place
+of the Cooney UVS metrics, as an independent-colour-source robustness check. Each B
+analysis mirrors its A counterpart exactly (data, sparse-cell collapse, phylogenetic
+matching, priors, sampler, and random structure), differing only in the colour columns
+and the `B`-prefixed outputs and fits. Mapping: B1a from A1a, B1b from A1b, B2c from A2c,
+B2d from A2d, B3 from A3. The B1a-vs-B1b LOO is the Dale analogue of A1a-vs-A1b.
+
+### Dale metrics (added in 00_data_preparation.R)
+
+- `meancoldale` = mean(Male_plumage_score_dale, Female_plumage_score_dale), lognormal
+- `malecoldale` = Male_plumage_score_dale, lognormal
+- `dichrodale` = Male_plumage_score_dale / Female_plumage_score_dale, lognormal (ratio)
+- `dichrodiffdale` = Male_plumage_score_dale - Female_plumage_score_dale, gaussian (difference)
+
+Dale scores are positive (male 34 to 74, female 34 to 72), the difference ranges -7.9 to
+34, so the families match the Cooney set (lognormal for the three positive metrics,
+Gaussian for the difference). Coverage is slightly better than Cooney: 1,679 species have
+a Dale male score vs 1,530 for Cooney, so the B runs drop fewer records to colour-NA.
+present.csv now carries the four Dale columns, added without changing any existing column
+or row (verified: all 85 original columns byte-identical after regeneration).
+
+### Metric sets (like-for-like with A)
+
+- B1a, B1b, B3: all four Dale metrics.
+- B2c, B2d: `z_malecoldale` and `z_dichrodiffdale`. Colour enters standardised, so the
+  predictor scale is identical to the Cooney runs.
+
+Priors, families, sampler settings, and the sparse-cell collapse are all carried over
+unchanged from the A scripts.
+
+### Setup verification (2026-07-28)
+
+Setups reproduce the A pipelines. B1b and B1a use 34,653 records (SS 59, SSB 361, SSBS
+3,716). B2c uses 27,720 records and 1,375 tips. B2d uses 54,003 records and 1,167 tips
+across 40 studies, with Temperate Open × Plantation at 242 records and no collapse, as in
+A2d. B3 matches 1,391 tips, with Dale colour present for about 1,387 of them, more than
+A3's 1,254, reflecting Dale's broader coverage. Fits are pending. Runtimes mirror the A
+family: the no-phylogeny B1a and B1b are cheap, each phylogenetic fit (B2c, B2d, B3)
+takes a few hours.
+
 ## Summary interpretation (A1 + A2 + A2b + A3)
 
 All analyses use Primary vegetation as the reference level. Land use does not directly shift community colour in a simple way. Effects are mediated by biome, trophic ecology, and body mass. Colourfulness (mean/male colour) and sexual dichromatism (dichro ratio, dichrodiff) often show contrasting patterns:
