@@ -44,13 +44,22 @@ findings hold under an independent colour-scoring system.
 ## Structure
 
 ```
-data/      Analytical dataset (present.csv), raw data (.csv.gz), phylogeny (BBtree2.tre)
-scripts/   R scripts: data prep, analyses (A1a / A1b / A2c / A2d / A3, + A2e/A2f),
-           Dale counterparts (B1a / B1b / B2c / B2d / B3), figures
-results/   Summary tables (CSV): convergence, fixed effects, variance components, R2, LOO
-figures/   Plots; figures/pub holds the publication figures
-fits/       brms model objects (gitignored — regenerate via the scripts)
+data/            Analytical dataset (present.csv), raw data (.csv.gz), phylogeny (BBtree2.tre)
+scripts/         Shared data prep (00_*.R) at the root, then two parallel families:
+  cooney/        Cooney-colour analyses A1a / A1b / A2 / A2b / A2c / A2d / A2e / A2f / A3, pub_figures.R
+  dale/          Dale-colour analyses B1a / B1b / B2c / B2d / B3, pub_figures_dale.R
+results/
+  cooney/        Cooney (A) summary tables (CSV): convergence, fixed effects, variance, R2, LOO
+  dale/          Dale (B) summary tables, same set
+figures/
+  pub/cooney/    Cooney publication figures (Figures 1-8)
+  pub/dale/       Dale publication figures (parallel numbering; Figure 4 has no Dale counterpart)
+  cooney/, dale/ Per-analysis diagnostic plots; desc_* descriptive plots at the root
+fits/            brms model objects (gitignored, kept flat and prefixed — regenerate via the scripts)
 ```
+
+The Cooney (A) and Dale (B) families are deliberately kept separate on disk: same
+pipeline, one folder each, so the two colour systems never share an output path.
 
 ## Requirements
 
@@ -64,33 +73,33 @@ then run each focal analysis (setup → fit → diagnostics), the sensitivity ch
 finally the figures:
 
 ```r
-source("scripts/00_data_preparation.R")   # requires the raw .csv.gz in data/
+source("scripts/00_data_preparation.R")   # requires the raw .csv.gz in data/; writes both colour systems
 
+# --- Cooney (A) family: scripts/cooney/ ---
 # A1b — community colour (primary; run before A1a so its fits exist for the LOO)
-source("scripts/A1b_01_setup.R"); source("scripts/A1b_02_fit_models.R"); source("scripts/A1b_03_diagnostics_summary.R")
+source("scripts/cooney/A1b_01_setup.R"); source("scripts/cooney/A1b_02_fit_models.R"); source("scripts/cooney/A1b_03_diagnostics_summary.R")
 # A1a — community colour extension (land use x trophic and x mass); LOO vs A1b
-source("scripts/A1a_01_setup.R"); source("scripts/A1a_02_fit_models.R"); source("scripts/A1a_03_diagnostics_summary.R")
+source("scripts/cooney/A1a_01_setup.R"); source("scripts/cooney/A1a_02_fit_models.R"); source("scripts/cooney/A1a_03_diagnostics_summary.R")
 # A2c — relative abundance (reuses A3 tree-matching)
-source("scripts/A2c_01_setup.R"); source("scripts/A2c_02_fit_models.R"); source("scripts/A2c_03_diagnostics_summary.R")
+source("scripts/cooney/A2c_01_setup.R"); source("scripts/cooney/A2c_02_fit_models.R"); source("scripts/cooney/A2c_03_diagnostics_summary.R")
 # A2d — paired-difference abundance change
-source("scripts/A2d_01_setup.R"); source("scripts/A2d_02_fit_models.R"); source("scripts/A2d_03_diagnostics_summary.R")
+source("scripts/cooney/A2d_01_setup.R"); source("scripts/cooney/A2d_02_fit_models.R"); source("scripts/cooney/A2d_03_diagnostics_summary.R")
 # A3 — phylogenetic regression
-source("scripts/A3_01_setup.R"); source("scripts/A3_02_fit_models.R"); source("scripts/A3_03_diagnostics_summary.R")
-
+source("scripts/cooney/A3_01_setup.R"); source("scripts/cooney/A3_02_fit_models.R"); source("scripts/cooney/A3_03_diagnostics_summary.R")
 # Sensitivity checks (three-way interaction)
-source("scripts/A2e_3way_sensitivity.R"); source("scripts/A2f_3way_sensitivity.R")
+source("scripts/cooney/A2e_3way_sensitivity.R"); source("scripts/cooney/A2f_3way_sensitivity.R")
+# Cooney publication figures
+source("scripts/cooney/pub_figures.R")
 
-# --- Dale (B) family: the same analyses with Dale colour ---
-# 00_data_preparation.R (above) now also writes the Dale metrics into present.csv.
+# --- Dale (B) family: scripts/dale/, the same analyses with Dale colour ---
 # Run B1b before B1a (B1a's LOO needs the B1b fits), as with A1b/A1a.
-source("scripts/B1b_01_setup.R"); source("scripts/B1b_02_fit_models.R"); source("scripts/B1b_03_diagnostics_summary.R")
-source("scripts/B1a_01_setup.R"); source("scripts/B1a_02_fit_models.R"); source("scripts/B1a_03_diagnostics_summary.R")
-source("scripts/B2c_01_setup.R"); source("scripts/B2c_02_fit_models.R"); source("scripts/B2c_03_diagnostics_summary.R")
-source("scripts/B2d_01_setup.R"); source("scripts/B2d_02_fit_models.R"); source("scripts/B2d_03_diagnostics_summary.R")
-source("scripts/B3_01_setup.R"); source("scripts/B3_02_fit_models.R"); source("scripts/B3_03_diagnostics_summary.R")
-
-# Publication figures
-source("scripts/pub_figures.R")
+source("scripts/dale/B1b_01_setup.R"); source("scripts/dale/B1b_02_fit_models.R"); source("scripts/dale/B1b_03_diagnostics_summary.R")
+source("scripts/dale/B1a_01_setup.R"); source("scripts/dale/B1a_02_fit_models.R"); source("scripts/dale/B1a_03_diagnostics_summary.R")
+source("scripts/dale/B2c_01_setup.R"); source("scripts/dale/B2c_02_fit_models.R"); source("scripts/dale/B2c_03_diagnostics_summary.R")
+source("scripts/dale/B2d_01_setup.R"); source("scripts/dale/B2d_02_fit_models.R"); source("scripts/dale/B2d_03_diagnostics_summary.R")
+source("scripts/dale/B3_01_setup.R"); source("scripts/dale/B3_02_fit_models.R"); source("scripts/dale/B3_03_diagnostics_summary.R")
+# Dale publication figures
+source("scripts/dale/pub_figures_dale.R")
 ```
 
 The phylogenetic models (A2c/A2d and their sensitivity checks) each take a few hours;

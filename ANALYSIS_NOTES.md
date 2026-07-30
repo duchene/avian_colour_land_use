@@ -612,8 +612,9 @@ To justify reporting the 2-way models, the **full three-way** interaction `z_col
 
 ## B family: Dale-colour replication (B1a, B1b, B2c, B2d, B3)
 
-**Status:** prepared 2026-07-28, not yet fitted. All 15 scripts written and all five
-setups verified against their A counterparts.
+**Status:** prepared 2026-07-28, fitted 2026-07-29/30. All five analyses converged and
+their results are recorded below. Scripts live in `scripts/dale/`, outputs in
+`results/dale/` and `figures/pub/dale/` (fits stay flat and `B`-prefixed in `fits/`).
 
 The B family repeats every focal analysis with Dale et al. (2015) plumage scores in place
 of the Cooney UVS metrics, as an independent-colour-source robustness check. Each B
@@ -651,11 +652,73 @@ Setups reproduce the A pipelines. B1b and B1a use 34,653 records (SS 59, SSB 361
 3,716). B2c uses 27,720 records and 1,375 tips. B2d uses 54,003 records and 1,167 tips
 across 40 studies, with Temperate Open × Plantation at 242 records and no collapse, as in
 A2d. B3 matches 1,391 tips, with Dale colour present for about 1,387 of them, more than
-A3's 1,254, reflecting Dale's broader coverage. Fits are pending. Runtimes mirror the A
-family: the no-phylogeny B1a and B1b are cheap, each phylogenetic fit (B2c, B2d, B3)
-takes a few hours.
+A3's 1,254, reflecting Dale's broader coverage.
 
-## Summary interpretation (A1 + A2 + A2b + A3)
+### B results (fitted 2026-07-29/30)
+
+All five analyses converged (max Rhat below 1.008 for B1a/B1b, below 1.005 for B2c and B3;
+B2d's z_malecoldale reached 1.014, marginally over target but with zero divergences and
+adequate ESS). Reported per analysis, with the Cooney counterpart in parentheses.
+
+- **B1b / B1a (community colour).** As with A1a/A1b, LOO favours the full-interaction B1a
+  over B1b for all four metrics (elpd difference +137 to +398). The biome x land-use and
+  body mass x land-use structure replicates: mass x land-use interactions are credible in
+  the same directions (larger birds relatively duller in primary vegetation, that deficit
+  eroded in cropland and pasture, and more dichromatic in plantations). What does **not**
+  replicate is the trophic story. Under Dale there is **no credible trophic x land-use
+  interaction at all**: the headline Plantation forest x Frugivore effect is null for every
+  metric (mean -0.07 [-0.19, 0.04], male -0.08 [-0.21, 0.06]), against the credibly negative
+  Cooney values (-0.35, -0.36), and the pasture nectarivore dichromatism collapse also
+  disappears. Dale community-colour R2 is markedly lower (mean 10.0%, male 9.2%) than Cooney
+  (mean/male roughly 17-19%), consistent with Dale scores carrying less land-use-linked
+  signal at the community level.
+
+- **B2c (relative abundance).** The structural result matches A2c exactly: R2 = 51.7%
+  (= A2c), variance dominated by phylogeny (sd 0.94) and study (sd 0.94), not colour. **But
+  the substantive conclusion diverges.** Where A2c found every colour x land-use and colour
+  x biome term null once biome and phylogeny were included, B2c has several credible ones:
+  dichromatism-difference main effect -0.048, dichrodiff x Cropland +0.063, dichrodiff x
+  Pasture +0.051, dichrodiff x Temperate Forest +0.093, dichrodiff x Tropical Open +0.085,
+  and male-colour x Cropland +0.061. So under Dale, more dichromatic species stay credibly
+  more abundant in cropland and pasture even under the full biome + phylogeny controls,
+  partially reviving the naive A2 pattern that A2c had erased. The one Cooney signal that
+  survived in A2c (male colour x Tropical Open -0.09) does not replicate (-0.004, null).
+  Magnitudes are small (about 0.05 on the standardised log scale). This is the single
+  genuine A-versus-B divergence and it is metric-dependent. See Figure 5 (Dale).
+
+- **B2d (abundance change).** Reinforces A2d rather than B2c. R2 = 22.8%, phylogeny-dominated
+  (sd 0.069, everything else near zero). As in A2d the credible colour interactions are of
+  trivial magnitude (0.002 to 0.009) with mixed signs, so the conclusion holds: once each
+  species is differenced against its own primary-vegetation baseline, colour barely moves
+  abundance change in any land use.
+
+- **B3 (phylogenetic regression).** Reinforces A3, more cleanly. R2 is 0.75 to 0.84 (above
+  A3), reflecting strong phylogenetic conservatism of Dale colour. The land-use-association
+  coefficients are all large and positive but statistically indistinguishable from one
+  another (about 3.8 to 3.9 across cropland, plantation, primary, pasture, secondary), as in
+  A3 (about 4.4 to 4.7). Under Dale too, which land uses a species associates with does not
+  predict its colour once phylogeny is accounted for.
+
+### A-versus-B comparison (summary)
+
+Three of the four analyses reinforce the Cooney manuscript under an independent colour
+system. The community-colour biome/mass structure (B1b/B1a), the phylogeny-and-study
+dominance of abundance (B2c/B2d variance), the near-null abundance-change result (B2d), and
+the phylogenetic-association result (B3) all replicate. Two findings do not carry over. (1)
+The trophic x land-use interactions that are central to Analysis 1 under Cooney (Plantation
+x Frugivore dulling, pasture nectarivore dichromatism collapse) vanish under Dale. (2) The
+Analysis 2 conclusion that colour does not predict relative abundance once biome and
+phylogeny are controlled is softened: B2c retains credible dichromatism x land-use effects
+(cropland, pasture) that A2c had removed, though small. Both divergences are metric-specific
+and should be reported as such: the Cooney UVS metrics and the Dale plumage scores capture
+overlapping but non-identical aspects of colour, and the guild- and abundance-level signals
+are the ones most sensitive to that choice.
+
+## Summary interpretation, Cooney family (A1 + A2 + A2b + A3)
+
+This synthesis is for the Cooney UVS analyses. The Dale replication and the point-by-point
+A-versus-B comparison are in the "B family" section above; the two colour systems are kept
+separate throughout so their conclusions are never conflated.
 
 All analyses use Primary vegetation as the reference level. Land use does not directly shift community colour in a simple way. Effects are mediated by biome, trophic ecology, and body mass. Colourfulness (mean/male colour) and sexual dichromatism (dichro ratio, dichrodiff) often show contrasting patterns:
 

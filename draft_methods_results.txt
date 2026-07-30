@@ -2,7 +2,10 @@ METHODS AND RESULTS
 Draft: avian plumage colour and land-use change
 ================================================================================
 Four analyses (community colour, colour-abundance, colour-abundance change, and a
-phylogenetic test). Model codes in parentheses map to scripts and ANALYSIS_NOTES.md.
+phylogenetic test). Each is run twice: once with Cooney UVS colour (the A analyses,
+primary) and once with the independent Dale plumage scores (the B analyses, a
+colour-source robustness check), reported in separate sections. Model codes in
+parentheses map to scripts and ANALYSIS_NOTES.md.
 
 METHODS
 ================================================================================
@@ -13,11 +16,14 @@ We combined the PREDICTS database (site-level bird survey records from studies
 spanning multiple land-use types worldwide) with Cooney et al.'s spectrophotometric
 plumage measurements (ultraviolet-sensitive [UVS] visual model, LociUVS scores) and
 AVONET traits (body mass, trophic niche). The merged dataset comprised 216,834
-records from 1,703 passerine species. All colour metrics used the UVS model (Dale
-scores excluded). We derived four species-level colour variables: mean colourfulness
-(mean of male and female LociUVS), male conspicuousness (male LociUVS), the sexual
-dichromatism ratio (male / female LociUVS), and the sexual dichromatism difference
-(male minus female LociUVS, which can be negative).
+records from 1,703 passerine species. Our primary (A) analyses used the Cooney UVS
+model (LociUVS scores). We derived four species-level colour variables: mean
+colourfulness (mean of male and female LociUVS), male conspicuousness (male LociUVS),
+the sexual dichromatism ratio (male / female LociUVS), and the sexual dichromatism
+difference (male minus female LociUVS, which can be negative). We then repeated every
+analysis with the independent Dale et al. (2015) plumage scores in place of the UVS
+metrics, as a colour-source robustness check reported separately (the B analyses, see
+Dale-colour replication).
 
 Site-level analyses used records from studies containing primary vegetation plus at
 least one other land use (n = 34,653, "present.csv"). Land use (five levels) was
@@ -132,6 +138,19 @@ max_treedepth = 12, for n = 1,254 species. All models converged (0 divergences, 
 Rhat <= 1.01), though the dichromatism difference showed low E-BFMI and is interpreted
 cautiously.
 
+Dale-colour replication (B analyses)
+
+To test whether the findings depend on the colour-scoring system, we repeated all four
+analyses with Dale et al.'s plumage scores in place of the Cooney UVS metrics, holding
+the data, priors, sampler, random structure, and metric families identical. These are
+the B analyses: B1b and B1a replicate A1b and A1a, B2c replicates A2c, B2d replicates
+A2d, and B3 replicates A3. From each colour system we derived the same four responses
+(mean colourfulness, male conspicuousness, the dichromatism ratio, and the dichromatism
+difference), with the same lognormal and Gaussian families. Dale scores cover slightly
+more species than the UVS metrics, so the B runs retained marginally more records. The B
+outputs are kept separate from the A analyses throughout (scripts/dale, results/dale,
+figures/pub/dale).
+
 
 ================================================================================
 RESULTS
@@ -227,6 +246,47 @@ lowest expected colour (mean 4.42, male 4.44 on the log scale) and those associa
 with Cropland the highest (4.67, 4.68), a Pasture-Primary gap of about -0.15. No
 land-use association credibly predicted either dichromatism metric.
 
+Dale-colour replication (B analyses)
+
+Repeating every analysis with the Dale plumage scores reproduced most of the Cooney
+results but not all, and the exceptions are informative. All five B analyses converged.
+
+Community colour (B1b, B1a). As under Cooney, LOO favoured the full-interaction model
+B1a over B1b for all four responses (expected log predictive density higher by 137 to
+398). The biome and body-mass structure replicated, including the weakening of the
+size-colour relationship in cropland and pasture. The trophic story did not. Under Dale
+there was no credible trophic x land-use interaction for any metric. The Plantation
+forest x Frugivore dulling that is the clearest guild effect under Cooney was null (mean
+colour -0.07 [-0.19, 0.04], male -0.08 [-0.21, 0.06]), and the collapse of nectarivore
+dichromatism in pasture likewise disappeared. Dale community-colour R2 was also lower
+(10.0% mean, 9.2% male, against roughly 17 to 19% under Cooney), consistent with the
+Dale scores carrying less land-use-linked signal at the community level.
+
+Relative abundance (B2c). The structure matched A2c exactly (Bayesian R2 51.7%, variance
+dominated by phylogeny and study), but the conclusion diverged. Where A2c found colour
+irrelevant to relative abundance once biome and phylogeny were included, B2c retained
+several credible colour effects. More dichromatic species were credibly more abundant in
+cropland (dichromatism difference x Cropland +0.063) and pasture (+0.051), more
+conspicuous males were more abundant in cropland (+0.061), and there was a credible
+negative dichromatism main effect (-0.048) alongside credible dichromatism x biome
+terms. These magnitudes are small (about 0.05 on the standardised log scale), but they
+partially revive the naive colour x land-use pattern that the Cooney model had removed.
+The one Cooney biome-level signal (males scarcer in tropical-open) did not replicate.
+
+Abundance change (B2d) and phylogenetic association (B3). Both reinforced their Cooney
+counterparts. B2d again showed colour explaining little of abundance change (Bayesian R2
+22.8%, phylogeny-dominated), with only trivially small colour x biome and colour x
+land-use terms. B3 again found colour strongly phylogenetically conserved (Bayesian R2
+0.75 to 0.84) with land-use association coefficients statistically indistinguishable
+across land uses, so colour did not track land-use association once phylogeny was
+accounted for.
+
+In short, three of the four analyses replicate under an independent colour system. Two
+Cooney findings are metric-specific: the guild-level land-use interactions of Analysis 1,
+which vanish under Dale, and the Analysis 2 conclusion that colour does not predict
+relative abundance, which softens under Dale because more dichromatic species remain
+credibly more abundant in cropland and pasture even with biome and phylogeny controlled.
+
 Synthesis
 
 Plumage colour is a strongly phylogenetically conserved species trait (Analysis 4), and
@@ -248,7 +308,15 @@ or loses under land-use conversion (Analysis 3). That change is governed by line
 and study structure rather than colour. Together, the analyses provide little support
 for plumage colour itself acting as a filter on how passerine communities respond to
 land-use change, once the biome context and evolutionary non-independence of colour
-are properly controlled.
+are properly controlled. Repeating the whole pipeline with an independent colour-scoring
+system (the Dale analyses) supports this for the phylogenetic conservatism of colour,
+the abundance-change result, and the phylogenetic association, but flags two
+metric-specific caveats. The guild-specific land-use interactions of Analysis 1 do not
+reproduce under Dale, and the claim that colour does not predict relative abundance holds
+only in part, because more dichromatic species remain credibly more abundant in cropland
+and pasture under Dale even with biome and phylogeny controlled. The core message, that
+colour is not a general filter on community responses to land use, is robust, but the
+guild-level and relative-abundance signals should be read as colour-metric dependent.
 
 ================================================================================
 END OF DRAFT
