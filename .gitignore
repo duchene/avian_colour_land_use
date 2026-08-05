@@ -9,3 +9,6 @@ data/aves_predicts_passerines_dale_cooney_avonet.csv
 .RData
 .Rproj.user/
 *.Rproj
+
+# macOS
+.DS_Store
