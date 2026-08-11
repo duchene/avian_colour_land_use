@@ -7,12 +7,17 @@
 
 library(brms)
 library(posterior)
+source("scripts/00_config.R")
 library(tidyverse)
 
 load("fits/B1b_all_fits.RData")   # `fits` (named list)
 dir.create("results/dale", showWarnings = FALSE)
 
-EMPTY_CELL <- "Biome4TemperateOpen:Predominant_simplePlantationforest"
+# Prior-only biome x land-use cells, derived from the fitted data.
+load("fits/B1b_model_setup.RData")   # `dat`
+EMPTY_CELLS <- empty_cell_params(dat)
+cat("Prior-only empty cells:",
+    if (length(EMPTY_CELLS)) paste(EMPTY_CELLS, collapse = ", ") else "none", "\n")
 
 conv <- map_dfr(names(fits), function(tag) {
   fit <- fits[[tag]]
@@ -34,7 +39,7 @@ fixef_tbl <- map_dfr(names(fits), function(tag) {
   fx <- as.data.frame(fixef(fits[[tag]]))
   fx$parameter <- rownames(fx)
   fx$model <- tag
-  fx$prior_only_empty_cell <- grepl(EMPTY_CELL, fx$parameter, fixed = TRUE)
+  fx$prior_only_empty_cell <- fx$parameter %in% EMPTY_CELLS
   as_tibble(fx)
 }) %>%
   select(model, parameter, Estimate, Est.Error, Q2.5, Q97.5, prior_only_empty_cell)

@@ -8,12 +8,17 @@
 
 library(brms)
 library(posterior)
+source("scripts/00_config.R")
 library(tidyverse)
 
 load("fits/B2c_all_fits.RData")   # `fits` (named list, one per colour var)
 dir.create("results/dale", showWarnings = FALSE)
 
-EMPTY_CELL <- "Biome4TemperateOpen:Predominant_simplePlantationforest"
+# Prior-only biome x land-use cells, derived from the fitted data.
+load("fits/B2c_model_setup.RData")   # `dat`
+EMPTY_CELLS <- empty_cell_params(dat)
+cat("Prior-only empty cells:",
+    if (length(EMPTY_CELLS)) paste(EMPTY_CELLS, collapse = ", ") else "none", "\n")
 
 conv <- map_dfr(names(fits), function(cv) {
   fit <- fits[[cv]]; s <- summary(fit)
@@ -33,7 +38,7 @@ cat("Convergence:\n"); print(conv)
 fixef_tbl <- map_dfr(names(fits), function(cv) {
   fx <- as.data.frame(fixef(fits[[cv]]))
   fx$parameter <- rownames(fx); fx$model <- cv
-  fx$prior_only_empty_cell <- grepl(EMPTY_CELL, fx$parameter, fixed = TRUE)
+  fx$prior_only_empty_cell <- fx$parameter %in% EMPTY_CELLS
   as_tibble(fx)
 }) %>% select(model, parameter, Estimate, Est.Error, Q2.5, Q97.5, prior_only_empty_cell)
 write_csv(fixef_tbl, "results/dale/B2c_fixed_effects.csv")

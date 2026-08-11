@@ -14,6 +14,7 @@
 
 library(brms)
 library(posterior)
+source("scripts/00_config.R")
 library(tidyverse)
 library(loo)
 
@@ -21,10 +22,11 @@ load("fits/A1a_all_fits.RData")   # `fits` (named by response, single variant)
 responses <- names(fits)
 dir.create("results/cooney", showWarnings = FALSE)
 
-# Empty interaction cell after the Temperate Open x Plantation collapse
-# (prior-only, flagged not interpreted); Herbivore terrestrial has N=2
-# records so its land-use interactions are prior-driven and flagged too.
-EMPTY_CELL     <- "Biome4TemperateOpen:Predominant_simplePlantationforest"
+# Prior-only biome x land-use cells, derived from the fitted data.
+load("fits/A1a_model_setup.RData")   # `dat`
+EMPTY_CELLS <- empty_cell_params(dat)
+cat("Prior-only empty cells:",
+    if (length(EMPTY_CELLS)) paste(EMPTY_CELLS, collapse = ", ") else "none", "\n")
 SPARSE_TROPHIC <- "Trophic.NicheHerbivoreterrestrial"
 
 # ---- convergence ------------------------------------------------------------
@@ -49,7 +51,7 @@ fixef_tbl <- map_dfr(responses, function(tag) {
   fx <- as.data.frame(fixef(fits[[tag]]))
   fx$parameter <- rownames(fx)
   fx$model <- tag
-  fx$prior_only_empty_cell <- grepl(EMPTY_CELL, fx$parameter, fixed = TRUE)
+  fx$prior_only_empty_cell <- fx$parameter %in% EMPTY_CELLS
   fx$sparse_trophic        <- grepl(SPARSE_TROPHIC, fx$parameter, fixed = TRUE)
   as_tibble(fx)
 }) %>%

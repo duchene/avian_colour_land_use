@@ -7,25 +7,17 @@
 
 library(brms)
 library(posterior)
+source("scripts/00_config.R")
 library(tidyverse)
 
 load("fits/A2d_all_fits.RData")     # `fits` (named list, one per colour var)
 load("fits/A2d_model_setup.RData")  # `dat_final` — to detect empty biome x land-use cells
 dir.create("results/cooney", showWarnings = FALSE)
 
-# Detect empty biome x land-use cells from the data and map them to the
-# corresponding interaction parameter names (non-reference combos only).
-# Such coefficients are prior-only and are flagged, not interpreted.
-ref_biome <- "Tropical Forest"; ref_lu <- "Secondary"
-ct0 <- table(dat_final$Biome4, dat_final$Predominant_simple)
-empties <- which(ct0 == 0, arr.ind = TRUE)
-EMPTY_PARAMS <- character(0)
-for (i in seq_len(nrow(empties))) {
-  b <- rownames(ct0)[empties[i, 1]]; l <- colnames(ct0)[empties[i, 2]]
-  if (b != ref_biome && l != ref_lu)
-    EMPTY_PARAMS <- c(EMPTY_PARAMS,
-      paste0("Biome4", gsub(" ", "", b), ":Predominant_simple", gsub(" ", "", l)))
-}
+# Prior-only biome x land-use cells, derived from the fitted data.
+# ref_lu is Secondary here: primary vegetation is absorbed into the
+# paired-difference response, so it is not a factor level.
+EMPTY_PARAMS <- empty_cell_params(dat_final, ref_lu = "Secondary")
 cat("Empty (prior-only) interaction cells flagged:",
     if (length(EMPTY_PARAMS)) paste(EMPTY_PARAMS, collapse = ", ") else "none", "\n")
 

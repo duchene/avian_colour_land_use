@@ -7,6 +7,7 @@
 # Reuses the A2d setup + firmer sampler settings (matching the
 # 2026-07-03 A2d refit) so the comparison is fair.
 # ============================================================
+source("scripts/00_config.R")
 library(tidyverse); library(brms); library(cmdstanr); library(posterior)
 options(brms.backend = "cmdstanr")
 dir.create("results/cooney", showWarnings = FALSE)
@@ -53,12 +54,7 @@ conv <- tibble(model = "A2f_3way_malecolcooney",
 write_csv(conv, "results/cooney/A2f_convergence.csv"); print(conv)
 
 # ---- fixed effects with empty-cell flag ----
-ct <- table(d$Biome4, d$Predominant_simple); empt <- which(ct == 0, arr.ind = TRUE)
-emptns <- character(0)
-for (i in seq_len(nrow(empt))) {
-  b <- rownames(ct)[empt[i,1]]; l <- colnames(ct)[empt[i,2]]
-  emptns <- c(emptns, paste0("Biome4", gsub(" ", "", b), ":Predominant_simple", gsub(" ", "", l)))
-}
+emptns <- empty_cell_params(d, ref_lu = "Secondary")
 fx <- as.data.frame(fixef(fit3)); fx$parameter <- rownames(fx)
 fx$prior_only_empty_cell <- vapply(fx$parameter,
   function(p) any(vapply(emptns, function(e) grepl(e, p, fixed = TRUE), logical(1))), logical(1))

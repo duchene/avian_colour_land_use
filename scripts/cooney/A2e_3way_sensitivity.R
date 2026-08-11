@@ -6,6 +6,7 @@
 # Compared against the reported 2-way A2c model via LOO.
 # Reuses the A2c setup + sampler settings so the comparison is fair.
 # ============================================================
+source("scripts/00_config.R")
 library(tidyverse); library(brms); library(cmdstanr); library(posterior)
 options(brms.backend = "cmdstanr")
 dir.create("results/cooney", showWarnings = FALSE)
@@ -52,12 +53,7 @@ conv <- tibble(model = "A2e_3way_malecolcooney",
 write_csv(conv, "results/cooney/A2e_convergence.csv"); print(conv)
 
 # ---- fixed effects with empty-cell flag (any term touching an empty biome x LU cell) ----
-ct <- table(d$Biome4, d$Predominant_simple); empt <- which(ct == 0, arr.ind = TRUE)
-emptns <- character(0)
-for (i in seq_len(nrow(empt))) {
-  b <- rownames(ct)[empt[i,1]]; l <- colnames(ct)[empt[i,2]]
-  emptns <- c(emptns, paste0("Biome4", gsub(" ", "", b), ":Predominant_simple", gsub(" ", "", l)))
-}
+emptns <- empty_cell_params(d)
 fx <- as.data.frame(fixef(fit3)); fx$parameter <- rownames(fx)
 fx$prior_only_empty_cell <- vapply(fx$parameter,
   function(p) any(vapply(emptns, function(e) grepl(e, p, fixed = TRUE), logical(1))), logical(1))

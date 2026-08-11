@@ -3,9 +3,7 @@
 # Parallels scripts/cooney/pub_figures.R exactly, using the B analyses and Dale
 # plumage metrics: B1b (community colour), B1a (guild/size interactions), B2c
 # (relative abundance), B2d (abundance change), B3 (phylogenetic association).
-# Figure numbers match their Cooney counterparts. Figure 4 (the naive A2 vs A2c
-# "vanishing" comparison) has no Dale counterpart, because there is no naive B2
-# model, so it is intentionally omitted here.
+# Figure numbers match their Cooney counterparts one-for-one (1-7).
 # Driven from results/dale/*.csv plus the B3 tree. Run: Rscript scripts/dale/pub_figures_dale.R
 
 suppressMessages({
@@ -27,7 +25,7 @@ lu_pal <- c("Primary vegetation"="#1B7837","Secondary"="#A6D96A",
             "Plantation forest"="#FEC44F","Cropland"="#D95F0E","Pasture"="#993404")
 lu_nonref  <- c("Secondary","Plantation forest","Cropland","Pasture")
 lu_full    <- c("Primary vegetation", lu_nonref)
-biome_nonref <- c("Temperate Forest","Temperate Open","Tropical Open")
+biome_nonref <- c("Temperate Forest","Tropical Open")
 resp_lab   <- c(meancoldale="Mean colour", malecoldale="Male colour",
                 dichrodale="Dichromatism ratio", dichrodiffdale="Dichromatism difference")
 resp_order <- unname(resp_lab)
@@ -38,7 +36,6 @@ cred_labs  <- c("TRUE"="yes","FALSE"="no")
 pretty_lu    <- function(x) str_replace(x, "Plantationforest", "Plantation forest")
 pretty_biome <- function(x) x |>
   str_replace("TemperateForest","Temperate Forest") |>
-  str_replace("TemperateOpen","Temperate Open") |>
   str_replace("TropicalOpen","Tropical Open") |>
   str_replace("TropicalForest","Tropical Forest")
 
@@ -175,16 +172,11 @@ try_fig({
 })
 
 # ============================================================
-# Figure 4 — no Dale counterpart (needs the naive A2 colour-only model, which
-#            has no B equivalent). Intentionally omitted; see header.
+# Figure 4 — Colour effects on abundance (B2c relative abundance, B2d change)
 # ============================================================
-
-# ============================================================
-# Figure 5 — Colour effects on abundance (B2c relative abundance, B2d change)
-# ============================================================
-message("Figure 5 ...")
+message("Figure 4 ...")
 try_fig({
-  term_levels <- c("main effect","x Temperate Forest","x Temperate Open","x Tropical Open",
+  term_levels <- c("main effect","x Temperate Forest","x Tropical Open",
                    "x Cropland","x Pasture","x Plantation forest","x Secondary")
   read_ct <- function(path, lab) read.csv(path) |> mutate(analysis = lab)
   c4 <- bind_rows(read_ct("results/dale/B2c_fixed_effects.csv","B2c (relative abundance)"),
@@ -208,13 +200,13 @@ try_fig({
     labs(x = "Colour effect on abundance / abundance change", y = NULL,
          title = "Dale colour effects on abundance: credible terms persist in B2c") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 8))
-  save_fig(fig5, "Figure_5_B2c_B2d_colour_terms", mm2in(200), mm2in(140))
+  save_fig(fig5, "Figure_4_B2c_B2d_colour_terms", mm2in(200), mm2in(140))
 })
 
 # ============================================================
-# Figure 6 — Abundance variance components (phylogeny/study dominate)
+# Figure 5 — Abundance variance components (phylogeny/study dominate)
 # ============================================================
-message("Figure 6 ...")
+message("Figure 5 ...")
 try_fig({
   vc <- bind_rows(read.csv("results/dale/B2c_variance_components.csv") |> mutate(analysis="B2c (relative abundance)"),
                   read.csv("results/dale/B2d_variance_components.csv") |> mutate(analysis="B2d (abundance change)")) |>
@@ -230,13 +222,13 @@ try_fig({
     labs(x = NULL, y = "Random-effect / residual SD",
          title = "Abundance variance is dominated by phylogeny and study, not colour (Dale)") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  save_fig(fig6, "Figure_6_variance_components", mm2in(180), mm2in(130))
+  save_fig(fig6, "Figure_5_variance_components", mm2in(180), mm2in(130))
 })
 
 # ============================================================
-# Figure 7 — B3 radial phylogenies with ancestral colour states (Dale)
+# Figure 6 — B3 radial phylogenies with ancestral colour states (Dale)
 # ============================================================
-message("Figure 7 (contMap; ~1-2 min) ...")
+message("Figure 6 (contMap; ~1-2 min) ...")
 try_fig({
   load("fits/B3_model_setup.RData")   # tree, spdat
   x_mal <- setNames(spdat$malecoldale, spdat$phylo); x_mal <- x_mal[!is.na(x_mal)]
@@ -271,9 +263,9 @@ try_fig({
 })
 
 # ============================================================
-# Figure 8 — B3 expected colour by land-use association
+# Figure 7 — B3 expected colour by land-use association
 # ============================================================
-message("Figure 8 ...")
+message("Figure 7 ...")
 try_fig({
   b3 <- read.csv("results/dale/B3_fixed_effects.csv") |>
     mutate(land_use = str_remove(parameter, "^prop_") |> str_replace_all("_", " "),
@@ -287,7 +279,7 @@ try_fig({
     labs(x = "Expected colour for a species found exclusively in that land use", y = NULL,
          title = "B3 - phylogenetic association of colour with land use (Dale)") +
     theme(axis.text.y = element_text(size = 8))
-  save_fig(fig8, "Figure_8_B3_landuse_association", mm2in(200), mm2in(140))
+  save_fig(fig8, "Figure_7_B3_landuse_association", mm2in(200), mm2in(140))
 })
 
 message("\nDone. Figures in figures/pub/dale/")
