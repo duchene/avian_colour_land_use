@@ -1,0 +1,9 @@
+model,max_rhat,min_ess_bulk,n_divergent
+meancolcooney_base,1.0058,651,0
+meancolcooney_covariate,1.0079,961,0
+dichrocooney_base,1.0051,690,0
+dichrocooney_covariate,1.0046,1039,0
+malecolcooney_base,1.0033,807,0
+malecolcooney_covariate,1.0049,864,0
+dichrodiff_base,1.0037,1337,0
+dichrodiff_covariate,1.0055,1219,0

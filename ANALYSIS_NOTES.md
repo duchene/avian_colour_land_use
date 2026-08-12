@@ -9,9 +9,18 @@ Last restructured 2026-08-11.
 
 ## Status
 
-No model has been fitted against the current dataset. `results/` and `figures/` are
-empty pending the refit. The previous outputs were all fitted on a dataset built by a
-faulty filter and are preserved only in the git tag `prefilter-results-2026-08`.
+The refit began 2026-08-11 16:08. A1b, A1a and A2c are complete and converged with zero
+divergent transitions. A2d is fitting, then A3, the A2e and A2f sensitivity checks, the
+Cooney figures, and the whole B family. Progress is logged to `logs/` (gitignored).
+
+Fitted numbers live in `results/` and are written up in `draft_methods_results.txt`.
+They are deliberately absent here, because quoting results in prose is what let this
+file drift out of step with the code.
+
+Observed runtimes on this machine (16 cores, 4 chains at 4 threads): the A1 models take
+about 20 minutes each, A2c about 80 minutes per model, and A2d about 7 hours per model.
+A2d is the constraint, at 53,551 records against A2c's 19,785, 3,500 iterations, and
+`adapt_delta` 0.95. Budget roughly two days for the full A and B sequence.
 
 ## What changed on 2026-08-11
 
@@ -246,6 +255,31 @@ editing `BIOME_MAP` in the config and refitting.
 
 **A3 dichrodiff previously produced an E-BFMI warning** below 0.3 on all four chains
 despite converging. Watch for it again.
+
+## Watchlist: results sensitive to the correction
+
+Which findings should be read cautiously, and why. This is a record of where the data
+are thin, not a summary of results.
+
+**Anything resting on pasture or cropland.** Pasture fell from 3,431 records to 619 and
+cropland from 4,577 to 2,225, because the publications that supplied most of them held
+no primary vegetation and are correctly excluded. Any effect whose credibility depends
+on those two land uses now rests on far less data, even where the interval still
+excludes zero.
+
+**The mass by land-use interactions changed sign on the corrected data**, and they sit
+squarely in the cropland and pasture cells above. Treat the direction as unsettled
+until the Dale replication is in, since B1a fits the same interaction on a different
+colour metric and offers an independent read.
+
+**Effects at the credibility boundary.** Several A1a guild interactions have intervals
+that only just exclude zero. Report the interval rather than the verdict, and do not
+build an argument on a term whose upper bound is within rounding distance of zero.
+
+**Cross-family comparison is the real test.** The A-versus-B comparison on the previous
+data found three of four analyses replicating, with the trophic interactions and part of
+the A2c conclusion not carrying over. Redo that comparison from scratch on the corrected
+fits rather than assuming the earlier verdict holds.
 
 ## Removed analyses
 

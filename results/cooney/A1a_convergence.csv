@@ -1,0 +1,5 @@
+model,max_rhat,min_ess_bulk,n_divergent
+meancolcooney,1.0114,539,0
+dichrocooney,1.0031,1325,0
+malecolcooney,1.0063,679,0
+dichrodiff,1.0045,1634,0

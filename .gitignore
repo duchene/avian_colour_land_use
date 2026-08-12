@@ -12,3 +12,6 @@ data/aves_predicts_passerines_dale_cooney_avonet.csv
 
 # macOS
 .DS_Store
+
+# Run logs (long refits)
+logs/
