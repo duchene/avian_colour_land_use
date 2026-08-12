@@ -3,7 +3,7 @@ Draft: avian plumage colour and land-use change
 ================================================================================
 Four analyses (community colour, colour-abundance, colour-abundance change, and a phylogenetic test). Each is run twice: once with Cooney UVS colour (the A analyses, primary) and once with the independent Dale plumage scores (the B analyses, a colour-source robustness check), reported in separate sections. Model codes in parentheses map to scripts and ANALYSIS_NOTES.md.
 
-STATUS, 2026-08-12. The refit on the corrected dataset is under way. Analyses 1 and 2 (A1b, A1a, A2c) are complete and written up below. Analysis 3 (A2d) is fitting, Analysis 4 (A3) and the three-way sensitivity checks are queued, and the full Dale replication follows. Sections marked PENDING will be written as each analysis lands. Every number previously reported in this draft came from a dataset built by a faulty filter and was removed rather than carried forward.
+STATUS, 2026-08-12. The refit on the corrected dataset is under way. Analyses 1 to 3 (A1b, A1a, A2c, A2d) are complete and written up below. Analysis 4 (A3) is fitting, the three-way sensitivity checks are queued, and the full Dale replication follows. Sections marked PENDING will be written as each analysis lands. Every number previously reported in this draft came from a dataset built by a faulty filter and was removed rather than carried forward.
 
 METHODS
 ================================================================================
@@ -49,7 +49,7 @@ that is, all three two-way interactions but no three-way term. Priors were as in
 
 Analysis 3: Colour and abundance change following land-use conversion (A2d)
 
-To include absences and anchor each species to its own baseline, we computed, per study, each species' mean relative abundance across primary-vegetation sites, and subtracted it from that species' relative abundance at each modified site (the paired difference). Exact-zero differences, meaning species absent from both, were dropped as uninformative. This yielded 66,225 non-zero differences, of which 54,038 were negative. Primary vegetation is thus absorbed into the response, leaving four land-use levels. For the same two colour metrics we fitted the same two-way structure as Analysis 2 with a Gaussian family (n = 50,534). Priors were Normal(0,0.5), Normal(0,0.2), and Exponential(5), and we ran 4 chains for 3,500 iterations (1,500 warmup) at adapt_delta = 0.95, max_treedepth = 12. The three-way interaction was again fitted as a sensitivity check (model A2f) and compared by LOO.
+To include absences and anchor each species to its own baseline, we computed, per study, each species' mean relative abundance across primary-vegetation sites, and subtracted it from that species' relative abundance at each modified site (the paired difference). Exact-zero differences, meaning species absent from both, were dropped as uninformative. This yielded 66,225 non-zero differences, of which 54,038 were negative. Primary vegetation is thus absorbed into the response, leaving four land-use levels. For the same two colour metrics we fitted the same two-way structure as Analysis 2 with a Gaussian family (n = 50,534). Priors were Normal(0,0.5), Normal(0,0.2), and Exponential(5), and we ran 4 chains for 3,500 iterations (1,500 warmup) at adapt_delta = 0.95, max_treedepth = 12. The three-way interaction was again fitted as a sensitivity check (model A2f) and compared by LOO. Both models converged with no divergent transitions, a maximum Rhat of 1.007, and a minimum bulk ESS of 587. The elevated intercept Rhat seen in the previous fit did not recur.
 
 Analysis 4: Phylogenetic association of colour with land use (A3)
 
@@ -97,7 +97,13 @@ What structures relative abundance is lineage and study, not colour. The model e
 
 Analysis 3: Colour and abundance change following land-use conversion (A2d)
 
-PENDING. Fitting at the time of writing.
+Colour barely moves how much abundance a species gains or loses when its habitat is converted. No colour main effect was credible, for either metric, and only one colour by land-use interaction reached credibility: male conspicuousness in plantation forest, at +0.0018 [+0.0004, +0.0032]. On a response whose residual standard deviation is 0.050 and whose values run to roughly plus or minus 0.06, an effect of 0.002 is negligible. We regard it as credible but not meaningful.
+
+Three colour by biome interactions were credible and are also small. More conspicuous males lost slightly less abundance in temperate forest (+0.0100) and tropical open habitats (+0.0086), and species with larger sex differences lost slightly less in tropical open habitats (+0.0106). These are the largest colour effects anywhere in the analysis and they still amount to about a fifth of the residual standard deviation.
+
+What does structure abundance change is lineage. The model explained 23.1% of variance, almost all of it carried by the phylogenetic random effect (sd 0.072), which exceeded the residual (sd 0.050) and dwarfed study (sd 0.015), block (sd 0.0011), and site (sd 0.0002). Related species therefore gain and lose abundance together under land-use conversion, and they do so for reasons that colour does not capture. Among land uses, only cropland showed a credible mean loss relative to the other modified types (-0.0039), and that loss was steeper still in tropical open habitats (-0.0055).
+
+Read alongside Analysis 2, the two abundance results agree. Colour does not predict a species' standing share of its community, and it does not predict how that share changes when the habitat is converted. Note the sign contrast on tropical open habitats, where more conspicuous males held a lower standing share (-0.094 in Analysis 2) yet lost marginally less against their own baseline (+0.0086 here). These are different questions, one about level and one about change, so the two are not in conflict.
 
 Analysis 4: Phylogenetic association of colour with land use (A3)
 

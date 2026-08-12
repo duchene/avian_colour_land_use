@@ -1,0 +1,13 @@
+model,group,sd
+z_malecolcooney,phylo,0.071918947095
+z_malecolcooney,SS,0.0149130371808875
+z_malecolcooney,SSB,0.0011430330360496272
+z_malecolcooney,SSBS,2.2004427118787188e-4
+z_malecolcooney,residual__,0.049795825588
+z_malecolcooney,sigma,0.049795825588
+z_dichrodiff,phylo,0.071621186431125
+z_dichrodiff,SS,0.014783703537825
+z_dichrodiff,SSB,0.0011210204921333203
+z_dichrodiff,SSBS,2.231087504500615e-4
+z_dichrodiff,residual__,0.049794791267125
+z_dichrodiff,sigma,0.049794791267125
