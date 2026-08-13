@@ -9,18 +9,20 @@ Last restructured 2026-08-11.
 
 ## Status
 
-The refit began 2026-08-11 16:08. A1b, A1a and A2c are complete and converged with zero
-divergent transitions. A2d is fitting, then A3, the A2e and A2f sensitivity checks, the
-Cooney figures, and the whole B family. Progress is logged to `logs/` (gitignored).
+The refit began 2026-08-11 16:08. The whole Cooney family (A1b, A1a, A2c, A2d, A3),
+both sensitivity checks, and the Cooney figures are complete, all with zero divergent
+transitions. In the Dale family B1b and B1a are complete, B2c is fitting, and B2d and B3
+follow. Progress is logged to `logs/` (gitignored).
 
 Fitted numbers live in `results/` and are written up in `draft_methods_results.txt`.
 They are deliberately absent here, because quoting results in prose is what let this
 file drift out of step with the code.
 
-Observed runtimes on this machine (16 cores, 4 chains at 4 threads): the A1 models take
-about 20 minutes each, A2c about 80 minutes per model, and A2d about 7 hours per model.
-A2d is the constraint, at 53,551 records against A2c's 19,785, 3,500 iterations, and
-`adapt_delta` 0.95. Budget roughly two days for the full A and B sequence.
+Observed runtimes on this machine (16 cores, 4 chains at 4 threads), per model: A1b 17
+minutes, A3 28 minutes, A1a 50 minutes, A2c 80 minutes, and A2d 373 minutes. A2d and its
+B counterpart are the constraint, at 53,551 records against A2c's 19,785, 3,500
+iterations, and `adapt_delta` 0.95. Together with A2f they account for most of the
+wall time. Budget about 60 hours for the full A and B sequence.
 
 ## What changed on 2026-08-11
 
