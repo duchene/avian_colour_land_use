@@ -74,4 +74,34 @@ for (resp in names(fits_B3)) {
   ggsave(paste0("figures/dale/B3_pp_check_", resp, ".png"), p, width = 7, height = 5, dpi = 150)
 }
 
+# ============================================================
+# LAND-USE CONTRASTS AGAINST PRIMARY VEGETATION
+# ============================================================
+# The five compositional coefficients are strongly correlated in the
+# posterior, so comparing their marginal credible intervals understates
+# the evidence for a difference. Contrast the posterior draws instead.
+# This is the only valid way to ask whether species associated with a
+# given land use differ in colour from primary-vegetation species.
+
+cat("\nLand-use contrasts against primary vegetation...\n")
+
+lu_contrast <- c("prop_Cropland", "prop_Pasture",
+                 "prop_Plantation_forest", "prop_Secondary")
+
+contrasts_tbl <- map_dfr(names(fits_B3), function(resp) {
+  d  <- posterior::as_draws_matrix(fits_B3[[resp]])
+  bp <- d[, "b_prop_Primary_vegetation"]
+  map_dfr(lu_contrast, function(lu) {
+    delta <- d[, paste0("b_", lu)] - bp
+    q <- quantile(delta, c(0.025, 0.5, 0.975))
+    tibble(response = resp,
+           contrast = paste0(sub("prop_", "", lu), " - Primary vegetation"),
+           Estimate = unname(q[2]), Q2.5 = unname(q[1]), Q97.5 = unname(q[3]),
+           prob_positive = mean(delta > 0),
+           credible = unname(sign(q[1]) == sign(q[3])))
+  })
+})
+write_csv(contrasts_tbl, "results/dale/A3_landuse_contrasts.csv")
+print(as.data.frame(contrasts_tbl), digits = 3)
+
 cat("\nB3 analysis complete. Results in results/ and figures/\n")

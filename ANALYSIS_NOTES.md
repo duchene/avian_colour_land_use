@@ -243,18 +243,30 @@ is that a species' habitat association is a property of the species and is best
 estimated from all available records. The alternative is consistency with the rest of
 the pipeline. Flagged in the header of both scripts.
 
-**A3 needs a posterior contrast, not an eyeball comparison.** The compositional
-coefficients are strongly correlated in the posterior, so overlapping marginal credible
-intervals do not settle whether pasture-associated species differ from
-primary-associated ones. Compute the contrast from the fits rather than comparing
-intervals. Earlier notes asserted a pasture effect that was never tested this way.
+**A3 posterior contrasts: resolved 2026-08-13.** The compositional coefficients are
+strongly correlated in the posterior, so overlapping marginal credible intervals do not
+settle whether pasture-associated species differ from primary-associated ones. The
+contrast is now computed inside `A3_03_diagnostics_summary.R` and `B3_03_...` and
+written to `results/*/[AB]3_landuse_contrasts.csv`, so it can no longer be skipped.
+The answer: the pasture difference is credible for colourfulness where the marginal
+intervals had suggested it was not, which vindicates the earlier claim but only because
+it was finally tested the right way.
 
 **Mediterranean Forests, Woodlands and Scrub sits in Temperate Forest.** Its WWF name
 spans forest and shrubland, so the assignment is genuinely borderline. Changing it means
 editing `BIOME_MAP` in the config and refitting.
 
-**A3 dichrodiff previously produced an E-BFMI warning** below 0.3 on all four chains
-despite converging. Watch for it again.
+**A3 has an E-BFMI problem, and it got worse.** On the corrected data all four models
+return an energy Bayesian fraction of missing information below 0.3, on all four chains
+for mean colour, male colour and the dichromatism difference, and on one chain for the
+ratio. Previously only the dichromatism difference was affected. Rhat (max 1.002) and
+bulk ESS (min 863) look fine, which is the point: neither detects this.
+
+It matters because A3's one substantive result, the pasture contrast, is a statement
+about a posterior tail. Before that result is submitted, refit A3 with a non-centred
+parameterisation of the phylogenetic term, or at higher `adapt_delta` with a longer
+warmup, and confirm the contrast is unchanged. B3 will show whether the problem is
+specific to the Cooney metrics or inherent to the species-level model.
 
 ## Watchlist: results sensitive to the correction
 

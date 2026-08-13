@@ -1,0 +1,9 @@
+model,max_rhat,min_ess_bulk,n_divergent
+meancoldale_base,1.0034,1090,0
+meancoldale_covariate,1.0054,774,0
+dichrodale_base,1.0097,704,0
+dichrodale_covariate,1.0056,728,0
+malecoldale_base,1.0081,966,0
+malecoldale_covariate,1.004,1135,0
+dichrodiffdale_base,1.0054,808,0
+dichrodiffdale_covariate,1.0046,954,0

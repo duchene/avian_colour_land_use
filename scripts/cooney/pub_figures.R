@@ -256,9 +256,9 @@ try_fig({
                   digits = 1, x = 0.05, y = 0.6, lwd = 10, fsize = 0.9, prompt = FALSE, subtitle = "")
   }
   dir.create("figures/pub/cooney", showWarnings = FALSE, recursive = TRUE)
-  pdf("figures/pub/cooney/Figure_7_A3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
-  png("figures/pub/cooney/Figure_7_A3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
-  message("Saved Figure_7_A3_phylogeny")
+  pdf("figures/pub/cooney/Figure_6_A3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
+  png("figures/pub/cooney/Figure_6_A3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
+  message("Saved Figure_6_A3_phylogeny")
 })
 
 # ============================================================

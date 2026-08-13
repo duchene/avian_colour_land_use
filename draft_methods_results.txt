@@ -3,7 +3,7 @@ Draft: avian plumage colour and land-use change
 ================================================================================
 Four analyses (community colour, colour-abundance, colour-abundance change, and a phylogenetic test). Each is run twice: once with Cooney UVS colour (the A analyses, primary) and once with the independent Dale plumage scores (the B analyses, a colour-source robustness check), reported in separate sections. Model codes in parentheses map to scripts and ANALYSIS_NOTES.md.
 
-STATUS, 2026-08-12. The refit on the corrected dataset is under way. Analyses 1 to 3 (A1b, A1a, A2c, A2d) are complete and written up below. Analysis 4 (A3) is fitting, the three-way sensitivity checks are queued, and the full Dale replication follows. Sections marked PENDING will be written as each analysis lands. Every number previously reported in this draft came from a dataset built by a faulty filter and was removed rather than carried forward.
+STATUS, 2026-08-13. All four Cooney analyses, both sensitivity checks, and the Cooney figures are complete and written up below. In the Dale replication, B1b and B1a are complete and written up, B2c is fitting, and B2d and B3 follow. Every number previously reported in this draft came from a dataset built by a faulty filter and was removed rather than carried forward.
 
 METHODS
 ================================================================================
@@ -58,7 +58,7 @@ At the species level, we regressed each colour response on the within-species pr
     colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest
                 + prop_Primary_vegetation + prop_Secondary + (1 | gr(phylo, cov = A))
 
-These proportions were computed from the full raw dataset rather than the filtered analytical dataset, because a species' habitat association is a property of the species and is best estimated from all of its records. Priors were broadened for species-level data: Normal(0,5) on fixed effects for the lognormal responses, Normal(0,50) for the Gaussian response, Exponential(2) on the standard deviations and sigma for the lognormal responses, and Exponential(0.05) for the Gaussian response. We ran 4 chains for 4,000 iterations (2,000 warmup) at adapt_delta = 0.95, max_treedepth = 12, for n = 1,254 species. Because the compositional coefficients are strongly correlated in the posterior, we compare land uses by posterior contrast rather than by inspecting whether marginal credible intervals overlap.
+These proportions were computed from the full raw dataset rather than the filtered analytical dataset, because a species' habitat association is a property of the species and is best estimated from all of its records. Priors were broadened for species-level data: Normal(0,5) on fixed effects for the lognormal responses, Normal(0,50) for the Gaussian response, Exponential(2) on the standard deviations and sigma for the lognormal responses, and Exponential(0.05) for the Gaussian response. We ran 4 chains for 4,000 iterations (2,000 warmup) at adapt_delta = 0.95, max_treedepth = 12, for n = 1,254 species. All four models converged on the usual diagnostics, with no divergent transitions, a maximum Rhat of 1.002, and a minimum bulk ESS of 863. All four nonetheless returned an energy Bayesian fraction of missing information (E-BFMI) below 0.3, on all four chains for mean colourfulness, male conspicuousness and the dichromatism difference, and on one chain for the dichromatism ratio. A low E-BFMI indicates that the sampler explored the energy distribution poorly, which is common in hierarchical models with a heavy-tailed posterior and is not detected by Rhat or effective sample size. We therefore treat the A3 posteriors as adequate for central estimates but unreliable in the tails, and we return to this when interpreting the land-use contrasts. Because the compositional coefficients are strongly correlated in the posterior, we compare land uses by contrasting posterior draws rather than by inspecting whether marginal credible intervals overlap, and we report those contrasts with the posterior probability that the difference is positive.
 
 Dale-colour replication (B analyses)
 
@@ -107,15 +107,29 @@ Read alongside Analysis 2, the two abundance results agree. Colour does not pred
 
 Analysis 4: Phylogenetic association of colour with land use (A3)
 
-PENDING. Queued. Note that the land uses must be compared by posterior contrast rather than by inspecting whether marginal credible intervals overlap, because the compositional coefficients are strongly correlated in the posterior.
+Plumage colour is strongly phylogenetically conserved. Phylogeny alone explained 88.6% of variance in mean colourfulness and 86.3% in male conspicuousness, with the phylogenetic standard deviation far exceeding the residual (0.515 against 0.143, and 0.560 against 0.173). The two dichromatism measures were less conserved, at 65.7% for the difference and 46.8% for the ratio. The magnitude of the sex difference is therefore more evolutionarily labile than colourfulness itself, and the ratio is the most labile trait we measured.
+
+Species associated with pasture are credibly duller than species associated with primary vegetation. On the expected-colour scale the ordering ran Cropland 4.67, Secondary 4.61, Plantation forest 4.59, Primary vegetation 4.57, and Pasture 4.42 for mean colourfulness, with male conspicuousness in the same order. Read as marginal credible intervals these coefficients overlap almost entirely, each spanning roughly 0.7 units, and the pasture difference would appear unsupported. That reading is wrong. Because the five proportions sum to 1 per species, their coefficients are strongly correlated in the posterior, and the correct test is a contrast of the posterior draws. Contrasting pasture against primary vegetation gives -0.156 [-0.263, -0.045] for mean colourfulness and -0.147 [-0.273, -0.023] for male conspicuousness, with the posterior probability of a positive difference at 0.003 and 0.010 respectively.
+
+No other land use differed credibly from primary vegetation, and neither dichromatism measure showed any land-use association at all. The pasture effect on colourfulness is therefore the single result of this analysis, and it is the only place in the study where a land-use association survives at the level of lineages rather than communities.
+
+This result carries a caveat. Every A3 model returned a low E-BFMI, so the tails of these posteriors are not well characterised, and a contrast whose credibility rests on a 2.5% quantile is exactly the quantity such a warning bears on. The pasture contrast sits comfortably away from zero for mean colourfulness, at a posterior probability of 0.003, and we regard it as sound. The male-conspicuousness contrast is closer to the boundary at 0.010 and should be treated as suggestive until the sampling issue is resolved. Reparameterising the model, or raising adapt_delta and lengthening the warmup, would settle both.
 
 Three-way sensitivity checks (A2e, A2f)
 
-PENDING. Queued.
+The three-way colour by biome by land-use interaction earns no place in either abundance model. For relative abundance (A2e) the three-way model was worse than the reported two-way model by 4.4 units of expected log predictive density (SE 3.2), and for the paired difference (A2f) by 1.3 units (SE 3.7). Neither difference reaches two standard errors, so the two models are statistically indistinguishable and parsimony selects the two-way form. We therefore report A2c and A2d throughout. Both checks used male conspicuousness.
 
 Dale-colour replication (B analyses)
 
-PENDING. The full B family is queued behind the Cooney analyses.
+The community-colour architecture replicates under Dale scores, but the guild story does not. As with the Cooney metrics, LOO favoured the full-interaction model B1a over B1b for all four responses, by 97 to 158 units of expected log predictive density (SE 16 to 25), so guild-specific and size-specific land-use responses earn their place under either colour system. All twelve models converged with no divergent transitions, at a maximum Rhat of 1.012.
+
+Body size behaves the same way under both colour systems. The mass by land-use interactions were credible in matching directions, positive in pasture (mean +0.012, male +0.018) and negative in plantation forest and secondary vegetation (-0.007 to -0.009 for the colour metrics). This independent corroboration matters, because these are the interactions whose sign changed when the primary-vegetation filter was corrected, and Dale scores reproduce the corrected pattern.
+
+The trophic interactions do not replicate. Under Dale scores not one land use by trophic niche interaction was credible on any of the four metrics. The Cooney headline, frugivores duller in plantation forest, is absent: -0.070 [-0.185, +0.046] for mean colour and -0.075 [-0.212, +0.066] for male colour, against credible Cooney values of -0.270 and -0.286. The nectarivore results are likewise absent.
+
+Dale scores also carry much less land-use-linked signal for colourfulness. Bayesian R2 for the covariate models was 8.6% for mean colour and 9.1% for male colour, roughly half the Cooney values of 16.3% and 15.1%. For the two dichromatism measures the position reverses, at 18.7% for the ratio and 19.4% for the difference against Cooney's 14.2% and 18.1%. The two scoring systems evidently capture overlapping but non-identical aspects of plumage, and guild-level colour signals are the ones most sensitive to that choice.
+
+Analyses B2c, B2d and B3 are PENDING.
 
 ================================================================================
 END OF DRAFT

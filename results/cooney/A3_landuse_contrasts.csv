@@ -1,0 +1,17 @@
+"response","contrast","median","lo","hi","p_gt0","credible"
+"meancolcooney","Cropland - Primary",0.0956,-0.0375,0.2321,0.9152,FALSE
+"meancolcooney","Pasture - Primary",-0.1558,-0.2629,-0.0446,0.0027,TRUE
+"meancolcooney","Plantation_forest - Primary",0.0214,-0.0757,0.1236,0.6621,FALSE
+"meancolcooney","Secondary - Primary",0.0411,-0.0387,0.1222,0.8351,FALSE
+"dichrocooney","Cropland - Primary",-0.0192,-0.1315,0.092,0.3654,FALSE
+"dichrocooney","Pasture - Primary",0.0142,-0.0758,0.1026,0.6171,FALSE
+"dichrocooney","Plantation_forest - Primary",-0.0257,-0.1058,0.054,0.2646,FALSE
+"dichrocooney","Secondary - Primary",-0.0453,-0.1135,0.0207,0.0839,FALSE
+"malecolcooney","Cropland - Primary",0.0893,-0.0662,0.2449,0.8715,FALSE
+"malecolcooney","Pasture - Primary",-0.1468,-0.2733,-0.0225,0.0101,TRUE
+"malecolcooney","Plantation_forest - Primary",0.0207,-0.0956,0.137,0.6419,FALSE
+"malecolcooney","Secondary - Primary",0.0286,-0.0648,0.1223,0.7256,FALSE
+"dichrodiff","Cropland - Primary",-3.3923,-17.9702,11.008,0.3279,FALSE
+"dichrodiff","Pasture - Primary",0.1314,-11.5002,11.9759,0.5081,FALSE
+"dichrodiff","Plantation_forest - Primary",-5.1558,-15.673,5.3071,0.1635,FALSE
+"dichrodiff","Secondary - Primary",-6.0985,-14.8346,2.4768,0.0861,FALSE

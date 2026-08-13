@@ -257,9 +257,9 @@ try_fig({
                   digits = 1, x = 0.05, y = 0.6, lwd = 10, fsize = 0.9, prompt = FALSE, subtitle = "")
   }
   dir.create("figures/pub/dale", showWarnings = FALSE, recursive = TRUE)
-  pdf("figures/pub/dale/Figure_7_B3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
-  png("figures/pub/dale/Figure_7_B3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
-  message("Saved Figure_7_B3_phylogeny")
+  pdf("figures/pub/dale/Figure_6_B3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
+  png("figures/pub/dale/Figure_6_B3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
+  message("Saved Figure_6_B3_phylogeny")
 })
 
 # ============================================================

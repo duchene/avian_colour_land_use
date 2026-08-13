@@ -1,0 +1,5 @@
+model,max_rhat,min_ess_bulk,n_divergent
+meancoldale,1.0118,744,0
+dichrodale,1.0036,1093,0
+malecoldale,1.0029,1344,0
+dichrodiffdale,1.0029,1483,0
