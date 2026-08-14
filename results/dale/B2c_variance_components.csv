@@ -1,0 +1,13 @@
+model,group,sd
+z_malecoldale,phylo,0.9836026644825
+z_malecoldale,SS,0.9485500128825
+z_malecoldale,SSB,0.19129984236
+z_malecoldale,SSBS,0.2577411031475
+z_malecoldale,residual__,0.647748402475
+z_malecoldale,sigma,0.647748402475
+z_dichrodiffdale,phylo,0.985734083215
+z_dichrodiffdale,SS,0.9484708749325
+z_dichrodiffdale,SSB,0.1908519216325
+z_dichrodiffdale,SSBS,0.2572399572625
+z_dichrodiffdale,residual__,0.6479881933475
+z_dichrodiffdale,sigma,0.6479881933475

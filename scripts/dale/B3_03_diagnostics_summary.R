@@ -101,7 +101,7 @@ contrasts_tbl <- map_dfr(names(fits_B3), function(resp) {
            credible = unname(sign(q[1]) == sign(q[3])))
   })
 })
-write_csv(contrasts_tbl, "results/dale/A3_landuse_contrasts.csv")
+write_csv(contrasts_tbl, "results/dale/B3_landuse_contrasts.csv")
 print(as.data.frame(contrasts_tbl), digits = 3)
 
 cat("\nB3 analysis complete. Results in results/ and figures/\n")

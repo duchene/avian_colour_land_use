@@ -9,20 +9,22 @@ Last restructured 2026-08-11.
 
 ## Status
 
-The refit began 2026-08-11 16:08. The whole Cooney family (A1b, A1a, A2c, A2d, A3),
-both sensitivity checks, and the Cooney figures are complete, all with zero divergent
-transitions. In the Dale family B1b and B1a are complete, B2c is fitting, and B2d and B3
-follow. Progress is logged to `logs/` (gitignored).
+**The refit is complete** (2026-08-11 16:08 to 2026-08-14 02:51, 58.7 hours, zero
+failed steps). All 33 models across both colour families converged with zero divergent
+transitions and a maximum Rhat of 1.012. Results are in `results/`, figures in
+`figures/pub/`, and the write-up is `draft_methods_results.txt`.
 
-Fitted numbers live in `results/` and are written up in `draft_methods_results.txt`.
-They are deliberately absent here, because quoting results in prose is what let this
-file drift out of step with the code.
+Fitted numbers are deliberately absent from this file, because quoting results in prose
+is what let it drift out of step with the code.
+
+**One diagnostic problem is outstanding**, described under Open decisions: every
+species-level model in both families returned a low E-BFMI.
 
 Observed runtimes on this machine (16 cores, 4 chains at 4 threads), per model: A1b 17
-minutes, A3 28 minutes, A1a 50 minutes, A2c 80 minutes, and A2d 373 minutes. A2d and its
-B counterpart are the constraint, at 53,551 records against A2c's 19,785, 3,500
-iterations, and `adapt_delta` 0.95. Together with A2f they account for most of the
-wall time. Budget about 60 hours for the full A and B sequence.
+minutes, A3 28 minutes, A1a 50 minutes, A2c 80 minutes, A2f about 400 minutes, and A2d
+373 minutes. A2d, B2d and A2f account for most of the wall time, since each carries a
+dense species covariance matrix over 53,551 records. Budget about 60 hours for a full
+A and B sequence.
 
 ## What changed on 2026-08-11
 
@@ -258,17 +260,18 @@ it was finally tested the right way.
 spans forest and shrubland, so the assignment is genuinely borderline. Changing it means
 editing `BIOME_MAP` in the config and refitting.
 
-**A3 has an E-BFMI problem, and it got worse.** On the corrected data all four models
-return an energy Bayesian fraction of missing information below 0.3, on all four chains
-for mean colour, male colour and the dichromatism difference, and on one chain for the
-ratio. Previously only the dichromatism difference was affected. Rhat (max 1.002) and
-bulk ESS (min 863) look fine, which is the point: neither detects this.
+**The species-level model has an E-BFMI problem. This is the one thing still to fix.**
+All four A3 models and all four B3 models return an energy Bayesian fraction of missing
+information below 0.3, on all four chains in seven of the eight cases. Because it
+appears in both colour families it is a property of the species-level phylogenetic
+regression itself, not of either metric. Rhat (max 1.005) and bulk ESS (min 819) look
+fine, which is the point: neither detects this.
 
 It matters because A3's one substantive result, the pasture contrast, is a statement
-about a posterior tail. Before that result is submitted, refit A3 with a non-centred
-parameterisation of the phylogenetic term, or at higher `adapt_delta` with a longer
-warmup, and confirm the contrast is unchanged. B3 will show whether the problem is
-specific to the Cooney metrics or inherent to the species-level model.
+about a posterior tail. Refit A3 and B3 with a non-centred parameterisation of the
+phylogenetic term, or at higher `adapt_delta` with a longer warmup, and confirm the
+contrast. Note that the pasture contrast does not reproduce under Dale scores, so there
+is already independent reason to doubt it.
 
 ## Watchlist: results sensitive to the correction
 
