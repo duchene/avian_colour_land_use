@@ -67,6 +67,20 @@ resp_ramp <- function(rsp)
   setNames(colorRampPalette(c("#FFFFFF", resp_pal[[rsp]]))(5)[c(2, 3, 5)],
            c("low", "mid", "high"))
 
+# Range the drawn boxplot whiskers actually cover. geom_boxplot with
+# outlier.shape = NA hides the outliers but ggplot still scales the axis
+# to them, so a handful of extreme species stretch the panel and squash
+# every box into a band. This returns the 1.5 x IQR reach per group.
+whisker_lim <- function(v, g) {
+  r <- tapply(v, g, function(z) {
+    z <- z[!is.na(z)]
+    if (!length(z)) return(c(NA, NA))
+    q <- quantile(z, c(0.25, 0.75)); w <- 1.5 * diff(q)
+    c(min(z[z >= q[1] - w]), max(z[z <= q[2] + w]))
+  })
+  range(unlist(r), na.rm = TRUE)
+}
+
 pretty_lu <- function(x) str_replace(x, "Plantationforest", "Plantation forest")
 pretty_biome <- function(x) x |>
   str_replace("TemperateForest", "Temperate Forest") |>
@@ -186,10 +200,13 @@ try_fig({
            response = factor(ifelse(resp_raw == "malecolcooney",
                                     "Male colourfulness", "Sexual dichromatism"),
                              levels = resp_levels))
-  ylim_dich <- quantile(raw$value[raw$response == "Sexual dichromatism"],
-                        c(0.005, 0.995), na.rm = TRUE)
-  raw <- raw |> filter(response == "Male colourfulness" |
-                         (value >= ylim_dich[1] & value <= ylim_dich[2]))
+  grp <- interaction(raw$Predominant_simple, raw$Biome4, drop = TRUE)
+  ylim_dich <- whisker_lim(raw$value[raw$response == "Sexual dichromatism"],
+                           grp[raw$response == "Sexual dichromatism"])
+  ylim_mal  <- whisker_lim(raw$value[raw$response == "Male colourfulness"],
+                           grp[raw$response == "Male colourfulness"])
+  pad <- function(r, f = 0.04) r + c(-1, 1) * diff(r) * f
+  ylim_dich <- pad(ylim_dich); ylim_mal <- pad(ylim_mal)
 
   panel_row <- function(rsp, tags, show_x) {
     col  <- resp_pal[[rsp]]
@@ -213,7 +230,8 @@ try_fig({
                         legend.text = element_text(size = 5.6),
                         legend.key.size = unit(2.6, "mm"),
                         legend.margin = margin(0, 0, 0, 0))
-    pa <- if (logy) pa + scale_y_continuous(trans = "log10")
+    pa <- if (logy) pa + scale_y_continuous(trans = "log10") +
+                      coord_cartesian(ylim = ylim_mal)
           else pa + coord_cartesian(ylim = ylim_dich)
 
     pb <- forest_panel(filter(a1b, response == rsp), col,
@@ -415,7 +433,10 @@ try_fig({
   pg <- mk_forest("Sexual dichromatism", "g")
 
   # biome x land use, observed values, colour ignored
-  ylim_g <- quantile(base$diff_abund, c(0.06, 0.94))
+  ylim_g <- whisker_lim(base$diff_abund,
+                        interaction(base$Predominant_simple, base$Biome4,
+                                    drop = TRUE))
+  ylim_g <- ylim_g + c(-1, 1) * diff(ylim_g) * 0.04
   pe <- ggplot(base, aes(Predominant_simple, diff_abund, fill = Biome4)) +
     geom_hline(yintercept = 0, linetype = "dashed", colour = "grey55", linewidth = 0.3) +
     geom_boxplot(outlier.shape = NA, linewidth = 0.26, colour = "grey25",
@@ -493,12 +514,20 @@ try_fig({
     list(obj = obj, lims = if (logscale) round(exp(lims)) else round(lims))
   }
   lim_mal <- unname(log(quantile(spdat$malecolcooney, c(0.02, 0.98), na.rm = TRUE)))
-  q_dich  <- unname(max(abs(quantile(spdat$dichrodiff, c(0.02, 0.98), na.rm = TRUE))))
-  m_mal  <- build_map("malecolcooney", TRUE, viridisLite::magma(20), lim_mal)
-  # Diverging, since the difference is signed and centred near zero. Blue
-  # to red reads as a signed scale on sight and shares no hue with the
-  # magma ramp in panel a, so the two trees cannot be taken as one scale.
-  m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Blue-Red 3"), c(-q_dich, q_dich))
+  # 2%/98% spans -119 to +119, but 82% of species sit within +/-30, so
+  # that range parks almost every branch at the midpoint of the ramp.
+  # The 10%/90% magnitude puts the colour where the species actually are
+  # and clips only the tails, which were already clipped.
+  q_dich  <- unname(max(abs(quantile(spdat$dichrodiff, c(0.10, 0.90), na.rm = TRUE))))
+  # Mako, not magma. Zissou 1 in panel d is warm throughout, so a warm
+  # sequential ramp here would let the two trees read as one scale. Mako
+  # is cool from end to end (hues 94 to 300) and shares no hue with it.
+  m_mal  <- build_map("malecolcooney", TRUE, hcl.colors(20, "Mako"), lim_mal)
+  # Zissou 1 rather than a white-centred diverging ramp. Its midpoint sits
+  # at lightness 82 against 97 for Blue-Red 3, and its whole range spans
+  # only L 52 to 82, so a near-zero branch stays visible on white instead
+  # of disappearing into the page. It also shares no hue with panel a.
+  m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Zissou 1"), c(-q_dich, q_dich))
 
   contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1")
 
@@ -518,54 +547,63 @@ try_fig({
     }, numeric(3))
   }
 
-  scatter_panel <- function(resp, ylab, logscale, tag, title, ylim, legend) {
+  scatter_panel <- function(resp, ylab, logscale, tag, title, legend) {
     draws <- posterior::as_draws_matrix(fits_A1[[resp]])
     d  <- spdat[!is.na(spdat[[resp]]), ]
     wbar <- colMeans(d[, prop_cols])
     yv <- if (logscale) log(d[[resp]]) else d[[resp]]
-    plot(NA, xlim = c(0, 1), ylim = ylim,
-         xlab = "Land-use association score (proportion of a species' records)",
-         ylab = ylab, las = 1, cex.lab = 0.85, cex.axis = 0.8,
-         yaxt = if (logscale) "n" else "s")
-    if (logscale) {
-      at <- c(30, 50, 100, 200, 400)
-      axis(2, at = log(at), labels = at, las = 1, cex.axis = 0.8)
-    }
-    # Binned means rather than the raw cloud, matching Figure 5. The
-    # species points span the full range of the metric while the
-    # land-use effect is a fraction of it, so the cloud buries the
-    # signal. Within each land use the species with a non-zero score
-    # are split into deciles of that score, and each decile contributes
-    # one mean with its 95% interval.
+
+    # Bins and lines are built before the device is opened, so the axis
+    # can be set from what is actually drawn. The species themselves span
+    # 32 to 560 LociUVS while the decile means span barely 70 to 130, and
+    # a limit taken from the raw values would leave the panel almost empty.
     NBIN <- 10
-    ns <- integer(0)
+    ns <- integer(0); B <- list(); L <- list()
+    ts <- seq(0, 1, length.out = 80)
     for (j in seq_along(prop_cols)) {
       l <- lu_levels[j]; p <- d[[prop_cols[j]]]
       k <- p > 0                       # omit the uninformative zeros
       ns[l] <- sum(k)
       pk <- p[k]; yk <- yv[k]
-      if (length(pk) < 2 * NBIN) next
-      br <- unique(quantile(pk, seq(0, 1, length.out = NBIN + 1)))
-      b  <- cut(pk, breaks = br, include.lowest = TRUE, labels = FALSE)
-      bx <- tapply(pk, b, mean)
-      by <- tapply(yk, b, mean)
-      bs <- tapply(yk, b, function(z) sd(z) / sqrt(length(z)))
-      segments(bx, by - 1.96 * bs, bx, by + 1.96 * bs,
+      if (length(pk) >= 2 * NBIN) {
+        br <- unique(quantile(pk, seq(0, 1, length.out = NBIN + 1)))
+        b  <- cut(pk, breaks = br, include.lowest = TRUE, labels = FALSE)
+        B[[l]] <- list(x  = tapply(pk, b, mean),
+                       y  = tapply(yk, b, mean),
+                       se = tapply(yk, b, function(z) sd(z) / sqrt(length(z))))
+      }
+      L[[l]] <- list(ts = ts, fit = model_line(draws, j, wbar, ts),
+                     pmax_obs = max(p))
+    }
+    span <- range(c(unlist(lapply(B, function(z) c(z$y - 1.96 * z$se,
+                                                   z$y + 1.96 * z$se))),
+                    unlist(lapply(L, function(z) z$fit[1, ]))), na.rm = TRUE)
+    ylim <- span + c(-1, 1) * diff(span) * 0.10
+
+    plot(NA, xlim = c(0, 1), ylim = ylim,
+         xlab = "Land-use association score (proportion of a species' records)",
+         ylab = ylab, las = 1, cex.lab = 0.85, cex.axis = 0.8,
+         yaxt = if (logscale) "n" else "s")
+    if (logscale) {
+      at <- pretty(exp(ylim), 5); at <- at[at > 0 &
+                                           log(at) >= ylim[1] & log(at) <= ylim[2]]
+      axis(2, at = log(at), labels = at, las = 1, cex.axis = 0.8)
+    }
+    # Decile means rather than the raw cloud, matching Figure 5.
+    for (l in names(B)) {
+      z <- B[[l]]
+      segments(z$x, z$y - 1.96 * z$se, z$x, z$y + 1.96 * z$se,
                col = lu_pal[[l]], lwd = 0.9)
-      points(bx, by, pch = 21, cex = 0.72, lwd = 0.4,
+      points(z$x, z$y, pch = 21, cex = 0.72, lwd = 0.4,
              bg = lu_pal[[l]], col = "grey20")
     }
-    for (j in seq_along(prop_cols)) {
-      l <- lu_levels[j]; p <- d[[prop_cols[j]]]
-      pmax_obs <- max(p)
-      ts  <- seq(0, 1, length.out = 80)
-      fit <- model_line(draws, j, wbar, ts)
-      inr <- ts <= pmax_obs
+    for (l in names(L)) {
+      z <- L[[l]]; inr <- z$ts <= z$pmax_obs
       # No credible band: its width is set by uncertainty in the shared
       # level, which is common to all five lines and cancels in the
       # contrasts. Panel c carries the uncertainty that matters.
-      lines(ts[inr], fit[1, inr], col = lu_pal[[l]], lwd = 2.6)
-      lines(ts[!inr], fit[1, !inr], col = lu_pal[[l]], lwd = 1.5, lty = 3)
+      lines(z$ts[inr], z$fit[1, inr], col = lu_pal[[l]], lwd = 2.6)
+      lines(z$ts[!inr], z$fit[1, !inr], col = lu_pal[[l]], lwd = 1.5, lty = 3)
     }
     mtext(paste0("(", tag, ") ", title), side = 3, adj = 0, line = 0.5,
           font = 2, cex = 0.8)
@@ -624,32 +662,31 @@ try_fig({
     mtext(barlab, side = 1, line = 1.2, cex = 0.6)
   }
 
-  ylim_mal  <- log(c(28, 480))
-  ylim_dich <- c(-75, 130)
-
   draw3 <- function() {
-    # Rows are 95 mm tall. The forest column at 28 mm runs at about
-    # 3.4:1, against 1.3:1 before. Below 28 mm the axis label clips.
-    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(95, 106, 28))
+    # Measured from the rendered page rather than guessed: at a 28 mm
+    # column the plotted box came out 7 mm by 58 mm, or 8.4:1, because
+    # the label margin eats most of a narrow column. 36 mm puts the box
+    # near 15 mm by 58 mm, which is the 4:1 asked for.
+    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(95, 106, 36))
 
     tree_panel(m_mal, "(a) Male colourfulness across the phylogeny", "Male colourfulness (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
     scatter_panel("malecolcooney", "Male colourfulness (LociUVS)", TRUE, "b",
-                  "Male colourfulness vs land-use association", ylim_mal, TRUE)
+                  "Male colourfulness vs land-use association", TRUE)
     forest_base("Male colourfulness", "c", "log difference")
 
     tree_panel(m_dich, "(d) Sexual dichromatism across the phylogeny",
                "Sexual dichromatism (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
     scatter_panel("dichrodiff", "Sexual dichromatism (LociUVS)", FALSE, "e",
-                  "Sexual dichromatism vs land-use association", ylim_dich, FALSE)
+                  "Sexual dichromatism vs land-use association", FALSE)
     forest_base("Sexual dichromatism", "f", "LociUVS diff.")
   }
 
   pdf(file.path(OUT, "Figure_3_A1_phylogeny_landuse.pdf"),
-      width = mm2in(233), height = mm2in(190)); draw3(); dev.off()
+      width = mm2in(241), height = mm2in(190)); draw3(); dev.off()
   png(file.path(OUT, "Figure_3_A1_phylogeny_landuse.png"),
-      width = mm2in(233), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
+      width = mm2in(241), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
   message("Saved Figure_3_A1_phylogeny_landuse")
 })
 
