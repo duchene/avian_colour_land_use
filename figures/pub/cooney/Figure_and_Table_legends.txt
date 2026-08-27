@@ -1,0 +1,82 @@
+LEGENDS: FIGURES AND TABLES
+Avian plumage colour and land-use change (Cooney ultraviolet-sensitive metrics)
+
+Figures 1 and 2 are introductory and are prepared outside this repository.
+Legends below cover the three figures and two tables built by
+scripts/cooney/pub_figures.R and the two post-hoc scripts.
+
+
+FIGURE 3. Species-level colour against land-use association (model A1b).
+
+Each species' association score is the proportion of its detection records
+falling in a given land use, so the five scores sum to one. (a, d) Male
+colourfulness and sexual dichromatism mapped onto 1,375 tips of the
+BigBirdTree phylogeny by ancestral reconstruction. Scales are clipped to the
+2nd and 98th percentiles for colourfulness, and to the 10th and 90th
+percentile magnitude for dichromatism, which is signed. (b, e) Points are
+means of successive deciles of the association score within each land use,
+with 95% confidence intervals, excluding species scoring zero. Lines are
+posterior medians from the compositional model, solid across the observed
+range of scores and dotted beyond it. (c, f) Pairwise contrasts between land
+uses, from posterior draws, with 95% credible intervals. Filled symbols mark
+intervals excluding zero. n = 1,242 species.
+
+
+FIGURE 5. Colour and abundance change after land-use conversion (model A2d).
+
+The response is a species' relative abundance at a modified site minus its own
+mean in primary vegetation in the same study, so primary vegetation is
+absorbed into the baseline and four land uses remain. (a to d) Partial
+residuals, with the study mean and the species mean both removed, because
+colour is constant within a species and the raw margin reflects which studies
+sampled which species. Points are means of twelfths of the records with 95%
+confidence intervals, and the grey band is a linear fit. (e) Observed values by biome and land use, colour ignored.
+Boxes give quartiles, whiskers 1.5 times the interquartile range, outliers
+omitted. (f, g) Posterior contrasts and colour slopes with 95% credible
+intervals. One study supplying 94% of the tropical open cropland cell is
+excluded throughout. n = 50,534 differences.
+
+
+FIGURE 6. Community plumage colour across biomes and land uses (model A3b).
+
+Community values are taken over records of species detected at a site, with
+body mass and trophic niche entering as covariates. (a, c) Observed male
+colourfulness, on a log scale, and sexual dichromatism, by land use and
+biome. Boxes give quartiles and whiskers 1.5 times the interquartile range.
+Outliers are omitted and each axis is set to the whisker range. (b, d)
+Posterior contrasts with 95% credible intervals, grouped into blocks by
+biome. Within a block every row is that land use against primary vegetation
+in the same biome, so rows are not comparable across blocks. The final block
+holds the body-mass slope per standard deviation rather than a contrast.
+Filled symbols mark intervals excluding zero, open symbols those including
+it. n = 24,614 records.
+
+
+TABLE 1. Post-hoc contrasts, main effects.
+
+Every row is a posterior contrast rather than a model coefficient. Contrasts
+are formed by taking posterior draws of the linear predictor with random
+effects excluded, averaging over a balanced grid of the remaining factors,
+and differencing draw by draw. Reported are the posterior median, the 95%
+credible interval, the posterior probability that the difference takes its
+estimated sign, and a standardised effect size, the estimate divided by the
+residual standard deviation of that response on the scale the model works in.
+No multiplicity correction is applied, because these are posterior
+probabilities of a difference rather than repeated frequentist tests. Rows
+labelled A1 come from the superseded species-level model, whose association
+scores counted every raw record including structural zeros, and are retained
+so the sensitivity check against A1b stays auditable.
+
+
+TABLE 2. Post-hoc contrasts within levels of an interacting factor.
+
+Table 1 averages over the factor a term interacts with, which can cancel
+opposing effects. Table 2 recomputes the same contrasts separately within
+each level of that factor, which is what an interaction requires. Rows are of
+two kinds, named in the quantity column: level means, comparing two land uses
+or two biomes while the other factor is held at a stated level, and colour
+slopes, giving the change per standard deviation of a colour metric within a
+stated level. Columns match Table 1. All 284 rows are reconstructed from the
+fitted coefficients as a check that none is missing and none depends on a term
+the models do not contain, including any three-way colour by biome by land-use
+term, which no reported model carries.
