@@ -2,10 +2,11 @@
 # pub_figures.R
 # Publication figures for the avian colour x land-use manuscript.
 #
-# Figure 1 is a conceptual diagram, made separately.
-# Figure 2  A3b community colour
-# Figure 3  A2d abundance change
-# Figure 4  A1 species level
+# Figures 1 and 2 are introductory, made separately and held outside
+# this repository. This script produces 3, 5 and 6.
+# Figure 3  A1  species level
+# Figure 5  A2d abundance change
+# Figure 6  A3b community colour
 #
 # Each figure is two rows by three columns. A row is one response:
 # male colourfulness on top, sexual dichromatism below.
@@ -94,16 +95,22 @@ forest_panel <- function(d, fill_col, title, xlab) {
                size = 1.9, colour = fill_col, fill = fill_col) +
     scale_alpha_manual(values = c("TRUE" = 1, "FALSE" = 0.35), guide = "none") +
     scale_shape_manual(values = c("TRUE" = 21, "FALSE" = 1), guide = "none") +
-    facet_grid(block ~ ., scales = "free_y", space = "free_y", switch = "y") +
+    facet_grid(block ~ ., scales = "free_y", space = "free_y", switch = "y",
+               labeller = labeller(block = function(x)
+                 str_wrap(str_remove(x, " \\(primary baseline\\)"), 9))) +
     scale_y_discrete(labels = function(x) sub("^[0-9]+\u001f", "", x)) +
     labs(x = xlab, y = NULL, title = title) +
     theme(panel.grid.minor = element_blank(),
-          axis.text.y = element_text(size = 6.4),
+          panel.grid.major.x = element_blank(),
+          axis.text.y = element_text(size = 5.2),
+          axis.text.x = element_text(size = 5.2, angle = 90, hjust = 1, vjust = 0.5),
+          axis.title.x = element_text(size = 6),
           strip.placement = "outside",
           strip.background = element_rect(fill = "grey94", colour = NA),
-          strip.text.y.left = element_text(angle = 0, size = 6.2, face = "bold"),
+          strip.text.y.left = element_text(angle = 90, size = 4.6, face = "bold",
+                                           margin = margin(1, 1, 1, 1)),
           panel.spacing.y = unit(1.2, "pt"),
-          plot.title = element_text(size = 8.5, face = "bold"))
+          plot.title = element_text(size = 6.4, face = "bold"))
 }
 
 # Assemble a contrast frame from the two post-hoc tables.
@@ -132,7 +139,7 @@ raw_theme <- theme(panel.grid.minor = element_blank(),
 # b/e  observed response by land use           (main effects)
 # c/f  observed response by land use and biome (interaction)
 # ============================================================
-message("Figure 2 ...")
+message("Figure 6 ...")
 try_fig({
   ph <- read_posthoc()
 
@@ -199,22 +206,36 @@ try_fig({
       scale_x_discrete(labels = lu_short) +
       labs(x = if (show_x) "Land use" else NULL, y = ylab,
            title = paste0("(", tags[1], ") Observed, by land use and biome")) +
-      raw_theme + theme(legend.position = "right")
+      raw_theme + theme(legend.position = "bottom",
+                        legend.direction = "horizontal",
+                        legend.justification = "center",
+                        legend.title = element_blank(),
+                        legend.text = element_text(size = 5.6),
+                        legend.key.size = unit(2.6, "mm"),
+                        legend.margin = margin(0, 0, 0, 0))
     pa <- if (logy) pa + scale_y_continuous(trans = "log10")
           else pa + coord_cartesian(ylim = ylim_dich)
 
     pb <- forest_panel(filter(a1b, response == rsp), col,
-                       paste0("(", tags[2], ") ", rsp, ": biome x land use"),
-                       if (show_x) "Contrast or slope (95% CrI)" else NULL)
+                       paste0("(", tags[2], ") Contrasts"),
+                       if (show_x) "Contrast (95% CrI)" else NULL)
     list(pa, pb)
   }
 
   r1 <- panel_row("Male colourfulness", c("a", "b"), FALSE)
   r2 <- panel_row("Sexual dichromatism", c("c", "d"), TRUE)
 
-  fig2 <- (r1[[1]] | r1[[2]]) / (r2[[1]] | r2[[2]]) +
-    plot_layout(widths = c(1.0, 1.0))
-  save_fig(fig2, "Figure_2_A3b_community_colour", mm2in(225), mm2in(160))
+  # Each row is 80 mm tall, so a forest about 20 mm wide runs at roughly
+  # 4:1. A tall narrow forest keeps every interval within one eye
+  # movement of its label, and the estimates here span barely 0.1 units,
+  # so horizontal room buys nothing.
+  # wrap_plots per row, not `|` with a trailing plot_layout: the `/`
+  # operator absorbs the outer plot_layout and the widths never reach
+  # the nested rows, so the forest stays as wide as the boxplot.
+  row1 <- wrap_plots(r1[[1]], r1[[2]], nrow = 1, widths = c(1, 0.20))
+  row2 <- wrap_plots(r2[[1]], r2[[2]], nrow = 1, widths = c(1, 0.20))
+  fig6 <- wrap_plots(row1, row2, ncol = 1)
+  save_fig(fig6, "Figure_6_A3b_community_colour", mm2in(150), mm2in(160))
 })
 
 # ============================================================
@@ -226,7 +247,7 @@ try_fig({
 # b/e  observed change by land use                 (main effects)
 # c/f  observed change by biome and colour tercile (interaction)
 # ============================================================
-message("Figure 3 ...")
+message("Figure 5 ...")
 try_fig({
   ph <- read_posthoc()
   lu_d <- c("Secondary", "Plantation", "Cropland", "Pasture")
@@ -373,13 +394,13 @@ try_fig({
   mk_forest <- function(rsp, tag) {
     short <- rsp
     forest_panel(filter(a2d, response == rsp), resp_pal[[rsp]],
-                 paste0("(", tag, ") ", short, " model"),
-                 "Effect on abundance change (95% CrI)") +
+                 paste0("(", tag, ") Effects"),
+                 "Effect (95% CrI)") +
       scale_x_continuous(breaks = c(-0.01, 0, 0.01)) +
-      theme(axis.text.y = element_text(size = 6),
-            strip.text.y.left = element_text(angle = 0, size = 5.6, face = "bold"),
-            axis.text.x = element_text(size = 6),
-            axis.title.x = element_text(size = 7))
+      theme(axis.text.y = element_text(size = 5.0),
+            strip.text.y.left = element_text(angle = 0, size = 4.8, face = "bold"),
+            axis.text.x = element_text(size = 5.0, angle = 90, hjust = 1, vjust = 0.5),
+            axis.title.x = element_text(size = 5.8))
   }
 
   pa <- resid_panel("Male colourfulness", "Biome4", "a",
@@ -425,9 +446,11 @@ try_fig({
                        nrow = 1, widths = c(0.29, 0.42, 0.29))
   left   <- wrap_plots(scat, e_row, ncol = 1, heights = c(2, 0.85))
   right  <- wrap_plots(pf, pg, ncol = 1)
-  fig3   <- wrap_plots(left, right, nrow = 1, widths = c(2.75, 1)) &
-    theme(plot.title = element_text(size = 7.6, face = "bold"))
-  save_fig(fig3, "Figure_3_A2d_abundance_change", mm2in(280), mm2in(184))
+  # Two forests stacked in a 184 mm column are 92 mm each, so about
+  # 23 mm wide holds them near 4:1.
+  fig5   <- wrap_plots(left, right, nrow = 1, widths = c(205, 23)) &
+    theme(plot.title = element_text(size = 7.0, face = "bold"))
+  save_fig(fig5, "Figure_5_A2d_abundance_change", mm2in(232), mm2in(184))
 })
 
 # ============================================================
@@ -449,7 +472,7 @@ try_fig({
 # any land use except secondary vegetation, so a coefficient read at
 # a score of 1 is an extrapolation.
 # ============================================================
-message("Figure 4 (contMap; ~1-2 min) ...")
+message("Figure 3 (contMap; ~1-2 min) ...")
 try_fig({
   load("fits/A1_model_setup.RData")   # spdat, tree
   load("fits/A1_all_fits.RData")      # fits_A1
@@ -472,9 +495,10 @@ try_fig({
   lim_mal <- unname(log(quantile(spdat$malecolcooney, c(0.02, 0.98), na.rm = TRUE)))
   q_dich  <- unname(max(abs(quantile(spdat$dichrodiff, c(0.02, 0.98), na.rm = TRUE))))
   m_mal  <- build_map("malecolcooney", TRUE, viridisLite::magma(20), lim_mal)
-  # Diverging, since the difference is signed and centred near zero, and
-  # deliberately far from magma so the two trees do not read as one scale.
-  m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Tropic"), c(-q_dich, q_dich))
+  # Diverging, since the difference is signed and centred near zero. Blue
+  # to red reads as a signed scale on sight and shares no hue with the
+  # magma ramp in panel a, so the two trees cannot be taken as one scale.
+  m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Blue-Red 3"), c(-q_dich, q_dich))
 
   contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1")
 
@@ -507,13 +531,29 @@ try_fig({
       at <- c(30, 50, 100, 200, 400)
       axis(2, at = log(at), labels = at, las = 1, cex.axis = 0.8)
     }
+    # Binned means rather than the raw cloud, matching Figure 5. The
+    # species points span the full range of the metric while the
+    # land-use effect is a fraction of it, so the cloud buries the
+    # signal. Within each land use the species with a non-zero score
+    # are split into deciles of that score, and each decile contributes
+    # one mean with its 95% interval.
+    NBIN <- 10
     ns <- integer(0)
     for (j in seq_along(prop_cols)) {
       l <- lu_levels[j]; p <- d[[prop_cols[j]]]
       k <- p > 0                       # omit the uninformative zeros
       ns[l] <- sum(k)
-      points(p[k], yv[k], pch = 16, cex = 0.62,
-             col = adjustcolor(lu_pal[[l]], alpha.f = 0.28))
+      pk <- p[k]; yk <- yv[k]
+      if (length(pk) < 2 * NBIN) next
+      br <- unique(quantile(pk, seq(0, 1, length.out = NBIN + 1)))
+      b  <- cut(pk, breaks = br, include.lowest = TRUE, labels = FALSE)
+      bx <- tapply(pk, b, mean)
+      by <- tapply(yk, b, mean)
+      bs <- tapply(yk, b, function(z) sd(z) / sqrt(length(z)))
+      segments(bx, by - 1.96 * bs, bx, by + 1.96 * bs,
+               col = lu_pal[[l]], lwd = 0.9)
+      points(bx, by, pch = 21, cex = 0.72, lwd = 0.4,
+             bg = lu_pal[[l]], col = "grey20")
     }
     for (j in seq_along(prop_cols)) {
       l <- lu_levels[j]; p <- d[[prop_cols[j]]]
@@ -529,9 +569,12 @@ try_fig({
     }
     mtext(paste0("(", tag, ") ", title), side = 3, adj = 0, line = 0.5,
           font = 2, cex = 0.8)
-    if (legend)
+    if (legend) {
       legend("topright", legend = sprintf("%s (n = %d)", lu_display[lu_levels], ns[lu_levels]),
              col = lu_pal[lu_levels], lwd = 2.6, bty = "n", cex = 0.6, seg.len = 1.4)
+      legend("topleft", legend = c("point: decile mean", "bar: 95% CI"),
+             bty = "n", cex = 0.55, text.col = "grey25")
+    }
   }
 
   forest_base <- function(resp_lab, tag, xlab) {
@@ -539,13 +582,20 @@ try_fig({
     d <- d[rev(seq_len(nrow(d))), ]
     n <- nrow(d); ys <- seq_len(n)
     xr <- range(c(d$lo, d$hi, 0)); pad <- diff(xr) * 0.06
-    par(mar = c(4.2, 8.8, 2.4, 0.8))
+    par(mar = c(6.0, 4.2, 2.4, 2.2), mgp = c(2.6, 0.5, 0))
     plot(NA, xlim = c(xr[1] - pad, xr[2] + pad), ylim = c(0.5, n + 0.5),
-         yaxt = "n", xlab = xlab, ylab = "", las = 1,
-         cex.lab = 0.85, cex.axis = 0.8)
+         yaxt = "n", xaxt = "n", xlab = "", ylab = "", las = 1)
+    axis(1, cex.axis = 0.62, las = 2, tcl = -0.25)
+    mtext(xlab, side = 1, line = 4.6, adj = 0.5, cex = 0.48)
     abline(v = 0, lty = 2, col = "grey60")
-    lab <- gsub(" vegetation", "", gsub(" forest", "", d$contrast))
-    axis(2, at = ys, labels = lab, las = 1, cex.axis = 0.66, tick = FALSE, line = -0.4)
+    # 24 mm of column leaves no room for "Pasture - Plantation forest",
+    # so each land use is cut to its shortest unambiguous stem.
+    abbr <- c("Primary vegetation" = "Prim", "Plantation forest" = "Plant",
+              "Secondary" = "Sec", "Cropland" = "Crop", "Pasture" = "Past")
+    lab <- d$contrast
+    for (nm in names(abbr)) lab <- gsub(nm, abbr[[nm]], lab, fixed = TRUE)
+    lab <- gsub(" - ", "-", lab, fixed = TRUE)
+    axis(2, at = ys, labels = lab, las = 1, cex.axis = 0.52, tick = FALSE, line = -0.6)
     for (i in ys) {
       cr <- d$credible[i]
       cl <- if (cr) "#B02020" else "grey55"
@@ -553,8 +603,8 @@ try_fig({
       points(d$estimate[i], i, pch = if (cr) 19 else 1,
              col = cl, cex = if (cr) 1.05 else 0.85)
     }
-    mtext(paste0("(", tag, ") Pairwise land-use contrasts"), side = 3, adj = 0,
-          line = 0.5, font = 2, cex = 0.8)
+    mtext(paste0("(", tag, ") Contrasts"), side = 3, adj = 0.5,
+          line = 0.5, font = 2, cex = 0.6)
   }
 
   tree_panel <- function(m, title, barlab) {
@@ -577,28 +627,30 @@ try_fig({
   ylim_mal  <- log(c(28, 480))
   ylim_dich <- c(-75, 130)
 
-  draw4 <- function() {
-    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(1.05, 1.35, 1.05))
+  draw3 <- function() {
+    # Rows are 95 mm tall. The forest column at 28 mm runs at about
+    # 3.4:1, against 1.3:1 before. Below 28 mm the axis label clips.
+    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(95, 106, 28))
 
     tree_panel(m_mal, "(a) Male colourfulness across the phylogeny", "Male colourfulness (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
     scatter_panel("malecolcooney", "Male colourfulness (LociUVS)", TRUE, "b",
                   "Male colourfulness vs land-use association", ylim_mal, TRUE)
-    forest_base("Male colourfulness", "c", "Difference in log male colourfulness (95% CrI)")
+    forest_base("Male colourfulness", "c", "log difference")
 
     tree_panel(m_dich, "(d) Sexual dichromatism across the phylogeny",
                "Sexual dichromatism (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
     scatter_panel("dichrodiff", "Sexual dichromatism (LociUVS)", FALSE, "e",
                   "Sexual dichromatism vs land-use association", ylim_dich, FALSE)
-    forest_base("Sexual dichromatism", "f", "Difference in LociUVS (95% CrI)")
+    forest_base("Sexual dichromatism", "f", "LociUVS diff.")
   }
 
-  pdf(file.path(OUT, "Figure_4_A1_phylogeny_landuse.pdf"),
-      width = mm2in(265), height = mm2in(190)); draw4(); dev.off()
-  png(file.path(OUT, "Figure_4_A1_phylogeny_landuse.png"),
-      width = mm2in(265), height = mm2in(190), units = "in", res = 400); draw4(); dev.off()
-  message("Saved Figure_4_A1_phylogeny_landuse")
+  pdf(file.path(OUT, "Figure_3_A1_phylogeny_landuse.pdf"),
+      width = mm2in(233), height = mm2in(190)); draw3(); dev.off()
+  png(file.path(OUT, "Figure_3_A1_phylogeny_landuse.png"),
+      width = mm2in(233), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
+  message("Saved Figure_3_A1_phylogeny_landuse")
 })
 
 message("\nDone. Publication figures in ", OUT)
