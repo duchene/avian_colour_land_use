@@ -44,7 +44,9 @@ found. A1b rebuilds the scores from detections only and changes nothing else. Th
 predictors correlate at 0.58 to 0.79 depending on land use, and the difference decides
 a result: pasture below primary vegetation is credible under A1 at -0.147
 [-0.273, -0.023] and is not under A1b at -0.085 [-0.193, +0.021]. A1 and B1 are kept
-so the check stays auditable, and both appear in `results/*/posthoc_contrasts.csv`.
+so the check stays auditable. They appear in `results/*/posthoc_contrasts.csv` but are
+excluded from the published `figures/pub/*/Table_1_posthoc_contrasts.csv`, which
+carries one model per analysis.
 
 **A2e / A2f** are sensitivity checks that add the full three-way colour x biome x land
 use interaction to A2c / A2d. They exist to justify reporting the two-way models.

@@ -62,10 +62,10 @@ credible interval, the posterior probability that the difference takes its
 estimated sign, and a standardised effect size, the estimate divided by the
 residual standard deviation of that response on the scale the model works in.
 No multiplicity correction is applied, because these are posterior
-probabilities of a difference rather than repeated frequentist tests. Rows
-labelled A1 come from the superseded species-level model, whose association
-scores counted every raw record including structural zeros, and are retained
-so the sensitivity check against A1b stays auditable.
+probabilities of a difference rather than repeated frequentist tests. The
+table carries one model per analysis: A3b for community colour, A2c for
+relative abundance, A2d for abundance change, and A1b for the species-level
+regression.
 
 
 TABLE 2. Post-hoc contrasts within levels of an interacting factor.

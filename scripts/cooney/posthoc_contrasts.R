@@ -147,7 +147,16 @@ tbl <- bind_rows(all_contrasts) %>%
 
 tbl <- tbl %>% mutate(across(all_of(c("contrast")), relabel_levels))
 write_csv(tbl, "results/cooney/posthoc_contrasts.csv")
-write_csv(tbl, "figures/pub/cooney/Table_1_posthoc_contrasts.csv")
+
+# The published table carries only the reported models. A1 is the
+# superseded species-level fit, whose association scores counted every
+# raw record including the 84% that are structural zeros. It stays in
+# results/cooney/posthoc_contrasts.csv so the A1b sensitivity check
+# remains auditable, and out of Table 1 so the table reports one model
+# per analysis.
+REPORTED <- c("A3b", "A2c", "A2d", "A1b")
+write_csv(filter(tbl, model %in% REPORTED),
+          "figures/pub/cooney/Table_1_posthoc_contrasts.csv")
 
 cat("\n", strrep("=", 70), "\n", sep = "")
 cat("CREDIBLE PAIRWISE CONTRASTS (95% CrI excludes zero)\n")
@@ -161,5 +170,6 @@ if (nrow(cred)) {
 } else cat("none\n")
 
 cat("\nTotal contrasts:", nrow(tbl), "| credible:", sum(tbl$credible), "\n")
+cat("Table 1 rows (reported models only):", sum(tbl$model %in% REPORTED), "\n")
 cat("Written to results/cooney/posthoc_contrasts.csv",
     "and figures/pub/cooney/Table_1_posthoc_contrasts.csv\n")

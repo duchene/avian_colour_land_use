@@ -23,7 +23,7 @@ IDENTIFYING COLUMNS
 ================================================================================
 
 model
-    Which analysis the row comes from: A3b community colour, A2c relative abundance, A2d abundance change, A1b species level. Rows marked A1 are the superseded species-level model, whose land-use association scores counted every raw row including the 84% that are structural zeros. A1b builds the same scores from detections only and is the reported model. A1 is kept so the sensitivity check stays auditable, and the two disagree on whether the pasture contrast is credible.
+    Which analysis the row comes from: A3b community colour, A2c relative abundance, A2d abundance change, A1b species level. One model per analysis. An earlier species-level fit, A1, built its land-use association scores by counting every raw record including the 84% that are structural zeros, and is superseded by A1b, which counts detections only. The two disagree on whether the pasture contrast is credible. A1 is kept in results/cooney/posthoc_contrasts.csv so that check stays auditable, and is excluded here.
 
 response
     Male colourfulness or Sexual dichromatism. In A2c and A2d the response is abundance and this names the colour metric used as a predictor, so read it as "the male-colour model".
@@ -107,13 +107,13 @@ effect_size
 
     A value of 0.5 means two levels differ by half a standard deviation of the response. A value of 0.05 means they differ by a twentieth of it. As rough anchors, 0.2 is a small effect, 0.5 a medium one, and 0.8 a large one, though these conventions were set for psychology and are generous for community ecology, where 0.1 across whole assemblages is worth attention.
 
-    High values matter because the difference is large relative to natural variation, so it would be visible in the field rather than only in a model. The largest value in these tables is 1.30, the dichromatism gap between nectarivores and invertivores in A3b, which is a difference you could see without a model. The pasture contrasts reach 0.52 in the superseded A1 and 0.24 in the reported A1b.
+    High values matter because the difference is large relative to natural variation, so it would be visible in the field rather than only in a model. The largest value in these tables is 1.30, the dichromatism gap between nectarivores and invertivores in A3b, which is a difference you could see without a model. The pasture contrasts in A1b reach 0.24.
 
     Low values matter because a credible effect can still be negligible. With 24,614 records a contrast can have pd of 1.0 and an effect size of 0.03, which is a real but trivial difference. The credible colour terms in A2d are exactly this case, and we report them as credible but not meaningful. Treat any row with credible = TRUE and an effect size below about 0.05 as a statement about precision rather than about biology.
 
     The denominator is the total standard deviation of the response, which includes variation among studies and sites as well as among species. Effect sizes here are therefore conservative. Dividing by the residual standard deviation instead, as some conventions do, would make every value larger.
 
-    The divisors used are 0.431 for A3b male colourfulness, 31.90 LociUVS for A3b sexual dichromatism, 1.113 for A2c log relative abundance, 0.0568 for A2d abundance change, 0.457 for A1 male colourfulness, and 34.32 LociUVS for A1 sexual dichromatism (A1b uses the same 0.457 and 34.41 LociUVS). Multiply an effect size by its divisor to recover the estimate.
+    The divisors used are 0.431 for A3b male colourfulness, 31.90 LociUVS for A3b sexual dichromatism, 1.113 for A2c log relative abundance, 0.0568 for A2d abundance change, 0.457 for A1b male colourfulness, and 34.41 LociUVS for A1b sexual dichromatism. Multiply an effect size by its divisor to recover the estimate.
 
 
 READING A ROW
