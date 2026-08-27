@@ -1,8 +1,8 @@
 # pub_figures.R
 # Publication figures for the avian colour x land-use manuscript.
-# Focus: A1b (community colour), A2c (relative abundance), A2d (abundance
-# change), A3 (phylogenetic association). Driven from results/*.csv (no need
-# to reload the large brms fits) plus the A3 tree. Run: Rscript scripts/pub_figures.R
+# Focus: A3b (community colour), A2c (relative abundance), A2d (abundance
+# change), A1 (phylogenetic association). Driven from results/*.csv (no need
+# to reload the large brms fits) plus the A1 tree. Run: Rscript scripts/pub_figures.R
 
 suppressMessages({
   library(dplyr); library(tidyr); library(ggplot2); library(stringr)
@@ -38,11 +38,11 @@ pretty_biome <- function(x) x |>
   str_replace("TropicalForest","Tropical Forest")
 
 # ============================================================
-# Figure 1 — A1b community colour: main effects
+# Figure 1 — A3b community colour: main effects
 # ============================================================
 message("Figure 1 ...")
 try_fig({
-  a1b <- read.csv("results/cooney/A1b_fixed_effects.csv") |>
+  a1b <- read.csv("results/cooney/A3b_fixed_effects.csv") |>
     mutate(response = resp_lab[str_remove(model, "_(base|covariate)$")],
            variant  = str_extract(model, "base|covariate"),
            credible = sign(Q2.5) == sign(Q97.5))
@@ -75,17 +75,17 @@ try_fig({
     scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
     scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
     labs(x = "Coefficient (reference: Primary vegetation / Tropical Forest / Aquatic predator)",
-         y = NULL, title = "A1b - community colour: land use, biome, body mass, trophic niche") +
+         y = NULL, title = "A3b - community colour: land use, biome, body mass, trophic niche") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 8))
-  save_fig(fig1, "Figure_1_A1b_main_effects", mm2in(220), mm2in(150))
+  save_fig(fig1, "Figure_1_A3b_main_effects", mm2in(220), mm2in(150))
 })
 
 # ============================================================
-# Figure 2 — A1b biome x land-use interactions
+# Figure 2 — A3b biome x land-use interactions
 # ============================================================
 message("Figure 2 ...")
 try_fig({
-  a1b <- read.csv("results/cooney/A1b_fixed_effects.csv") |>
+  a1b <- read.csv("results/cooney/A3b_fixed_effects.csv") |>
     mutate(response = resp_lab[str_remove(model, "_(base|covariate)$")],
            variant  = str_extract(model, "base|covariate"),
            credible = sign(Q2.5) == sign(Q97.5))
@@ -104,20 +104,20 @@ try_fig({
     scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
     scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
     labs(x = "Biome x land-use interaction coefficient", y = NULL,
-         title = "A1b - biome x land-use interactions on community colour") +
+         title = "A3b - biome x land-use interactions on community colour") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 7))
-  save_fig(fig2, "Figure_2_A1b_biome_landuse", mm2in(220), mm2in(150))
+  save_fig(fig2, "Figure_2_A3b_biome_landuse", mm2in(220), mm2in(150))
 })
 
 # ============================================================
-# Figure 3 — A1a: guild- and size-specific colour responses to land use
-#            (land use x trophic niche and land use x body mass). A1a is
-#            favoured over A1b by LOO for all four responses; these are the
-#            interactions A1b's main-effects-only structure cannot capture.
+# Figure 3 — A3a: guild- and size-specific colour responses to land use
+#            (land use x trophic niche and land use x body mass). A3a is
+#            favoured over A3b by LOO for all four responses; these are the
+#            interactions A3b's main-effects-only structure cannot capture.
 # ============================================================
 message("Figure 3 ...")
 try_fig({
-  a1a <- read.csv("results/cooney/A1a_fixed_effects.csv") |>
+  a1a <- read.csv("results/cooney/A3a_fixed_effects.csv") |>
     mutate(response = factor(resp_lab[model], levels = resp_order),
            credible = sign(Q2.5) == sign(Q97.5))
 
@@ -166,8 +166,8 @@ try_fig({
   fig3 <- (p_mass / p_troph) +
     plot_layout(heights = c(1, 4)) +
     plot_annotation(
-      title = "A1a - guild- and size-specific colour responses to land use")
-  save_fig(fig3, "Figure_3_A1a_trophic_mass", mm2in(220), mm2in(200))
+      title = "A3a - guild- and size-specific colour responses to land use")
+  save_fig(fig3, "Figure_3_A3a_trophic_mass", mm2in(220), mm2in(200))
 })
 
 # ============================================================
@@ -225,11 +225,11 @@ try_fig({
 })
 
 # ============================================================
-# Figure 6 — A3 radial phylogenies with ancestral colour states
+# Figure 6 — A1 radial phylogenies with ancestral colour states
 # ============================================================
 message("Figure 6 (contMap; ~1-2 min) ...")
 try_fig({
-  load("fits/A3_model_setup.RData")   # tree, spdat
+  load("fits/A1_model_setup.RData")   # tree, spdat
   x_mal <- setNames(spdat$malecolcooney, spdat$phylo); x_mal <- x_mal[!is.na(x_mal)]
   tree_mal <- drop.tip(tree, setdiff(tree$tip.label, names(x_mal)))
   obj_a <- contMap(tree_mal, log(x_mal), plot = FALSE)
@@ -256,17 +256,17 @@ try_fig({
                   digits = 1, x = 0.05, y = 0.6, lwd = 10, fsize = 0.9, prompt = FALSE, subtitle = "")
   }
   dir.create("figures/exploratory/cooney", showWarnings = FALSE, recursive = TRUE)
-  pdf("figures/exploratory/cooney/Figure_6_A3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
-  png("figures/exploratory/cooney/Figure_6_A3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
-  message("Saved Figure_6_A3_phylogeny")
+  pdf("figures/exploratory/cooney/Figure_6_A1_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
+  png("figures/exploratory/cooney/Figure_6_A1_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
+  message("Saved Figure_6_A1_phylogeny")
 })
 
 # ============================================================
-# Figure 7 — A3 expected colour by land-use association
+# Figure 7 — A1 expected colour by land-use association
 # ============================================================
 message("Figure 7 ...")
 try_fig({
-  a3 <- read.csv("results/cooney/A3_fixed_effects.csv") |>
+  a3 <- read.csv("results/cooney/A1_fixed_effects.csv") |>
     mutate(land_use = str_remove(parameter, "^prop_") |> str_replace_all("_", " "),
            land_use = factor(land_use, levels = rev(lu_full)),
            response = factor(resp_lab[response], levels = resp_order))
@@ -276,9 +276,9 @@ try_fig({
     facet_wrap(~response, scales = "free_x") +
     scale_colour_manual(values = lu_pal, guide = "none") +
     labs(x = "Expected colour for a species found exclusively in that land use", y = NULL,
-         title = "A3 - phylogenetic association of colour with land use") +
+         title = "A1 - phylogenetic association of colour with land use") +
     theme(axis.text.y = element_text(size = 8))
-  save_fig(fig7, "Figure_7_A3_landuse_association", mm2in(200), mm2in(140))
+  save_fig(fig7, "Figure_7_A1_landuse_association", mm2in(200), mm2in(140))
 })
 
 message("\nDone. Figures in figures/pub/")

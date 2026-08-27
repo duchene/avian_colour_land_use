@@ -26,7 +26,7 @@
 # colour levels, because colour is continuous. They are expressed as
 # pairwise comparisons of the BIOME and LAND-USE levels, contrasting
 # the colour slope between them, which is exactly what the interaction
-# coefficients encode. A1b contributes "Level mean" rows only, since
+# coefficients encode. A3b contributes "Level mean" rows only, since
 # colour is its response and it carries no colour interaction.
 #
 # Deliberately NOT included:
@@ -34,16 +34,16 @@
 #     pairwise level comparisons.
 #   * Simple slopes on the standardised colour predictors. Colour is
 #     continuous and has no levels to pair.
-#   * Trophic niche and body mass. They enter A1b as main effects
+#   * Trophic niche and body mass. They enter A3b as main effects
 #     only, never in an interaction, so their contrasts do not depend
 #     on any other level and belong in Table 1.
 #   * Contrasts in which biome AND land use both differ. They confound
 #     the two factors and a credible result among them could not be
 #     attributed to either.
-#   * A3, which carries no interaction term at all.
+#   * A1, which carries no interaction term at all.
 #
 # RESPONSE. The response differs between model families and is named
-# in its own column. In A1b the response is community colour. In A2c
+# in its own column. In A3b the response is community colour. In A2c
 # and A2d the response is ABUNDANCE.
 #
 # THE COLOUR METRIC IS NOT PART OF ANY CONTRAST HERE. A2c and A2d were
@@ -99,28 +99,28 @@ simple_effects <- function(fit, grid, target, within, model, response, src) {
 }
 
 RESPONSE   <- c(A2c = "Relative abundance", A2d = "Abundance change vs primary")
-COLOUR_LAB <- c(malecolcooney = "Colour diversity", dichrodiff = "Sexual dichromatism",
-                z_malecolcooney = "Colour diversity (z)",
+COLOUR_LAB <- c(malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
+                z_malecolcooney = "Male colourfulness (z)",
                 z_dichrodiff = "Sexual dichromatism (z)")
 # Names the fit an estimate came from, not a term in the contrast.
-SRC_FIT    <- c(z_malecolcooney = "fitted with colour diversity (z)",
+SRC_FIT    <- c(z_malecolcooney = "fitted with male colourfulness (z)",
                 z_dichrodiff    = "fitted with sexual dichromatism (z)")
 
 out <- list()
 
 # ------------------------------------------------------------
-# A1b. Response is community colour. No colour predictor.
+# A3b. Response is community colour. No colour predictor.
 # ------------------------------------------------------------
-message("A1b ...")
+message("A3b ...")
 grid_a1b <- make_grid(Predominant_simple = LU5, Biome4 = BIOME3,
                       Trophic.Niche = TROPHIC6, z_logMass = 0)
 for (resp in c("malecolcooney", "dichrodiff")) {
-  load(paste0("fits/A1b_fit_", resp, "_covariate.RData"))
+  load(paste0("fits/A3b_fit_", resp, "_covariate.RData"))
   rlab <- paste0("Community ", tolower(COLOUR_LAB[[resp]]))
-  out[[paste0("A1b_lu_", resp)]] <-
-    simple_effects(fit, grid_a1b, "Predominant_simple", "Biome4", "A1b", rlab, NA_character_)
-  out[[paste0("A1b_bi_", resp)]] <-
-    simple_effects(fit, grid_a1b, "Biome4", "Predominant_simple", "A1b", rlab, NA_character_)
+  out[[paste0("A3b_lu_", resp)]] <-
+    simple_effects(fit, grid_a1b, "Predominant_simple", "Biome4", "A3b", rlab, NA_character_)
+  out[[paste0("A3b_bi_", resp)]] <-
+    simple_effects(fit, grid_a1b, "Biome4", "Predominant_simple", "A3b", rlab, NA_character_)
   rm(fit); gc(verbose = FALSE)
   message("  ", resp, " done")
 }
@@ -168,7 +168,7 @@ message("\nvalidating ...")
 # Level means: every pair, within every level of the other factor.
 # Colour slopes: every pair, once, averaged over the other factor.
 expected <- bind_rows(
-  tibble(model = "A1b", quantity = "Level mean",
+  tibble(model = "A3b", quantity = "Level mean",
          n_lu_exp = choose(5, 2) * 3, n_bi_exp = choose(3, 2) * 5),
   tibble(model = "A2c", quantity = "Level mean",
          n_lu_exp = choose(5, 2) * 3, n_bi_exp = choose(3, 2) * 5),
@@ -206,18 +206,18 @@ strip   <- function(x) gsub("[^A-Za-z0-9]", "", x)
 coef_of <- function(fx, nm) if (nm %in% names(fx)) unname(fx[[nm]]) else 0
 
 specs <- list(
-  list(m = "A1b", file = "results/cooney/A1b_fixed_effects.csv", lus = LU5,
-       fits = list(c(key = "malecolcooney_covariate", resp = "Community colour diversity", cp = NA),
+  list(m = "A3b", file = "results/cooney/A3b_fixed_effects.csv", lus = LU5,
+       fits = list(c(key = "malecolcooney_covariate", resp = "Community male colourfulness", cp = NA),
                    c(key = "dichrodiff_covariate",
                      resp = "Community sexual dichromatism", cp = NA))),
   list(m = "A2c", file = "results/cooney/A2c_fixed_effects.csv", lus = LU5,
        fits = list(c(key = "z_malecolcooney", resp = "Relative abundance",
-                     cp = "fitted with colour diversity (z)"),
+                     cp = "fitted with male colourfulness (z)"),
                    c(key = "z_dichrodiff", resp = "Relative abundance",
                      cp = "fitted with sexual dichromatism (z)"))),
   list(m = "A2d", file = "results/cooney/A2d_fixed_effects.csv", lus = LU4,
        fits = list(c(key = "z_malecolcooney", resp = "Abundance change vs primary",
-                     cp = "fitted with colour diversity (z)"),
+                     cp = "fitted with male colourfulness (z)"),
                    c(key = "z_dichrodiff", resp = "Abundance change vs primary",
                      cp = "fitted with sexual dichromatism (z)"))))
 
@@ -227,7 +227,7 @@ for (sp in specs) {
   for (ft in sp$fits) {
     sel <- fe$model == ft[["key"]]
     fx  <- setNames(fe$Estimate[sel], fe$parameter[sel])
-    cvar <- if (sp$m == "A1b") NA_character_ else ft[["key"]]
+    cvar <- if (sp$m == "A3b") NA_character_ else ft[["key"]]
     sub <- tbl %>% filter(model == sp$m, response == ft[["resp"]],
                           if (is.na(ft[["cp"]])) is.na(source_fit)
                           else source_fit %in% ft[["cp"]])

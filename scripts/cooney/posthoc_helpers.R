@@ -95,8 +95,8 @@ DISPLAY <- c("Tropical Forest"  = "Tropical closed",
              "Plantation forest" = "Plantation")
 relabel_levels <- function(x) stringr::str_replace_all(as.character(x), DISPLAY)
 
-RESP_LABEL <- c(malecolcooney = "Colour diversity", dichrodiff = "Sexual dichromatism",
-                z_malecolcooney = "Colour diversity", z_dichrodiff = "Sexual dichromatism")
+RESP_LABEL <- c(malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
+                z_malecolcooney = "Male colourfulness", z_dichrodiff = "Sexual dichromatism")
 
 LU5 <- c("Primary vegetation", "Secondary", "Plantation forest", "Cropland", "Pasture")
 LU4 <- c("Secondary", "Plantation forest", "Cropland", "Pasture")

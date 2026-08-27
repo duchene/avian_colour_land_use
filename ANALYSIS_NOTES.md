@@ -20,8 +20,8 @@ is what let it drift out of step with the code.
 **One diagnostic problem is outstanding**, described under Open decisions: every
 species-level model in both families returned a low E-BFMI.
 
-Observed runtimes on this machine (16 cores, 4 chains at 4 threads), per model: A1b 17
-minutes, A3 28 minutes, A1a 50 minutes, A2c 80 minutes, A2f about 400 minutes, and A2d
+Observed runtimes on this machine (16 cores, 4 chains at 4 threads), per model: A3b 17
+minutes, A1 28 minutes, A3a 50 minutes, A2c 80 minutes, A2f about 400 minutes, and A2d
 373 minutes. A2d, B2d and A2f account for most of the wall time, since each carries a
 dense species covariance matrix over 53,551 records. Budget about 60 hours for a full
 A and B sequence.
@@ -135,9 +135,9 @@ phylogenetic random effect and colour claim the same species-level variance, bec
 colour is strongly conserved. Colour fixed effects there should be read as effects
 beyond phylogeny. Biome and land use vary within a species and are not affected.
 
-## Why A1a and A1b carry no phylogenetic term
+## Why A3a and A3b carry no phylogenetic term
 
-A1b was originally specified with `(1 | gr(phylo, cov = A))`. A feasibility fit showed
+A3b was originally specified with `(1 | gr(phylo, cov = A))`. A feasibility fit showed
 the specification is not identifiable, and the term was dropped.
 
 Plumage colour is a species-level trait, identical across all of a species' occurrence
@@ -150,7 +150,7 @@ The diagnostics showed structural degeneracy rather than slow mixing: sd(phylo) 
 Rhat between 1.8 and 3.0 and bulk effective sample sizes of 2 to 7 despite no
 divergences.
 
-A3 places a phylogenetic term on colour legitimately because it is fitted at the
+A1 places a phylogenetic term on colour legitimately because it is fitted at the
 species level, one row per species, where the covariance matrix constrains the
 phylogenetic effect and sigma captures the residual. The abundance models A2c and A2d
 keep the term because abundance genuinely varies within species. Community level
@@ -159,7 +159,7 @@ both questions.
 
 ## Model specifications
 
-### A1b, B1b: community colour by biome and land use
+### A3b, B3b: community colour by biome and land use
 
 ```
 colour ~ Biome4 * Predominant_simple [+ Trophic.Niche + z_logMass]
@@ -168,9 +168,9 @@ colour ~ Biome4 * Predominant_simple [+ Trophic.Niche + z_logMass]
 
 Two variants per response, base and covariate. The primary community model. Biome by
 land use is reported from here. Trophic niche and body mass enter as main effects only,
-since their land-use interactions are A1a's job.
+since their land-use interactions are A3a's job.
 
-### A1a, B1a: adding guild and size interactions
+### A3a, B3a: adding guild and size interactions
 
 ```
 colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
@@ -178,7 +178,7 @@ colour ~ Biome4 * Predominant_simple + Trophic.Niche + z_logMass
          + (1|SS) + (1|SSB) + (1|SSBS)
 ```
 
-A nested superset of the A1b covariate model on identical rows, so leave-one-out
+A nested superset of the A3b covariate model on identical rows, so leave-one-out
 cross-validation tests directly whether the guild and size interactions earn their
 place. Both scripts call `load_community_data()`, which guarantees the shared rows the
 comparison requires.
@@ -216,13 +216,13 @@ from 66,225 non-zero differences of which 54,038 are negative.
 
 ### A2e, A2f: three-way sensitivity checks
 
-The full `colour * Biome4 * Predominant_simple` interaction fitted for colour diversity and
+The full `colour * Biome4 * Predominant_simple` interaction fitted for male colourfulness and
 compared to the reported two-way model by leave-one-out cross-validation. A2e extends
 A2c, A2f extends A2d. These exist to justify reporting the two-way models and are not
-themselves reported. The check uses colour diversity only. Extend it to the dichromatism
+themselves reported. The check uses male colourfulness only. Extend it to the dichromatism
 difference if an all-metric statement is needed.
 
-### A3, B3: species-level phylogenetic regression
+### A1, B1: species-level phylogenetic regression
 
 ```
 colour ~ 0 + prop_Cropland + prop_Pasture + prop_Plantation_forest
@@ -240,17 +240,17 @@ matched to 1,391 tips.
 
 These need a call before or during the refit. None has been made silently.
 
-**A3 and B3 compute land-use proportions from the full raw file.** They therefore
+**A1 and B1 compute land-use proportions from the full raw file.** They therefore
 include studies with no primary vegetation and records in the dropped Temperate Open
 biome, while every other analysis works from the filtered `present.csv`. The rationale
 is that a species' habitat association is a property of the species and is best
 estimated from all available records. The alternative is consistency with the rest of
 the pipeline. Flagged in the header of both scripts.
 
-**A3 posterior contrasts: resolved 2026-08-13.** The compositional coefficients are
+**A1 posterior contrasts: resolved 2026-08-13.** The compositional coefficients are
 strongly correlated in the posterior, so overlapping marginal credible intervals do not
 settle whether pasture-associated species differ from primary-associated ones. The
-contrast is now computed inside `A3_03_diagnostics_summary.R` and `B3_03_...` and
+contrast is now computed inside `A1_03_diagnostics_summary.R` and `B1_03_...` and
 written to `results/*/[AB]3_landuse_contrasts.csv`, so it can no longer be skipped.
 The answer: the pasture difference is credible for colourfulness where the marginal
 intervals had suggested it was not, which vindicates the earlier claim but only because
@@ -261,14 +261,14 @@ spans forest and shrubland, so the assignment is genuinely borderline. Changing 
 editing `BIOME_MAP` in the config and refitting.
 
 **The species-level model has an E-BFMI problem. This is the one thing still to fix.**
-All four A3 models and all four B3 models return an energy Bayesian fraction of missing
+All four A1 models and all four B1 models return an energy Bayesian fraction of missing
 information below 0.3, on all four chains in seven of the eight cases. Because it
 appears in both colour families it is a property of the species-level phylogenetic
 regression itself, not of either metric. Rhat (max 1.005) and bulk ESS (min 819) look
 fine, which is the point: neither detects this.
 
-It matters because A3's one substantive result, the pasture contrast, is a statement
-about a posterior tail. Refit A3 and B3 with a non-centred parameterisation of the
+It matters because A1's one substantive result, the pasture contrast, is a statement
+about a posterior tail. Refit A1 and B1 with a non-centred parameterisation of the
 phylogenetic term, or at higher `adapt_delta` with a longer warmup, and confirm the
 contrast. Note that the pasture contrast does not reproduce under Dale scores, so there
 is already independent reason to doubt it.
@@ -286,10 +286,10 @@ excludes zero.
 
 **The mass by land-use interactions changed sign on the corrected data**, and they sit
 squarely in the cropland and pasture cells above. Treat the direction as unsettled
-until the Dale replication is in, since B1a fits the same interaction on a different
+until the Dale replication is in, since B3a fits the same interaction on a different
 colour metric and offers an independent read.
 
-**Effects at the credibility boundary.** Several A1a guild interactions have intervals
+**Effects at the credibility boundary.** Several A3a guild interactions have intervals
 that only just exclude zero. Report the interval rather than the verdict, and do not
 build an argument on a term whose upper bound is within rounding distance of zero.
 
@@ -302,7 +302,7 @@ fits rather than assuming the earlier verdict holds.
 
 Recoverable with `git checkout prefilter-results-2026-08 -- <path>`.
 
-- **Original A1.** A single `(1|SSBS)` random intercept. Refitted as A1a under the full
+- **Original A3.** A single `(1|SSBS)` random intercept. Refitted as A3a under the full
   hierarchy.
 - **A2.** Relative abundance on colour by land use with a single `(1|SSBS)` intercept
   and no biome or phylogeny. Superseded by A2c.

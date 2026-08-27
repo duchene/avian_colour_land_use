@@ -50,19 +50,19 @@ contrasts_for <- function(fit, model, response, specs) {
 all_contrasts <- list()
 
 # ------------------------------------------------------------
-# A1b: community colour (covariate variant, the reported one)
+# A3b: community colour (covariate variant, the reported one)
 # ------------------------------------------------------------
-message("A1b ...")
+message("A3b ...")
 lu <- LU5; bio <- BIOME3; tro <- TROPHIC6
 
 grid_a1b <- make_grid(Predominant_simple = lu, Biome4 = bio,
                       Trophic.Niche = tro, z_logMass = 0)
 
 for (resp in c("malecolcooney", "dichrodiff")) {
-  f <- paste0("fits/A1b_fit_", resp, "_covariate.RData")
+  f <- paste0("fits/A3b_fit_", resp, "_covariate.RData")
   load(f)
-  all_contrasts[[paste0("A1b_", resp)]] <- contrasts_for(
-    fit, "A1b", resp,
+  all_contrasts[[paste0("A3b_", resp)]] <- contrasts_for(
+    fit, "A3b", resp,
     list(Predominant_simple = grid_a1b, Biome4 = grid_a1b, Trophic.Niche = grid_a1b))
   rm(fit); gc(verbose = FALSE)
   message("  ", resp, " done")
@@ -102,36 +102,36 @@ for (cv in c("z_malecolcooney", "z_dichrodiff")) {
 }
 
 # ------------------------------------------------------------
-# A3: species-level compositional model. There is no intercept and
+# A1: species-level compositional model. There is no intercept and
 # the five proportions sum to 1, so each coefficient IS the marginal
 # mean for a species found exclusively in that land use. Contrast
 # the coefficient draws directly rather than through a grid.
 # ------------------------------------------------------------
-message("A3 ...")
-load("fits/A3_all_fits.RData")
+message("A1 ...")
+load("fits/A1_all_fits.RData")
 lu_prop <- c("prop_Primary_vegetation", "prop_Secondary",
              "prop_Plantation_forest", "prop_Cropland", "prop_Pasture")
 lu_lab  <- str_replace_all(str_remove(lu_prop, "^prop_"), "_", " ")
 
 for (resp in c("malecolcooney", "dichrodiff")) {
-  fit <- fits_A3[[resp]]
+  fit <- fits_A1[[resp]]
   d <- posterior::as_draws_matrix(fit)
   emm <- d[, paste0("b_", lu_prop), drop = FALSE]
   colnames(emm) <- lu_lab
-  all_contrasts[[paste0("A3_", resp)]] <- pairwise(
+  all_contrasts[[paste0("A1_", resp)]] <- pairwise(
     emm, link_sd(fit), fit$family$family == "lognormal",
-    model = "A3", response = resp, factor = "Predominant_simple")
+    model = "A1", response = resp, factor = "Predominant_simple")
   message("  ", resp, " done")
 }
-rm(fits_A3); gc(verbose = FALSE)
+rm(fits_A1); gc(verbose = FALSE)
 
 # ------------------------------------------------------------
 # Write out
 # ------------------------------------------------------------
 tbl <- bind_rows(all_contrasts) %>%
   mutate(response = recode(response,
-           malecolcooney = "Colour diversity", dichrodiff = "Sexual dichromatism",
-           z_malecolcooney = "Colour diversity", z_dichrodiff = "Sexual dichromatism"),
+           malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
+           z_malecolcooney = "Male colourfulness", z_dichrodiff = "Sexual dichromatism"),
          factor = recode(factor,
            Predominant_simple = "Land use", Biome4 = "Biome",
            Trophic.Niche = "Trophic niche")) %>%

@@ -1,10 +1,10 @@
 # pub_figures_dale.R
 # Publication figures for the Dale-colour (B) replication of the manuscript.
 # Parallels scripts/cooney/pub_figures.R exactly, using the B analyses and Dale
-# plumage metrics: B1b (community colour), B1a (guild/size interactions), B2c
-# (relative abundance), B2d (abundance change), B3 (phylogenetic association).
+# plumage metrics: B3b (community colour), B3a (guild/size interactions), B2c
+# (relative abundance), B2d (abundance change), B1 (phylogenetic association).
 # Figure numbers match their Cooney counterparts one-for-one (1-7).
-# Driven from results/dale/*.csv plus the B3 tree. Run: Rscript scripts/dale/pub_figures_dale.R
+# Driven from results/dale/*.csv plus the B1 tree. Run: Rscript scripts/dale/pub_figures_dale.R
 
 suppressMessages({
   library(dplyr); library(tidyr); library(ggplot2); library(stringr)
@@ -40,11 +40,11 @@ pretty_biome <- function(x) x |>
   str_replace("TropicalForest","Tropical Forest")
 
 # ============================================================
-# Figure 1 — B1b community colour: main effects
+# Figure 1 — B3b community colour: main effects
 # ============================================================
 message("Figure 1 ...")
 try_fig({
-  b1b <- read.csv("results/dale/B1b_fixed_effects.csv") |>
+  b1b <- read.csv("results/dale/B3b_fixed_effects.csv") |>
     mutate(response = resp_lab[str_remove(model, "_(base|covariate)$")],
            variant  = str_extract(model, "base|covariate"),
            credible = sign(Q2.5) == sign(Q97.5))
@@ -77,17 +77,17 @@ try_fig({
     scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
     scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
     labs(x = "Coefficient (reference: Primary vegetation / Tropical Forest / Aquatic predator)",
-         y = NULL, title = "B1b - community colour (Dale): land use, biome, body mass, trophic niche") +
+         y = NULL, title = "B3b - community colour (Dale): land use, biome, body mass, trophic niche") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 8))
-  save_fig(fig1, "Figure_1_B1b_main_effects", mm2in(220), mm2in(150))
+  save_fig(fig1, "Figure_1_B3b_main_effects", mm2in(220), mm2in(150))
 })
 
 # ============================================================
-# Figure 2 — B1b biome x land-use interactions
+# Figure 2 — B3b biome x land-use interactions
 # ============================================================
 message("Figure 2 ...")
 try_fig({
-  b1b <- read.csv("results/dale/B1b_fixed_effects.csv") |>
+  b1b <- read.csv("results/dale/B3b_fixed_effects.csv") |>
     mutate(response = resp_lab[str_remove(model, "_(base|covariate)$")],
            variant  = str_extract(model, "base|covariate"),
            credible = sign(Q2.5) == sign(Q97.5))
@@ -106,19 +106,19 @@ try_fig({
     scale_colour_manual(values = cred_col, name = "95% CI excludes 0", labels = cred_labs) +
     scale_shape_manual(values = cred_shape, name = "95% CI excludes 0", labels = cred_labs) +
     labs(x = "Biome x land-use interaction coefficient", y = NULL,
-         title = "B1b - biome x land-use interactions on community colour (Dale)") +
+         title = "B3b - biome x land-use interactions on community colour (Dale)") +
     theme(legend.position = "bottom", axis.text.y = element_text(size = 7))
-  save_fig(fig2, "Figure_2_B1b_biome_landuse", mm2in(220), mm2in(150))
+  save_fig(fig2, "Figure_2_B3b_biome_landuse", mm2in(220), mm2in(150))
 })
 
 # ============================================================
-# Figure 3 — B1a: guild- and size-specific colour responses to land use
-#            (land use x trophic niche and land use x body mass). B1a is
-#            favoured over B1b by LOO for all four responses.
+# Figure 3 — B3a: guild- and size-specific colour responses to land use
+#            (land use x trophic niche and land use x body mass). B3a is
+#            favoured over B3b by LOO for all four responses.
 # ============================================================
 message("Figure 3 ...")
 try_fig({
-  b1a <- read.csv("results/dale/B1a_fixed_effects.csv") |>
+  b1a <- read.csv("results/dale/B3a_fixed_effects.csv") |>
     mutate(response = factor(resp_lab[model], levels = resp_order),
            credible = sign(Q2.5) == sign(Q97.5))
 
@@ -167,8 +167,8 @@ try_fig({
   fig3 <- (p_mass / p_troph) +
     plot_layout(heights = c(1, 4)) +
     plot_annotation(
-      title = "B1a - guild- and size-specific colour responses to land use (Dale)")
-  save_fig(fig3, "Figure_3_B1a_trophic_mass", mm2in(220), mm2in(200))
+      title = "B3a - guild- and size-specific colour responses to land use (Dale)")
+  save_fig(fig3, "Figure_3_B3a_trophic_mass", mm2in(220), mm2in(200))
 })
 
 # ============================================================
@@ -226,11 +226,11 @@ try_fig({
 })
 
 # ============================================================
-# Figure 6 — B3 radial phylogenies with ancestral colour states (Dale)
+# Figure 6 — B1 radial phylogenies with ancestral colour states (Dale)
 # ============================================================
 message("Figure 6 (contMap; ~1-2 min) ...")
 try_fig({
-  load("fits/B3_model_setup.RData")   # tree, spdat
+  load("fits/B1_model_setup.RData")   # tree, spdat
   x_mal <- setNames(spdat$malecoldale, spdat$phylo); x_mal <- x_mal[!is.na(x_mal)]
   tree_mal <- drop.tip(tree, setdiff(tree$tip.label, names(x_mal)))
   obj_a <- contMap(tree_mal, log(x_mal), plot = FALSE)
@@ -257,17 +257,17 @@ try_fig({
                   digits = 1, x = 0.05, y = 0.6, lwd = 10, fsize = 0.9, prompt = FALSE, subtitle = "")
   }
   dir.create("figures/exploratory/dale", showWarnings = FALSE, recursive = TRUE)
-  pdf("figures/exploratory/dale/Figure_6_B3_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
-  png("figures/exploratory/dale/Figure_6_B3_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
-  message("Saved Figure_6_B3_phylogeny")
+  pdf("figures/exploratory/dale/Figure_6_B1_phylogeny.pdf", width = mm2in(200), height = mm2in(130)); draw6(); dev.off()
+  png("figures/exploratory/dale/Figure_6_B1_phylogeny.png", width = mm2in(200), height = mm2in(130), units = "in", res = 300); draw6(); dev.off()
+  message("Saved Figure_6_B1_phylogeny")
 })
 
 # ============================================================
-# Figure 7 — B3 expected colour by land-use association
+# Figure 7 — B1 expected colour by land-use association
 # ============================================================
 message("Figure 7 ...")
 try_fig({
-  b3 <- read.csv("results/dale/B3_fixed_effects.csv") |>
+  b3 <- read.csv("results/dale/B1_fixed_effects.csv") |>
     mutate(land_use = str_remove(parameter, "^prop_") |> str_replace_all("_", " "),
            land_use = factor(land_use, levels = rev(lu_full)),
            response = factor(resp_lab[response], levels = resp_order))
@@ -277,9 +277,9 @@ try_fig({
     facet_wrap(~response, scales = "free_x") +
     scale_colour_manual(values = lu_pal, guide = "none") +
     labs(x = "Expected colour for a species found exclusively in that land use", y = NULL,
-         title = "B3 - phylogenetic association of colour with land use (Dale)") +
+         title = "B1 - phylogenetic association of colour with land use (Dale)") +
     theme(axis.text.y = element_text(size = 8))
-  save_fig(fig8, "Figure_7_B3_landuse_association", mm2in(200), mm2in(140))
+  save_fig(fig8, "Figure_7_B1_landuse_association", mm2in(200), mm2in(140))
 })
 
 message("\nDone. Figures in figures/exploratory/dale/")

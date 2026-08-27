@@ -3,7 +3,7 @@
 # ============================================================
 # Sourced first by every other script. Nothing here reads data or
 # fits a model. It holds the choices that MUST be identical across
-# A1a, A1b, A2c, A2d, A2e, A2f, A3 and their five B counterparts.
+# A3a, A3b, A2c, A2d, A2e, A2f, A1 and their five B counterparts.
 #
 # RULE: change a decision here and it changes everywhere. Never
 # re-implement any of these blocks inside an analysis script. If
@@ -113,7 +113,7 @@ check_cells <- function(df, min_records = 50, min_species = 15) {
 # Shared data loaders
 # ------------------------------------------------------------
 # Record-level analytical data with every shared policy applied.
-# Used by A1a / A1b / A2c and their B counterparts, so those models
+# Used by A3a / A3b / A2c and their B counterparts, so those models
 # are guaranteed to see identical rows (required for a fair LOO).
 # apply_biome_policy is idempotent: present.csv already excludes
 # BIOME_DROP, so this only relevels.
@@ -266,7 +266,7 @@ match_to_tree <- function(df, tree, verbose = TRUE) {
 #   "lognormal"   meancol / malecol / dichro ratio, and abundance
 #   "gaussian"    dichrodiff at the record level
 #   "paired_diff" A2d/B2d, tight priors for the +/-0.06 difference scale
-#   "phylo_*"     species-level A3/B3, wider fixed-effect priors
+#   "phylo_*"     species-level A1/B1, wider fixed-effect priors
 model_priors <- function(type = c("lognormal", "gaussian", "paired_diff",
                                   "phylo_lognormal", "phylo_gaussian")) {
   type <- match.arg(type)
@@ -284,9 +284,9 @@ model_priors <- function(type = c("lognormal", "gaussian", "paired_diff",
                     sp("normal(0, 0.2)", class = "b"),
                     sp("exponential(5)", class = "sd"),
                     sp("exponential(5)", class = "sigma")),
-    # No intercept in A3/B3 (the compositional predictors span it), so
+    # No intercept in A1/B1 (the compositional predictors span it), so
     # b coefficients are absolute levels and take a wider prior.
-    # NB these are the values the A3 code has always used. ANALYSIS_NOTES
+    # NB these are the values the A1 code has always used. ANALYSIS_NOTES
     # previously recorded normal(0,100)/exponential(2) for the Gaussian
     # case, which never matched the script; the code is authoritative.
     phylo_lognormal = c(sp("normal(0, 5)",      class = "b"),

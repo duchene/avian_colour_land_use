@@ -3,12 +3,12 @@
 # Publication figures for the avian colour x land-use manuscript.
 #
 # Figure 1 is a conceptual diagram, made separately.
-# Figure 2  A1b community colour
+# Figure 2  A3b community colour
 # Figure 3  A2d abundance change
-# Figure 4  A3 species level
+# Figure 4  A1 species level
 #
 # Each figure is two rows by three columns. A row is one response:
-# colour diversity on top, sexual dichromatism below.
+# male colourfulness on top, sexual dichromatism below.
 # Column 1 carries every coefficient of that model in a single
 # forest, main effects and interactions together, separated by
 # rules. Columns 2 and 3 carry the raw data behind the main effects
@@ -57,11 +57,11 @@ relabel <- function(x) str_replace_all(as.character(x),
   c("Tropical Forest" = "Tropical closed", "Temperate Forest" = "Temperate closed",
     "Tropical Open" = "Tropical open", "Plantation forest" = "Plantation"))
 biome_display <- setNames(biome_levels, biome_levels)
-biome_pal <- c("Tropical closed" = "#1F5C99", "Temperate closed" = "#7FB3DE",
+biome_pal <- c("Tropical closed" = "#1F5C99", "Temperate closed" = "#7FB1DE",
                "Tropical open" = "#C9A227")
 
-resp_levels <- c("Colour diversity", "Sexual dichromatism")
-resp_pal <- c("Colour diversity" = "#1F5C99", "Sexual dichromatism" = "#B2456E")
+resp_levels <- c("Male colourfulness", "Sexual dichromatism")
+resp_pal <- c("Male colourfulness" = "#1F5C99", "Sexual dichromatism" = "#B2456E")
 resp_ramp <- function(rsp)
   setNames(colorRampPalette(c("#FFFFFF", resp_pal[[rsp]]))(5)[c(2, 3, 5)],
            c("low", "mid", "high"))
@@ -127,7 +127,7 @@ raw_theme <- theme(panel.grid.minor = element_blank(),
                    legend.text = element_text(size = 6))
 
 # ============================================================
-# FIGURE 2 - A1b community colour
+# FIGURE 2 - A3b community colour
 # a/d  every coefficient, main effects then biome x land use
 # b/e  observed response by land use           (main effects)
 # c/f  observed response by land use and biome (interaction)
@@ -141,19 +141,19 @@ try_fig({
   # biome. The interaction is the difference between the three blocks.
   # Body mass is the one main effect retained.
   lu_in_biome <- ph$t2 |>
-    filter(model == "A1b", quantity == "Level mean", factor_compared == "Land use",
+    filter(model == "A3b", quantity == "Level mean", factor_compared == "Land use",
            str_detect(held_fixed, "^Biome = "),
            str_detect(contrast, " - Primary vegetation$")) |>
     mutate(response = str_remove(response, "^Community ") |>
-             str_replace("^colour diversity$", "Colour diversity") |>
+             str_replace("^male colourfulness$", "Male colourfulness") |>
              str_replace("^sexual dichromatism$", "Sexual dichromatism"),
            label = str_remove(contrast, " - Primary vegetation$"),
            block = factor(str_remove(held_fixed, "^Biome = "), levels = biome_levels))
 
-  mass_c <- read.csv("results/cooney/A1b_fixed_effects.csv") |>
+  mass_c <- read.csv("results/cooney/A3b_fixed_effects.csv") |>
     filter(model %in% c("malecolcooney_covariate", "dichrodiff_covariate"),
            parameter == "z_logMass") |>
-    transmute(response = c(malecolcooney_covariate = "Colour diversity",
+    transmute(response = c(malecolcooney_covariate = "Male colourfulness",
                            dichrodiff_covariate = "Sexual dichromatism")[model],
               estimate = Estimate, lo = Q2.5, hi = Q97.5,
               credible = sign(Q2.5) == sign(Q97.5),
@@ -177,16 +177,16 @@ try_fig({
     mutate(Predominant_simple = factor(relabel(Predominant_simple), levels = lu_levels),
            Biome4 = factor(relabel(Biome4), levels = biome_levels),
            response = factor(ifelse(resp_raw == "malecolcooney",
-                                    "Colour diversity", "Sexual dichromatism"),
+                                    "Male colourfulness", "Sexual dichromatism"),
                              levels = resp_levels))
   ylim_dich <- quantile(raw$value[raw$response == "Sexual dichromatism"],
                         c(0.005, 0.995), na.rm = TRUE)
-  raw <- raw |> filter(response == "Colour diversity" |
+  raw <- raw |> filter(response == "Male colourfulness" |
                          (value >= ylim_dich[1] & value <= ylim_dich[2]))
 
   panel_row <- function(rsp, tags, show_x) {
     col  <- resp_pal[[rsp]]
-    logy <- rsp == "Colour diversity"
+    logy <- rsp == "Male colourfulness"
     ylab <- paste0(rsp, if (logy) " (log scale)" else "")
 
     # Raw panel first, land use and biome as the two factors, boxplots
@@ -209,12 +209,12 @@ try_fig({
     list(pa, pb)
   }
 
-  r1 <- panel_row("Colour diversity", c("a", "b"), FALSE)
+  r1 <- panel_row("Male colourfulness", c("a", "b"), FALSE)
   r2 <- panel_row("Sexual dichromatism", c("c", "d"), TRUE)
 
   fig2 <- (r1[[1]] | r1[[2]]) / (r2[[1]] | r2[[2]]) +
     plot_layout(widths = c(1.0, 1.0))
-  save_fig(fig2, "Figure_2_A1b_community_colour", mm2in(225), mm2in(160))
+  save_fig(fig2, "Figure_2_A3b_community_colour", mm2in(225), mm2in(160))
 })
 
 # ============================================================
@@ -230,7 +230,7 @@ message("Figure 3 ...")
 try_fig({
   ph <- read_posthoc()
   lu_d <- c("Secondary", "Plantation", "Cropland", "Pasture")
-  cp_lab <- c("Colour diversity" = "fitted with colour diversity (z)",
+  cp_lab <- c("Male colourfulness" = "fitted with male colourfulness (z)",
               "Sexual dichromatism" = "fitted with sexual dichromatism (z)")
 
   t2 <- ph$t2 |> filter(model == "A2d") |>
@@ -320,8 +320,8 @@ try_fig({
     group_by(SS)  |> mutate(r = diff_abund - mean(diff_abund)) |> ungroup() |>
     group_by(Best_guess_binomial) |> mutate(r = r - mean(r)) |> ungroup() |>
     select(Biome4, Predominant_simple, r,
-           `Colour diversity` = malecolcooney, `Sexual dichromatism` = dichrodiff) |>
-    pivot_longer(c(`Colour diversity`, `Sexual dichromatism`),
+           `Male colourfulness` = malecolcooney, `Sexual dichromatism` = dichrodiff) |>
+    pivot_longer(c(`Male colourfulness`, `Sexual dichromatism`),
                  names_to = "response", values_to = "x") |>
     filter(!is.na(x)) |>
     mutate(response = factor(response, levels = resp_levels))
@@ -382,15 +382,15 @@ try_fig({
             axis.title.x = element_text(size = 7))
   }
 
-  pa <- resid_panel("Colour diversity", "Biome4", "a",
-                    "Colour diversity by biome: partial residuals", note = TRUE)
-  pb <- resid_panel("Colour diversity", "Predominant_simple", "b",
-                    "Colour diversity by land use: partial residuals")
+  pa <- resid_panel("Male colourfulness", "Biome4", "a",
+                    "Male colourfulness by biome: partial residuals", note = TRUE)
+  pb <- resid_panel("Male colourfulness", "Predominant_simple", "b",
+                    "Male colourfulness by land use: partial residuals")
   pc <- resid_panel("Sexual dichromatism", "Biome4", "c",
                     "Sexual dichromatism by biome: partial residuals")
   pd <- resid_panel("Sexual dichromatism", "Predominant_simple", "d",
                     "Sexual dichromatism by land use: partial residuals")
-  pf <- mk_forest("Colour diversity", "f")
+  pf <- mk_forest("Male colourfulness", "f")
   pg <- mk_forest("Sexual dichromatism", "g")
 
   # biome x land use, observed values, colour ignored
@@ -431,7 +431,7 @@ try_fig({
 })
 
 # ============================================================
-# FIGURE 4 - A3 species level
+# FIGURE 4 - A1 species level
 # a/d  radial phylogeny with ancestral state reconstruction
 # b/e  species colour against land-use association score
 # c/f  every pairwise land-use contrast, from the posterior
@@ -451,8 +451,8 @@ try_fig({
 # ============================================================
 message("Figure 4 (contMap; ~1-2 min) ...")
 try_fig({
-  load("fits/A3_model_setup.RData")   # spdat, tree
-  load("fits/A3_all_fits.RData")      # fits_A3
+  load("fits/A1_model_setup.RData")   # spdat, tree
+  load("fits/A1_all_fits.RData")      # fits_A1
 
   prop_cols <- c("prop_Primary_vegetation", "prop_Secondary",
                  "prop_Plantation_forest", "prop_Cropland", "prop_Pasture")
@@ -476,7 +476,7 @@ try_fig({
   # deliberately far from magma so the two trees do not read as one scale.
   m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Tropic"), c(-q_dich, q_dich))
 
-  contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A3")
+  contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1")
 
   # Model-implied line for land use j. The five proportions sum to 1,
   # so raising p_j to t forces the rest down. We redistribute the
@@ -495,7 +495,7 @@ try_fig({
   }
 
   scatter_panel <- function(resp, ylab, logscale, tag, title, ylim, legend) {
-    draws <- posterior::as_draws_matrix(fits_A3[[resp]])
+    draws <- posterior::as_draws_matrix(fits_A1[[resp]])
     d  <- spdat[!is.na(spdat[[resp]]), ]
     wbar <- colMeans(d[, prop_cols])
     yv <- if (logscale) log(d[[resp]]) else d[[resp]]
@@ -580,11 +580,11 @@ try_fig({
   draw4 <- function() {
     layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(1.05, 1.35, 1.05))
 
-    tree_panel(m_mal, "(a) Colour diversity across the phylogeny", "Colour diversity (LociUVS)")
+    tree_panel(m_mal, "(a) Male colourfulness across the phylogeny", "Male colourfulness (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
-    scatter_panel("malecolcooney", "Colour diversity (LociUVS)", TRUE, "b",
-                  "Colour diversity vs land-use association", ylim_mal, TRUE)
-    forest_base("Colour diversity", "c", "Difference in log colour diversity (95% CrI)")
+    scatter_panel("malecolcooney", "Male colourfulness (LociUVS)", TRUE, "b",
+                  "Male colourfulness vs land-use association", ylim_mal, TRUE)
+    forest_base("Male colourfulness", "c", "Difference in log male colourfulness (95% CrI)")
 
     tree_panel(m_dich, "(d) Sexual dichromatism across the phylogeny",
                "Sexual dichromatism (LociUVS)")
@@ -594,11 +594,11 @@ try_fig({
     forest_base("Sexual dichromatism", "f", "Difference in LociUVS (95% CrI)")
   }
 
-  pdf(file.path(OUT, "Figure_4_A3_phylogeny_landuse.pdf"),
+  pdf(file.path(OUT, "Figure_4_A1_phylogeny_landuse.pdf"),
       width = mm2in(265), height = mm2in(190)); draw4(); dev.off()
-  png(file.path(OUT, "Figure_4_A3_phylogeny_landuse.png"),
+  png(file.path(OUT, "Figure_4_A1_phylogeny_landuse.png"),
       width = mm2in(265), height = mm2in(190), units = "in", res = 400); draw4(); dev.off()
-  message("Saved Figure_4_A3_phylogeny_landuse")
+  message("Saved Figure_4_A1_phylogeny_landuse")
 })
 
 message("\nDone. Publication figures in ", OUT)

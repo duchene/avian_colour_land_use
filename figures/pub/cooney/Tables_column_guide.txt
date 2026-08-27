@@ -6,15 +6,15 @@ Both tables hold posterior contrasts, not model coefficients. Every quantity is 
 
 Table 1 contrasts levels of one factor at a time, averaged over a balanced grid of the others. Table 2 opens the interaction up, reporting the same contrasts computed separately within each level of the factor it interacts with.
 
-Every row of Table 2 is a pairwise comparison of two levels of a factor that appears in an interaction term of the fitted model. A1b carries one such interaction and A2c and A2d carry three each. All are covered, and the quantity column says which kind of comparison a row is.
+Every row of Table 2 is a pairwise comparison of two levels of a factor that appears in an interaction term of the fitted model. A3b carries one such interaction and A2c and A2d carry three each. All are covered, and the quantity column says which kind of comparison a row is.
 
     Biome4 x Predominant_simple    quantity = "Level mean"
     colour x Biome4                quantity = "Colour slope", factor_compared = "Biome"
     colour x Predominant_simple    quantity = "Colour slope", factor_compared = "Land use"
 
-The two colour interactions cannot be written as pairwise comparisons of colour levels, because colour is continuous. They are written instead as pairwise comparisons of the biome and land-use levels, contrasting the colour SLOPE between them, which is exactly what those interaction coefficients encode. A1b contributes level-mean rows only, since colour is its response and it carries no colour interaction.
+The two colour interactions cannot be written as pairwise comparisons of colour levels, because colour is continuous. They are written instead as pairwise comparisons of the biome and land-use levels, contrasting the colour SLOPE between them, which is exactly what those interaction coefficients encode. A3b contributes level-mean rows only, since colour is its response and it carries no colour interaction.
 
-Three things are absent by design. Trophic niche and body mass enter A1b as main effects only, so their contrasts do not depend on any other level and belong in Table 1. Differences of differences are not pairwise level comparisons. Contrasts in which biome and land use both differ confound the two factors, so a credible result among them could not be attributed to either.
+Three things are absent by design. Trophic niche and body mass enter A3b as main effects only, so their contrasts do not depend on any other level and belong in Table 1. Differences of differences are not pairwise level comparisons. Contrasts in which biome and land use both differ confound the two factors, so a credible result among them could not be attributed to either.
 
 Table 2 carries 284 rows. The script that builds it checks the count of every family against what the design implies, and reconstructs each row from the fitted coefficients, stopping if any row fails to match. Level-mean rows must equal the land-use and biome terms alone and colour-slope rows must equal the difference of the corresponding colour interaction coefficients. All 284 match to fifteen decimal places, which confirms both that none are missing and that no row depends on a term the models do not contain. There is no three-way colour by biome by land-use term anywhere, so none can leak in.
 
@@ -23,21 +23,21 @@ IDENTIFYING COLUMNS
 ================================================================================
 
 model
-    Which analysis the row comes from: A1b community colour, A2c relative abundance, A2d abundance change, A3 species level.
+    Which analysis the row comes from: A3b community colour, A2c relative abundance, A2d abundance change, A1 species level.
 
 response
-    Colour diversity or Sexual dichromatism. In A2c and A2d the response is abundance and this names the colour metric used as a predictor, so read it as "the male-colour model".
+    Male colourfulness or Sexual dichromatism. In A2c and A2d the response is abundance and this names the colour metric used as a predictor, so read it as "the male-colour model".
 
 factor (Table 1 only)
     Which factor is being contrasted: Land use, Biome, or Trophic niche.
 
 response
-    What the model predicts, which differs between families and is easy to get wrong. In A1b it is community colour, either "Community colour diversity" or "Community sexual dichromatism". In A2c it is "Relative abundance", a species' effort-corrected count over its site total. In A2d it is "Abundance change vs primary", a species' relative abundance minus its own mean relative abundance in primary vegetation in the same study. Colour is not the response in A2c or A2d.
+    What the model predicts, which differs between families and is easy to get wrong. In A3b it is community colour, either "Community male colourfulness" or "Community sexual dichromatism". In A2c it is "Relative abundance", a species' effort-corrected count over its site total. In A2d it is "Abundance change vs primary", a species' relative abundance minus its own mean relative abundance in primary vegetation in the same study. Colour is not the response in A2c or A2d.
 
 source_fit (Table 2 only)
-    Which fit an estimate came from. Empty for A1b, where the response column already distinguishes the two fits.
+    Which fit an estimate came from. Empty for A3b, where the response column already distinguishes the two fits.
 
-    A2c and A2d were each fitted twice, once with colour diversity as the predictor and once with sexual dichromatism, so every land-use and biome contrast has two estimates of the same quantity. This column says which fit produced the number in front of you.
+    A2c and A2d were each fitted twice, once with male colourfulness as the predictor and once with sexual dichromatism, so every land-use and biome contrast has two estimates of the same quantity. This column says which fit produced the number in front of you.
 
     It does NOT mean the contrast is conditioned on colour, and no row anywhere in this table is a three-way effect. The models carry all three two-way interactions and no three-way term, and colour is held at its mean (z = 0) throughout, so colour:Biome4 and colour:Predominant_simple contribute exactly zero. Each row is built from the land-use and biome terms alone, which the reconstruction check in the building script confirms to fifteen decimal places.
 
@@ -76,7 +76,7 @@ ESTIMATE COLUMNS
 ================================================================================
 
 estimate
-    Posterior median of the contrast, on the scale the model works in. That is the log scale for colour diversity and relative abundance, and raw LociUVS units for sexual dichromatism, and raw proportion units for abundance change.
+    Posterior median of the contrast, on the scale the model works in. That is the log scale for male colourfulness and relative abundance, and raw LociUVS units for sexual dichromatism, and raw proportion units for abundance change.
 
 lo, hi
     The 2.5% and 97.5% posterior percentiles, giving the 95% credible interval. Unlike a confidence interval this can be read directly: there is a 95% probability that the difference lies between lo and hi, given the model and the data.
@@ -96,7 +96,7 @@ credible
     TRUE when the 95% credible interval excludes zero. This is a reporting convention, not a decision rule, and it should never be read as the only thing that matters in a row. Use it to sort, then read the interval.
 
 pct_change
-    (exp(estimate) - 1) * 100, given only for the lognormal responses (colour diversity, relative abundance). Because those models work on the log scale, a difference of logs is a ratio, and this expresses it as a percentage change in the response itself. An estimate of -0.067 becomes -6.5%, meaning a 6.5% lower median colour diversity.
+    (exp(estimate) - 1) * 100, given only for the lognormal responses (male colourfulness, relative abundance). Because those models work on the log scale, a difference of logs is a ratio, and this expresses it as a percentage change in the response itself. An estimate of -0.067 becomes -6.5%, meaning a 6.5% lower median male colourfulness.
 
     NA for the Gaussian responses (sexual dichromatism, abundance change), where the estimate is already in the units of the response and needs no conversion.
 
@@ -107,13 +107,13 @@ effect_size
 
     A value of 0.5 means two levels differ by half a standard deviation of the response. A value of 0.05 means they differ by a twentieth of it. As rough anchors, 0.2 is a small effect, 0.5 a medium one, and 0.8 a large one, though these conventions were set for psychology and are generous for community ecology, where 0.1 across whole assemblages is worth attention.
 
-    High values matter because the difference is large relative to natural variation, so it would be visible in the field rather than only in a model. The largest value in these tables is 1.30, the dichromatism gap between nectarivores and invertivores in A1b, which is a difference you could see without a model. The pasture contrasts in A3 reach 0.52.
+    High values matter because the difference is large relative to natural variation, so it would be visible in the field rather than only in a model. The largest value in these tables is 1.30, the dichromatism gap between nectarivores and invertivores in A3b, which is a difference you could see without a model. The pasture contrasts in A1 reach 0.52.
 
     Low values matter because a credible effect can still be negligible. With 24,614 records a contrast can have pd of 1.0 and an effect size of 0.03, which is a real but trivial difference. The credible colour terms in A2d are exactly this case, and we report them as credible but not meaningful. Treat any row with credible = TRUE and an effect size below about 0.05 as a statement about precision rather than about biology.
 
     The denominator is the total standard deviation of the response, which includes variation among studies and sites as well as among species. Effect sizes here are therefore conservative. Dividing by the residual standard deviation instead, as some conventions do, would make every value larger.
 
-    The divisors used are 0.431 for A1b colour diversity, 31.90 LociUVS for A1b sexual dichromatism, 1.113 for A2c log relative abundance, 0.0568 for A2d abundance change, 0.457 for A3 colour diversity, and 34.32 LociUVS for A3 sexual dichromatism. Multiply an effect size by its divisor to recover the estimate.
+    The divisors used are 0.431 for A3b male colourfulness, 31.90 LociUVS for A3b sexual dichromatism, 1.113 for A2c log relative abundance, 0.0568 for A2d abundance change, 0.457 for A1 male colourfulness, and 34.32 LociUVS for A1 sexual dichromatism. Multiply an effect size by its divisor to recover the estimate.
 
 
 READING A ROW

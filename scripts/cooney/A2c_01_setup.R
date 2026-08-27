@@ -4,7 +4,7 @@
 #              (all 2-way interactions, NO 3-way; phylogenetic).
 #
 # The phylogenetic term is identifiable here because the response
-# (relative abundance) varies within species, unlike colour in A1b.
+# (relative abundance) varies within species, unlike colour in A3b.
 #
 # Phylogeny-colour confound: colour is strongly conserved, so the
 # phylogenetic random effect competes with colour for the same
