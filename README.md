@@ -6,11 +6,12 @@ mass, the PREDICTS study hierarchy, and phylogeny. Built on the PREDICTS biodive
 database merged with Cooney spectrophotometric colour data (ultraviolet-sensitive
 visual model, LociUVS) and AVONET morphological traits.
 
-**Status: awaiting refit.** The analytical dataset was rebuilt on 2026-08-11 after a
-filter bug was corrected and Temperate Open was dropped. No model has been fitted
-against it yet, so `results/` and `figures/` are empty by design. The pre-correction
-outputs are preserved in the git tag `prefilter-results-2026-08` and should not be
-quoted. `ANALYSIS_NOTES.md` records the design decisions and the open questions.
+**Status: refitted.** The analytical dataset was rebuilt on 2026-08-11 after a filter
+bug was corrected and Temperate Open was dropped, and all ten models have since been
+fitted against it. `results/` and `figures/` hold the current outputs. The
+pre-correction outputs are preserved in the git tag `prefilter-results-2026-08` and
+should not be quoted. `ANALYSIS_NOTES.md` records the design decisions and the open
+questions.
 
 ## Analyses
 
@@ -37,8 +38,8 @@ level instead.
 **A2e / A2f** are sensitivity checks that add the full three-way colour x biome x land
 use interaction to A2c / A2d. They exist to justify reporting the two-way models.
 
-Colour is summarised by four metrics: mean colourfulness, male conspicuousness, the
-sexual dichromatism ratio, and the sexual dichromatism difference.
+Colour is summarised by four metrics: mean colourfulness, colour diversity, the
+dichromatism ratio, and the sexual dichromatism.
 
 ## Structure
 
@@ -51,7 +52,8 @@ scripts/
   dale/                    B1a B1b B2c B2d B3, pub_figures_dale.R
 data/                      present.csv, raw .csv.gz, BBtree2.tre phylogeny
 results/cooney|dale/       Summary tables (CSV): convergence, fixed effects, variance, R2, LOO
-figures/pub/cooney|dale/   Publication figures 1 to 7
+figures/pub/cooney|dale/   Publication figures and Tables 1 to 2
+figures/exploratory/       Earlier exploratory figure set, not for publication
 figures/cooney|dale/       Per-analysis diagnostics, with desc_* descriptives at the root
 fits/                      brms model objects (gitignored, flat, prefixed)
 ```

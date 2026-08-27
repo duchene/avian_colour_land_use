@@ -216,10 +216,10 @@ from 66,225 non-zero differences of which 54,038 are negative.
 
 ### A2e, A2f: three-way sensitivity checks
 
-The full `colour * Biome4 * Predominant_simple` interaction fitted for male colour and
+The full `colour * Biome4 * Predominant_simple` interaction fitted for colour diversity and
 compared to the reported two-way model by leave-one-out cross-validation. A2e extends
 A2c, A2f extends A2d. These exist to justify reporting the two-way models and are not
-themselves reported. The check uses male colour only. Extend it to the dichromatism
+themselves reported. The check uses colour diversity only. Extend it to the dichromatism
 difference if an all-metric statement is needed.
 
 ### A3, B3: species-level phylogenetic regression

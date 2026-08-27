@@ -1,17 +1,17 @@
-"response","contrast","median","lo","hi","p_gt0","credible"
-"meancolcooney","Cropland - Primary",0.0956,-0.0375,0.2321,0.9152,FALSE
-"meancolcooney","Pasture - Primary",-0.1558,-0.2629,-0.0446,0.0027,TRUE
-"meancolcooney","Plantation_forest - Primary",0.0214,-0.0757,0.1236,0.6621,FALSE
-"meancolcooney","Secondary - Primary",0.0411,-0.0387,0.1222,0.8351,FALSE
-"dichrocooney","Cropland - Primary",-0.0192,-0.1315,0.092,0.3654,FALSE
-"dichrocooney","Pasture - Primary",0.0142,-0.0758,0.1026,0.6171,FALSE
-"dichrocooney","Plantation_forest - Primary",-0.0257,-0.1058,0.054,0.2646,FALSE
-"dichrocooney","Secondary - Primary",-0.0453,-0.1135,0.0207,0.0839,FALSE
-"malecolcooney","Cropland - Primary",0.0893,-0.0662,0.2449,0.8715,FALSE
-"malecolcooney","Pasture - Primary",-0.1468,-0.2733,-0.0225,0.0101,TRUE
-"malecolcooney","Plantation_forest - Primary",0.0207,-0.0956,0.137,0.6419,FALSE
-"malecolcooney","Secondary - Primary",0.0286,-0.0648,0.1223,0.7256,FALSE
-"dichrodiff","Cropland - Primary",-3.3923,-17.9702,11.008,0.3279,FALSE
-"dichrodiff","Pasture - Primary",0.1314,-11.5002,11.9759,0.5081,FALSE
-"dichrodiff","Plantation_forest - Primary",-5.1558,-15.673,5.3071,0.1635,FALSE
-"dichrodiff","Secondary - Primary",-6.0985,-14.8346,2.4768,0.0861,FALSE
+response,contrast,Estimate,Q2.5,Q97.5,prob_positive,credible
+meancolcooney,Cropland - Primary vegetation,0.09561099999999989,-0.037520569999999615,0.2320737374999998,0.91525,FALSE
+meancolcooney,Pasture - Primary vegetation,-0.15576684999999957,-0.2628940175000004,-0.04455708249999945,0.00275,TRUE
+meancolcooney,Plantation_forest - Primary vegetation,0.02142709999999992,-0.07571858749999984,0.12357976249999995,0.662125,FALSE
+meancolcooney,Secondary - Primary vegetation,0.0410632999999998,-0.03874944499999995,0.12224498499999983,0.835125,FALSE
+dichrocooney,Cropland - Primary vegetation,-0.01915890365,-0.131450199675,0.09202597179499988,0.365375,FALSE
+dichrocooney,Pasture - Primary vegetation,0.014169304999999986,-0.0757784583725,0.10255819007499997,0.617125,FALSE
+dichrocooney,Plantation_forest - Primary vegetation,-0.025659134,-0.105760168125,0.05397741642499996,0.264625,FALSE
+dichrocooney,Secondary - Primary vegetation,-0.045283175,-0.11350696652499999,0.020677118199999973,0.083875,FALSE
+malecolcooney,Cropland - Primary vegetation,0.08926444999999994,-0.06617196250000028,0.24486372249999938,0.8715,FALSE
+malecolcooney,Pasture - Primary vegetation,-0.1468168000000003,-0.2733381550000004,-0.022522970000000062,0.010125,TRUE
+malecolcooney,Plantation_forest - Primary vegetation,0.020686249999999795,-0.09557769749999964,0.13695421500000013,0.641875,FALSE
+malecolcooney,Secondary - Primary vegetation,0.028592399999999962,-0.06476823249999986,0.12233765500000068,0.725625,FALSE
+dichrodiff,Cropland - Primary vegetation,-3.3922797500000006,-17.970196965,11.008038552249976,0.327875,FALSE
+dichrodiff,Pasture - Primary vegetation,0.13141527000000097,-11.5002486525,11.9759077225,0.508125,FALSE
+dichrodiff,Plantation_forest - Primary vegetation,-5.155834450000002,-15.67301271775,5.30713093749999,0.1635,FALSE
+dichrodiff,Secondary - Primary vegetation,-6.0984939,-14.834551447499997,2.4767956299999945,0.086125,FALSE
