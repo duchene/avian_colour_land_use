@@ -581,7 +581,7 @@ try_fig({
     ylim <- span + c(-1, 1) * diff(span) * 0.10
 
     plot(NA, xlim = c(0, 1), ylim = ylim,
-         xlab = "Land-use association score (proportion of a species' records)",
+         xlab = "Land-use association score",
          ylab = ylab, las = 1, cex.lab = 0.85, cex.axis = 0.8,
          yaxt = if (logscale) "n" else "s")
     if (logscale) {
@@ -609,7 +609,7 @@ try_fig({
           font = 2, cex = 0.8)
     if (legend) {
       legend("topright", legend = sprintf("%s (n = %d)", lu_display[lu_levels], ns[lu_levels]),
-             col = lu_pal[lu_levels], lwd = 2.6, bty = "n", cex = 0.6, seg.len = 1.4)
+             col = lu_pal[lu_levels], lwd = 2.2, bty = "n", cex = 0.5, seg.len = 1.2)
       legend("topleft", legend = c("point: decile mean", "bar: 95% CI"),
              bty = "n", cex = 0.55, text.col = "grey25")
     }
@@ -663,11 +663,12 @@ try_fig({
   }
 
   draw3 <- function() {
-    # Measured from the rendered page rather than guessed: at a 28 mm
-    # column the plotted box came out 7 mm by 58 mm, or 8.4:1, because
-    # the label margin eats most of a narrow column. 36 mm puts the box
-    # near 15 mm by 58 mm, which is the 4:1 asked for.
-    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(95, 106, 36))
+    # Widths measured off the rendered page, not estimated. The label
+    # margin takes a fixed ~20 mm out of the forest column whatever its
+    # width, so a narrow column starves the box itself. The scatters give
+    # up the room: their points sit in a narrow band of x, so they lose
+    # nothing by being narrower, and the forests gain it all.
+    layout(matrix(1:6, nrow = 2, byrow = TRUE), widths = c(95, 80, 48))
 
     tree_panel(m_mal, "(a) Male colourfulness across the phylogeny", "Male colourfulness (LociUVS)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
@@ -684,9 +685,9 @@ try_fig({
   }
 
   pdf(file.path(OUT, "Figure_3_A1_phylogeny_landuse.pdf"),
-      width = mm2in(241), height = mm2in(190)); draw3(); dev.off()
+      width = mm2in(227), height = mm2in(190)); draw3(); dev.off()
   png(file.path(OUT, "Figure_3_A1_phylogeny_landuse.png"),
-      width = mm2in(241), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
+      width = mm2in(227), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
   message("Saved Figure_3_A1_phylogeny_landuse")
 })
 
