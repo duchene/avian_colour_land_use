@@ -107,23 +107,30 @@ for (cv in c("z_malecolcooney", "z_dichrodiff")) {
 # mean for a species found exclusively in that land use. Contrast
 # the coefficient draws directly rather than through a grid.
 # ------------------------------------------------------------
-message("A1 ...")
-load("fits/A1_all_fits.RData")
+# Both variants are carried. A1 counts every raw row, 84% of which are
+# structural zeros, so its association scores partly measure survey
+# design. A1b builds them from detections only and is the reported
+# model. Keeping A1 in the table makes the sensitivity check auditable.
 lu_prop <- c("prop_Primary_vegetation", "prop_Secondary",
              "prop_Plantation_forest", "prop_Cropland", "prop_Pasture")
 lu_lab  <- str_replace_all(str_remove(lu_prop, "^prop_"), "_", " ")
 
-for (resp in c("malecolcooney", "dichrodiff")) {
-  fit <- fits_A1[[resp]]
-  d <- posterior::as_draws_matrix(fit)
-  emm <- d[, paste0("b_", lu_prop), drop = FALSE]
-  colnames(emm) <- lu_lab
-  all_contrasts[[paste0("A1_", resp)]] <- pairwise(
-    emm, link_sd(fit), fit$family$family == "lognormal",
-    model = "A1", response = resp, factor = "Predominant_simple")
-  message("  ", resp, " done")
+for (tag in c("A1b", "A1")) {
+  message(tag, " ...")
+  e <- new.env(); load(paste0("fits/", tag, "_all_fits.RData"), envir = e)
+  fits <- get(paste0("fits_", tag), envir = e)
+  for (resp in c("malecolcooney", "dichrodiff")) {
+    fit <- fits[[resp]]
+    d <- posterior::as_draws_matrix(fit)
+    emm <- d[, paste0("b_", lu_prop), drop = FALSE]
+    colnames(emm) <- lu_lab
+    all_contrasts[[paste0(tag, "_", resp)]] <- pairwise(
+      emm, link_sd(fit), fit$family$family == "lognormal",
+      model = tag, response = resp, factor = "Predominant_simple")
+    message("  ", resp, " done")
+  }
+  rm(e, fits); gc(verbose = FALSE)
 }
-rm(fits_A1); gc(verbose = FALSE)
 
 # ------------------------------------------------------------
 # Write out

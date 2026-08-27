@@ -23,7 +23,7 @@ sampler, and random structure, and differ only in the colour columns.
 | Model | Question | Response | Phylogeny |
 |---|---|---|---|
 | **A1** / B1 | Species-level colour ~ land-use association | colour | yes |
-| **A1b** | A1 with association scores from detections only | colour | yes |
+| **A1b** / B1b | A1 with association scores from detections only (**reported**) | colour | yes |
 | **A2c** / B2c | Relative abundance ~ colour x biome x land use | abundance | yes |
 | **A2d** / B2d | Abundance change against each species' own primary-vegetation baseline | difference | yes |
 | **A3b** / B3b | Community colour ~ biome x land use | colour | no |
@@ -36,12 +36,15 @@ because colour is constant within a species, which makes a per-species phylogene
 intercept unidentifiable at the record level. A1 answers that question at the species
 level instead.
 
-**A1b** is a sensitivity check on A1. A1 builds each species' land-use association
-score by counting rows in the raw extract, and 84% of those rows are structural zeros
-from the near-complete site by species matrix, so the score largely reflects how a
-study spread its sites rather than where the bird was found. A1b rebuilds the scores
-from detections only and changes nothing else. The two predictors correlate at 0.58
-to 0.79 depending on land use, so this is not a cosmetic difference.
+**A1b / B1b are the reported species-level models, not A1 / B1.** A1 builds each
+species' land-use association score by counting rows in the raw extract, and 84% of
+those rows are structural zeros from the near-complete site by species matrix, so the
+score largely reflects how a study spread its sites rather than where the bird was
+found. A1b rebuilds the scores from detections only and changes nothing else. The two
+predictors correlate at 0.58 to 0.79 depending on land use, and the difference decides
+a result: pasture below primary vegetation is credible under A1 at -0.147
+[-0.273, -0.023] and is not under A1b at -0.085 [-0.193, +0.021]. A1 and B1 are kept
+so the check stays auditable, and both appear in `results/*/posthoc_contrasts.csv`.
 
 **A2e / A2f** are sensitivity checks that add the full three-way colour x biome x land
 use interaction to A2c / A2d. They exist to justify reporting the two-way models.
@@ -57,10 +60,11 @@ scripts/
   00_data_preparation.R    Raw data -> data/present.csv
   00_descriptive_figures.R Descriptive plots
   cooney/                  A1 A1b A2c A2d A2e A2f A3a A3b, pub_figures.R
-  dale/                    B1 B2c B2d B3a B3b, exploratory_figures_dale.R
+  dale/                    B1 B1b B2c B2d B3a B3b, exploratory_figures_dale.R
 data/                      present.csv, raw .csv.gz, BBtree2.tre phylogeny
 results/cooney|dale/       Summary tables (CSV): convergence, fixed effects, variance, R2, LOO
-figures/pub/cooney|dale/   Publication figures and Tables 1 to 2
+figures/pub/cooney|dale/   Publication figures 3, 5, 6 and Tables 1 to 2
+                           (1 and 2 are introductory and live outside this repo)
 figures/exploratory/       Earlier exploratory figure set, not for publication
 figures/cooney|dale/       Per-analysis diagnostics, with desc_* descriptives at the root
 fits/                      brms model objects (gitignored, flat, prefixed)
@@ -94,6 +98,7 @@ source("scripts/cooney/pub_figures.R")
 
 # Dale (B), same order. B3b before B3a.
 source("scripts/dale/B1_01_setup.R");  source("scripts/dale/B1_02_fit_models.R");  source("scripts/dale/B1_03_diagnostics_summary.R")
+source("scripts/dale/B1b_01_setup.R"); source("scripts/dale/B1b_02_fit_models.R"); source("scripts/dale/B1b_03_diagnostics_summary.R")
 source("scripts/dale/B2c_01_setup.R"); source("scripts/dale/B2c_02_fit_models.R"); source("scripts/dale/B2c_03_diagnostics_summary.R")
 source("scripts/dale/B2d_01_setup.R"); source("scripts/dale/B2d_02_fit_models.R"); source("scripts/dale/B2d_03_diagnostics_summary.R")
 source("scripts/dale/B3b_01_setup.R"); source("scripts/dale/B3b_02_fit_models.R"); source("scripts/dale/B3b_03_diagnostics_summary.R")

@@ -4,7 +4,7 @@
 #
 # Figures 1 and 2 are introductory, made separately and held outside
 # this repository. This script produces 3, 5 and 6.
-# Figure 3  A1  species level
+# Figure 3  A1b species level
 # Figure 5  A2d abundance change
 # Figure 6  A3b community colour
 #
@@ -495,8 +495,11 @@ try_fig({
 # ============================================================
 message("Figure 3 (contMap; ~1-2 min) ...")
 try_fig({
-  load("fits/A1_model_setup.RData")   # spdat, tree
-  load("fits/A1_all_fits.RData")      # fits_A1
+  # A1b, not A1: its land-use association scores are built from
+  # detections rather than from every raw row, 84% of which are
+  # structural zeros. See ANALYSIS_NOTES.md.
+  load("fits/A1b_model_setup.RData")  # spdat, tree
+  load("fits/A1b_all_fits.RData")     # fits_A1b
 
   prop_cols <- c("prop_Primary_vegetation", "prop_Secondary",
                  "prop_Plantation_forest", "prop_Cropland", "prop_Pasture")
@@ -529,7 +532,7 @@ try_fig({
   # of disappearing into the page. It also shares no hue with panel a.
   m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Zissou 1"), c(-q_dich, q_dich))
 
-  contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1")
+  contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1b")
 
   # Model-implied line for land use j. The five proportions sum to 1,
   # so raising p_j to t forces the rest down. We redistribute the
@@ -548,7 +551,7 @@ try_fig({
   }
 
   scatter_panel <- function(resp, ylab, logscale, tag, title, legend) {
-    draws <- posterior::as_draws_matrix(fits_A1[[resp]])
+    draws <- posterior::as_draws_matrix(fits_A1b[[resp]])
     d  <- spdat[!is.na(spdat[[resp]]), ]
     wbar <- colMeans(d[, prop_cols])
     yv <- if (logscale) log(d[[resp]]) else d[[resp]]
@@ -684,11 +687,11 @@ try_fig({
     forest_base("Sexual dichromatism", "f", "LociUVS diff.")
   }
 
-  pdf(file.path(OUT, "Figure_3_A1_phylogeny_landuse.pdf"),
+  pdf(file.path(OUT, "Figure_3_A1b_phylogeny_landuse.pdf"),
       width = mm2in(227), height = mm2in(190)); draw3(); dev.off()
-  png(file.path(OUT, "Figure_3_A1_phylogeny_landuse.png"),
+  png(file.path(OUT, "Figure_3_A1b_phylogeny_landuse.png"),
       width = mm2in(227), height = mm2in(190), units = "in", res = 400); draw3(); dev.off()
-  message("Saved Figure_3_A1_phylogeny_landuse")
+  message("Saved Figure_3_A1b_phylogeny_landuse")
 })
 
 message("\nDone. Publication figures in ", OUT)

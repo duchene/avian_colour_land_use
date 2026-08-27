@@ -336,6 +336,32 @@ pasture score by more than 0.1. The species-level cost is small: 1,684 species w
 at least one detection against 1,703 in the extract, 1,375 matched to tips against
 1,391, and 1,242 entering the model against 1,254.
 
-A1b is that alternative, identical to A1 in every other respect. Which of the two
-the paper reports is an open decision, and it matters because pasture is the only
-credible A1 contrast.
+A1b is that alternative, identical to A1 in every other respect.
+
+### Resolved, 2026-08-27: A1b is reported
+
+A1b converged cleanly, with a maximum Rhat of 1.0032, a minimum bulk ESS of 788 and
+no divergent transitions. It carries the same E-BFMI warning as A1, below 0.3 on all
+four chains for mean colourfulness, male colourfulness and sexual dichromatism and on
+two chains for the dichromatism ratio, so that diagnostic is a property of the
+species-level phylogenetic regression rather than of the predictor.
+
+The structural findings do not move. Bayesian R2 is 86.4% [82.1, 90.1] for male
+colourfulness against A1's 86.3%, and the phylogenetic standard deviation is still
+3.2 times the residual (0.563 against 0.174).
+
+The land-use result does. Pasture below primary vegetation for male colourfulness was
+-0.147 [-0.273, -0.023] under A1, the only credible contrast in a reported metric. In
+A1b it attenuates to -0.085 [-0.193, +0.021] and the posterior probability of a
+negative effect falls from 0.99 to 0.94. Only 1 of 16 A1b contrasts is credible, mean
+colourfulness in pasture at -0.113 [-0.209, -0.017], a supplementary metric. The sign
+is unchanged throughout, so this is attenuation and not reversal.
+
+A second problem also disappears. Under A1 the coefficients were extrapolations,
+because the highest cropland score was 0.50 and the highest pasture score 0.80, so no
+species sat at the corner the coefficient describes. Under A1b all five land uses
+contain species at a score of 1: 128 primary vegetation, 124 secondary, 25 plantation,
+24 cropland and 16 pasture.
+
+Figure 3 and the post-hoc tables now come from A1b. A1 is retained in
+`results/cooney/posthoc_contrasts.csv` under model "A1" so the check stays auditable.
