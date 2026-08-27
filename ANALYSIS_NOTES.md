@@ -365,3 +365,26 @@ contain species at a score of 1: 128 primary vegetation, 124 secondary, 25 plant
 
 Figure 3 and the post-hoc tables now come from A1b. A1 is retained in
 `results/cooney/posthoc_contrasts.csv` under model "A1" so the check stays auditable.
+
+
+### B1b, the Dale replication of the same check (2026-08-27)
+
+B1b converged cleanly, maximum Rhat 1.0046, minimum bulk ESS 799, no divergent
+transitions, and carries the same E-BFMI warning on all four chains of all four
+models as the Cooney family does.
+
+Dale male colourfulness barely moves between the two constructions: pasture against
+primary vegetation is +0.028 [-0.014, +0.072] under B1 and +0.024 [-0.012, +0.062]
+under B1b, neither credible. So the earlier "does not replicate" reading was wrong in
+its diagnosis. The Cooney estimate was the one that moved, and once both families are
+scored from detections they agree that land-use association does not predict
+colourfulness.
+
+B1b does turn up something B1 did not. Species associated with pasture are more
+sexually dimorphic than species associated with primary vegetation, at +1.86 Dale
+units [+0.06, +3.63], probability 0.98, with the dichromatism ratio agreeing at
++0.038 [+0.003, +0.073]. The Cooney counterpart runs the same way at +6.82 LociUVS
+[-3.14, +16.84] but only reaches probability 0.90. This is the one land-use effect on
+colour that gains support under Dale scores rather than losing it. Credible on one
+family alone, with a lower bound at 0.06 and an E-BFMI warning outstanding, it is not
+established.

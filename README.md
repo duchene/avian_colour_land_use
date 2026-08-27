@@ -43,7 +43,9 @@ score largely reflects how a study spread its sites rather than where the bird w
 found. A1b rebuilds the scores from detections only and changes nothing else. The two
 predictors correlate at 0.58 to 0.79 depending on land use, and the difference decides
 a result: pasture below primary vegetation is credible under A1 at -0.147
-[-0.273, -0.023] and is not under A1b at -0.085 [-0.193, +0.021]. A1 and B1 are kept
+[-0.273, -0.023] and is not under A1b at -0.085 [-0.193, +0.021]. B1b shows the same
+contrast is not credible under Dale scores either, at +0.024 [-0.012, +0.062], so the
+two colour systems agree once both are scored from detections. A1 and B1 are kept
 so the check stays auditable. They appear in `results/*/posthoc_contrasts.csv` but are
 excluded from the published `figures/pub/*/Table_1_posthoc_contrasts.csv`, which
 carries one model per analysis.
