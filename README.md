@@ -23,6 +23,7 @@ sampler, and random structure, and differ only in the colour columns.
 | Model | Question | Response | Phylogeny |
 |---|---|---|---|
 | **A1** / B1 | Species-level colour ~ land-use association | colour | yes |
+| **A1b** | A1 with association scores from detections only | colour | yes |
 | **A2c** / B2c | Relative abundance ~ colour x biome x land use | abundance | yes |
 | **A2d** / B2d | Abundance change against each species' own primary-vegetation baseline | difference | yes |
 | **A3b** / B3b | Community colour ~ biome x land use | colour | no |
@@ -34,6 +35,13 @@ cross-validation adjudicates between them. A3a and A3b carry no phylogenetic ter
 because colour is constant within a species, which makes a per-species phylogenetic
 intercept unidentifiable at the record level. A1 answers that question at the species
 level instead.
+
+**A1b** is a sensitivity check on A1. A1 builds each species' land-use association
+score by counting rows in the raw extract, and 84% of those rows are structural zeros
+from the near-complete site by species matrix, so the score largely reflects how a
+study spread its sites rather than where the bird was found. A1b rebuilds the scores
+from detections only and changes nothing else. The two predictors correlate at 0.58
+to 0.79 depending on land use, so this is not a cosmetic difference.
 
 **A2e / A2f** are sensitivity checks that add the full three-way colour x biome x land
 use interaction to A2c / A2d. They exist to justify reporting the two-way models.
@@ -48,7 +56,7 @@ scripts/
   00_config.R              Every shared decision. Read this first.
   00_data_preparation.R    Raw data -> data/present.csv
   00_descriptive_figures.R Descriptive plots
-  cooney/                  A1 A2c A2d A2e A2f A3a A3b, pub_figures.R
+  cooney/                  A1 A1b A2c A2d A2e A2f A3a A3b, pub_figures.R
   dale/                    B1 B2c B2d B3a B3b, exploratory_figures_dale.R
 data/                      present.csv, raw .csv.gz, BBtree2.tre phylogeny
 results/cooney|dale/       Summary tables (CSV): convergence, fixed effects, variance, R2, LOO
@@ -76,6 +84,7 @@ source("scripts/00_data_preparation.R")   # check the printed tables
 
 # Cooney (A), in publication order. A3b before A3a, because the A3a LOO loads the A3b fits.
 source("scripts/cooney/A1_01_setup.R");  source("scripts/cooney/A1_02_fit_models.R");  source("scripts/cooney/A1_03_diagnostics_summary.R")
+source("scripts/cooney/A1b_01_setup.R"); source("scripts/cooney/A1b_02_fit_models.R"); source("scripts/cooney/A1b_03_diagnostics_summary.R")
 source("scripts/cooney/A2c_01_setup.R"); source("scripts/cooney/A2c_02_fit_models.R"); source("scripts/cooney/A2c_03_diagnostics_summary.R")
 source("scripts/cooney/A2d_01_setup.R"); source("scripts/cooney/A2d_02_fit_models.R"); source("scripts/cooney/A2d_03_diagnostics_summary.R")
 source("scripts/cooney/A3b_01_setup.R"); source("scripts/cooney/A3b_02_fit_models.R"); source("scripts/cooney/A3b_03_diagnostics_summary.R")

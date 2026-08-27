@@ -313,3 +313,29 @@ Publication Figure 4 compared A2 with A2c to show colour effects vanishing under
 fuller model. It was removed with A2, and the remaining figures renumbered 1 to 7 in
 both families. Making that point in a sentence of text costs nothing and avoids
 maintaining a whole superseded analysis to feed one panel.
+
+
+## A1 land-use association scores count absences (found 2026-08-27)
+
+A1 builds each species' land-use association score in `scripts/cooney/A1_01_setup.R`
+with `count()` over the raw extract. That file is 84% structural zeros, because
+PREDICTS stores a near-complete site by species matrix, and `count()` counts rows
+rather than detections. The score therefore measures how a study distributed its
+sites across land uses, not where the species was actually recorded.
+
+The mechanism is visible in a single study. In `VK1_2012__Otto 1` every one of the
+20 species has the identical row vector, 116 primary and 27 secondary, while their
+detections range from 13/2 to 53/9. 908 species, 53% of the total, occur in exactly
+one study, so for them the predictor is a constant that says nothing about the
+species at all.
+
+Rebuilding the scores from detections only gives a genuinely different predictor.
+The two correlate at 0.58 for primary vegetation, 0.61 for cropland, 0.64 for
+plantation, 0.71 for secondary and 0.79 for pasture, and 218 species move their
+pasture score by more than 0.1. The species-level cost is small: 1,684 species with
+at least one detection against 1,703 in the extract, 1,375 matched to tips against
+1,391, and 1,242 entering the model against 1,254.
+
+A1b is that alternative, identical to A1 in every other respect. Which of the two
+the paper reports is an open decision, and it matters because pasture is the only
+credible A1 contrast.
