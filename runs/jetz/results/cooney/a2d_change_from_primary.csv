@@ -1,0 +1,25 @@
+model,response,source_fit,biome,land_use,estimate,lo,hi,pd,credible,effect_size
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical closed,Secondary,0.00201178185,-0.061032093975,0.06303649334999997,0.525,FALSE,0.03544590810284502
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical closed,Plantation,3.8906275999999997e-4,-0.062456767894250004,0.06148425226299999,0.504625,FALSE,0.006854959367090049
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical closed,Cropland,-0.0018431261499999999,-0.06452876722249999,0.05859132551499993,0.5255,FALSE,-0.032474336188513954
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical closed,Pasture,6.12622805e-4,-0.06184033959,0.06171080532119998,0.507125,FALSE,0.010793899769866772
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Temperate closed,Secondary,-0.01208302905,-0.07622109687499999,0.05020659806499999,0.654625,FALSE,-0.2128928329432472
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Temperate closed,Plantation,-0.011702364004999999,-0.07576447328375,0.050921596680249995,0.641375,FALSE,-0.20618583426790107
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Temperate closed,Cropland,-0.011884818365,-0.07605451738425,0.05006941755999994,0.6485,FALSE,-0.20940052699292167
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Temperate closed,Pasture,-0.011944482935,-0.07605184985175,0.04993028982049995,0.64725,FALSE,-0.21045176665154358
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical open,Secondary,0.01597164135,-0.04817239849499999,0.07759299187499999,0.68375,FALSE,0.28140691871919393
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical open,Plantation,0.0161790931,-0.047927625490249995,0.07821117685499998,0.684875,FALSE,0.2850620444806051
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical open,Cropland,0.006416818400000001,-0.057712308030000006,0.06828239397999998,0.576,FALSE,0.11305895583014883
+A2d,Abundance change vs primary,fitted with male colourfulness (z),Tropical open,Pasture,0.013952627115000001,-0.05020016604125,0.07586596455999989,0.662125,FALSE,0.24583358206137199
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical closed,Secondary,-2.35289405e-6,-0.0607384683,0.06563047132499994,0.5,FALSE,-4.1456018838240766e-5
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical closed,Plantation,-0.0014742432749999998,-0.06208326661225,0.06433859930874998,0.516625,FALSE,-0.025974929462102107
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical closed,Cropland,-0.003765600805,-0.06434507712,0.061891276584999995,0.543125,FALSE,-0.06634672645348165
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical closed,Pasture,-0.001180403,-0.0614905061675,0.06483715281774999,0.514,FALSE,-0.020797710379146017
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Temperate closed,Secondary,-0.01759751685,-0.07817263360000001,0.04975211844999999,0.6915,FALSE,-0.31005348075059275
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Temperate closed,Plantation,-0.01746960545,-0.0781680367075,0.04861420250249998,0.693,FALSE,-0.30779978921355744
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Temperate closed,Cropland,-0.01789829705,-0.0785120909625,0.04925463277249991,0.6975,FALSE,-0.31535297548873015
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Temperate closed,Pasture,-0.018318365649999998,-0.0786450326425,0.048820937273499995,0.70025,FALSE,-0.32275423173949647
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical open,Secondary,0.013661406299999998,-0.04900000132249999,0.08120795392499996,0.661125,FALSE,0.24070251566561654
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical open,Plantation,0.013633988520000001,-0.04915118259749999,0.08103864745124996,0.660625,FALSE,0.24021943738838486
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical open,Cropland,0.004538499499999999,-0.0590604074955,0.07173441873649997,0.549125,FALSE,0.07996455291701139
+A2d,Abundance change vs primary,fitted with sexual dichromatism (z),Tropical open,Pasture,0.010911452875000002,-0.05210104462249999,0.07856326072174999,0.629875,FALSE,0.19225064381397725

@@ -58,8 +58,9 @@ lu <- LU5; bio <- BIOME3; tro <- TROPHIC6
 grid_a1b <- make_grid(Predominant_simple = lu, Biome4 = bio,
                       Trophic.Niche = tro, z_logMass = 0)
 
-for (resp in c("malecolcooney", "dichrodiff")) {
+for (resp in RESP_PH) {
   f <- paste0("fits/A3b_fit_", resp, "_covariate.RData")
+  if (!fit_exists(f)) next
   load(f)
   all_contrasts[[paste0("A3b_", resp)]] <- contrasts_for(
     fit, "A3b", resp,
@@ -72,8 +73,9 @@ for (resp in c("malecolcooney", "dichrodiff")) {
 # A2c: relative abundance
 # ------------------------------------------------------------
 message("A2c ...")
-for (cv in c("z_malecolcooney", "z_dichrodiff")) {
+for (cv in CV_PH) {
   f <- paste0("fits/A2c_fit_", cv, ".RData")
+  if (!fit_exists(f)) next
   load(f)
   g <- make_grid(Predominant_simple = lu, Biome4 = bio)
   g[[cv]] <- 0
@@ -90,8 +92,9 @@ for (cv in c("z_malecolcooney", "z_dichrodiff")) {
 # ------------------------------------------------------------
 message("A2d ...")
 lu_d <- LU4
-for (cv in c("z_malecolcooney", "z_dichrodiff")) {
+for (cv in CV_PH) {
   f <- paste0("fits/A2d_fit_", cv, ".RData")
+  if (!fit_exists(f)) next
   load(f)
   g <- make_grid(Predominant_simple = lu_d, Biome4 = bio)
   g[[cv]] <- 0
@@ -117,9 +120,10 @@ lu_lab  <- str_replace_all(str_remove(lu_prop, "^prop_"), "_", " ")
 
 for (tag in c("A1b", "A1")) {
   message(tag, " ...")
+  if (!fit_exists(paste0("fits/", tag, "_all_fits.RData"))) next
   e <- new.env(); load(paste0("fits/", tag, "_all_fits.RData"), envir = e)
   fits <- get(paste0("fits_", tag), envir = e)
-  for (resp in c("malecolcooney", "dichrodiff")) {
+  for (resp in intersect(RESP_PH, names(fits))) {
     fit <- fits[[resp]]
     d <- posterior::as_draws_matrix(fit)
     emm <- d[, paste0("b_", lu_prop), drop = FALSE]
@@ -136,9 +140,7 @@ for (tag in c("A1b", "A1")) {
 # Write out
 # ------------------------------------------------------------
 tbl <- bind_rows(all_contrasts) %>%
-  mutate(response = recode(response,
-           malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
-           z_malecolcooney = "Male colourfulness", z_dichrodiff = "Sexual dichromatism"),
+  mutate(response = recode(response, !!!RESP_LABEL),
          factor = recode(factor,
            Predominant_simple = "Land use", Biome4 = "Biome",
            Trophic.Niche = "Trophic niche")) %>%

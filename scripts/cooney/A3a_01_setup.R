@@ -22,8 +22,9 @@ library(brms)
 library(cmdstanr)
 
 dat <- load_community_data()
+dat <- add_colour_metrics(dat)   # dichroplate (2026-11)
 
-responses         <- RESP_COONEY
+responses         <- RESP_MAIN   # 2026-11: was RESP_COONEY
 response_families <- RESP_FAMILY[responses]
 
 # Term order matches A3b for the shared biome x land-use interaction

@@ -15,3 +15,16 @@ data/aves_predicts_passerines_dale_cooney_avonet.csv
 
 # Run logs (long refits)
 logs/
+
+# Manuscript drafts (unpublished, co-author comments): local only
+manuscript/
+
+# External downloads (derived tables in data/external/ are committed)
+data/external/raw/
+
+# Slurm logs
+logs/
+
+# Jetz-tree runs: fits are large and rebuildable; keep results and figures
+runs/jetz/fits/
+runs/jetz/logs/

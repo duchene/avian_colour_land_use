@@ -1,0 +1,81 @@
+"colour","slope_within","level","estimate","lo","hi","pd","credible","effect_size","fit_max_rhat","fit_min_ess_bulk"
+"Black","Overall","All land uses and biomes",-0.00508,-0.00845,-0.0018,0.999,TRUE,-0.0939,1.003,1215
+"Black","Land use","Secondary",-0.00532,-0.00872,-0.00203,1,TRUE,-0.0983,1.003,1215
+"Black","Land use","Plantation",-0.00512,-0.00854,-0.0018,0.999,TRUE,-0.0946,1.003,1215
+"Black","Land use","Cropland",-0.00554,-0.00904,-0.00213,1,TRUE,-0.102,1.003,1215
+"Black","Land use","Pasture",-0.00435,-0.00811,-0.000621,0.99,TRUE,-0.0803,1.003,1215
+"Black","Biome","Tropical closed",-0.00138,-0.00443,0.00162,0.817,FALSE,-0.0254,1.003,1215
+"Black","Biome","Temperate closed",-0.00758,-0.0136,-0.00152,0.994,TRUE,-0.14,1.003,1215
+"Black","Biome","Tropical open",-0.0063,-0.0108,-0.00178,0.997,TRUE,-0.116,1.003,1215
+"White","Overall","All land uses and biomes",0.00207,-0.000706,0.00489,0.927,FALSE,0.0383,1.006,637
+"White","Land use","Secondary",0.00102,-0.0018,0.00388,0.763,FALSE,0.0189,1.006,637
+"White","Land use","Plantation",0.000688,-0.00224,0.00366,0.681,FALSE,0.0127,1.006,637
+"White","Land use","Cropland",0.00356,0.000637,0.00654,0.992,TRUE,0.0659,1.006,637
+"White","Land use","Pasture",0.00301,-0.000133,0.00632,0.971,FALSE,0.0557,1.006,637
+"White","Biome","Tropical closed",0.00185,-0.000924,0.00463,0.904,FALSE,0.0342,1.006,637
+"White","Biome","Temperate closed",0.00241,-0.00221,0.00718,0.843,FALSE,0.0445,1.006,637
+"White","Biome","Tropical open",0.00197,-0.00229,0.00622,0.819,FALSE,0.0364,1.006,637
+"Grey","Overall","All land uses and biomes",-7e-04,-0.00339,0.00211,0.678,FALSE,-0.0129,1.007,725
+"Grey","Land use","Secondary",-0.00143,-0.00417,0.00145,0.838,FALSE,-0.0263,1.007,725
+"Grey","Land use","Plantation",-0.000393,-0.00326,0.00252,0.603,FALSE,-0.00726,1.007,725
+"Grey","Land use","Cropland",0.000419,-0.00242,0.0034,0.609,FALSE,0.00774,1.007,725
+"Grey","Land use","Pasture",-0.00134,-0.00458,0.0019,0.792,FALSE,-0.0247,1.007,725
+"Grey","Biome","Tropical closed",-0.00327,-0.00582,-0.000627,0.993,TRUE,-0.0604,1.007,725
+"Grey","Biome","Temperate closed",0.00285,-0.00119,0.0071,0.915,FALSE,0.0526,1.007,725
+"Grey","Biome","Tropical open",-0.00161,-0.00658,0.00329,0.737,FALSE,-0.0297,1.007,725
+"Brown","Overall","All land uses and biomes",0.000603,-0.00274,0.00395,0.637,FALSE,0.0111,1.009,585
+"Brown","Land use","Secondary",0.00266,-0.000652,0.00605,0.939,FALSE,0.0493,1.009,585
+"Brown","Land use","Plantation",0.00188,-0.00152,0.00538,0.857,FALSE,0.0348,1.009,585
+"Brown","Land use","Cropland",-0.00112,-0.00455,0.00229,0.744,FALSE,-0.0207,1.009,585
+"Brown","Land use","Pasture",-0.00106,-0.00493,0.00274,0.707,FALSE,-0.0197,1.009,585
+"Brown","Biome","Tropical closed",0.000599,-0.00239,0.00363,0.655,FALSE,0.0111,1.009,585
+"Brown","Biome","Temperate closed",-0.00431,-0.00961,0.000958,0.942,FALSE,-0.0797,1.009,585
+"Brown","Biome","Tropical open",0.00548,0.000344,0.0106,0.981,TRUE,0.101,1.009,585
+"Rufous","Overall","All land uses and biomes",-0.00186,-0.00473,0.00107,0.898,FALSE,-0.0344,1.008,624
+"Rufous","Land use","Secondary",-0.00113,-0.00396,0.00172,0.787,FALSE,-0.021,1.008,624
+"Rufous","Land use","Plantation",-0.00288,-0.00585,9.55e-05,0.971,FALSE,-0.0532,1.008,624
+"Rufous","Land use","Cropland",-0.00175,-0.00474,0.00128,0.874,FALSE,-0.0324,1.008,624
+"Rufous","Land use","Pasture",-0.00164,-0.00534,0.002,0.816,FALSE,-0.0303,1.008,624
+"Rufous","Biome","Tropical closed",0.000135,-0.00278,0.00302,0.539,FALSE,0.00249,1.008,624
+"Rufous","Biome","Temperate closed",0.00055,-0.00453,0.00568,0.588,FALSE,0.0102,1.008,624
+"Rufous","Biome","Tropical open",-0.00628,-0.0104,-0.00225,0.999,TRUE,-0.116,1.008,624
+"Yellow","Overall","All land uses and biomes",0.00229,-0.000595,0.0052,0.945,FALSE,0.0423,1.005,618
+"Yellow","Land use","Secondary",0.00183,-0.00108,0.00482,0.895,FALSE,0.0339,1.005,618
+"Yellow","Land use","Plantation",0.00381,0.000818,0.00683,0.995,TRUE,0.0704,1.005,618
+"Yellow","Land use","Cropland",0.000848,-0.00221,0.00385,0.713,FALSE,0.0157,1.005,618
+"Yellow","Land use","Pasture",0.00274,-0.000556,0.00607,0.949,FALSE,0.0507,1.005,618
+"Yellow","Biome","Tropical closed",0.000587,-0.00234,0.0036,0.653,FALSE,0.0109,1.005,618
+"Yellow","Biome","Temperate closed",0.00145,-0.00402,0.00709,0.698,FALSE,0.0268,1.005,618
+"Yellow","Biome","Tropical open",0.0049,0.000896,0.00883,0.994,TRUE,0.0905,1.005,618
+"Red","Overall","All land uses and biomes",-0.000995,-0.00452,0.00257,0.707,FALSE,-0.0184,1.008,485
+"Red","Land use","Secondary",-0.00189,-0.0054,0.00176,0.852,FALSE,-0.0349,1.008,485
+"Red","Land use","Plantation",-0.000343,-0.00395,0.00335,0.573,FALSE,-0.00634,1.008,485
+"Red","Land use","Cropland",-0.00133,-0.00499,0.00231,0.763,FALSE,-0.0246,1.008,485
+"Red","Land use","Pasture",-0.000349,-0.00435,0.00362,0.567,FALSE,-0.00645,1.008,485
+"Red","Biome","Tropical closed",0.00232,-0.00114,0.00583,0.906,FALSE,0.0428,1.008,485
+"Red","Biome","Temperate closed",0.00157,-0.00256,0.00578,0.776,FALSE,0.0291,1.008,485
+"Red","Biome","Tropical open",-0.00688,-0.0149,0.00129,0.954,FALSE,-0.127,1.008,485
+"Green","Overall","All land uses and biomes",-0.0495,-0.113,0.0168,0.932,FALSE,-0.916,1.004,589
+"Green","Land use","Secondary",-0.0505,-0.114,0.0158,0.934,FALSE,-0.933,1.004,589
+"Green","Land use","Plantation",-0.0496,-0.113,0.0167,0.932,FALSE,-0.917,1.004,589
+"Green","Land use","Cropland",-0.0495,-0.113,0.0167,0.931,FALSE,-0.914,1.004,589
+"Green","Land use","Pasture",-0.0488,-0.113,0.0174,0.928,FALSE,-0.903,1.004,589
+"Green","Biome","Tropical closed",-0.00199,-0.00559,0.00176,0.856,FALSE,-0.0368,1.004,589
+"Green","Biome","Temperate closed",-0.177,-0.367,0.0204,0.96,FALSE,-3.27,1.004,589
+"Green","Biome","Tropical open",0.0297,0.0215,0.038,1,TRUE,0.549,1.004,589
+"Blue","Overall","All land uses and biomes",0.00192,-0.000836,0.0047,0.917,FALSE,0.0355,1.004,548
+"Blue","Land use","Secondary",0.00151,-0.00135,0.00432,0.853,FALSE,0.0279,1.004,548
+"Blue","Land use","Plantation",0.000214,-0.00269,0.0032,0.556,FALSE,0.00395,1.004,548
+"Blue","Land use","Cropland",0.00363,0.000745,0.00647,0.994,TRUE,0.0671,1.004,548
+"Blue","Land use","Pasture",0.00235,-0.000824,0.00556,0.927,FALSE,0.0434,1.004,548
+"Blue","Biome","Tropical closed",0.00493,0.00228,0.0076,1,TRUE,0.0911,1.004,548
+"Blue","Biome","Temperate closed",0.00284,-0.00236,0.00818,0.863,FALSE,0.0526,1.004,548
+"Blue","Biome","Tropical open",-0.00199,-0.00595,0.00192,0.844,FALSE,-0.0367,1.004,548
+"Purple","Overall","All land uses and biomes",1.6e-05,-0.00428,0.00443,0.502,FALSE,0.000296,1.008,676
+"Purple","Land use","Secondary",-0.000271,-0.00453,0.00402,0.549,FALSE,-0.00501,1.008,676
+"Purple","Land use","Plantation",-0.00166,-0.006,0.00269,0.769,FALSE,-0.0306,1.008,676
+"Purple","Land use","Cropland",0.00207,-0.0026,0.00688,0.81,FALSE,0.0383,1.008,676
+"Purple","Land use","Pasture",-0.00014,-0.00737,0.0073,0.514,FALSE,-0.00259,1.008,676
+"Purple","Biome","Tropical closed",0.00162,-0.00293,0.00646,0.752,FALSE,0.03,1.008,676
+"Purple","Biome","Temperate closed",-0.00196,-0.0106,0.00661,0.671,FALSE,-0.0363,1.008,676
+"Purple","Biome","Tropical open",0.00036,-0.00442,0.00526,0.56,FALSE,0.00666,1.008,676

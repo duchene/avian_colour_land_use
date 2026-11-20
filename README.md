@@ -3,8 +3,10 @@
 How land-use change relates to passerine plumage colouration, and whether colour
 predicts abundance across land-use types, accounting for biome, trophic niche, body
 mass, the PREDICTS study hierarchy, and phylogeny. Built on the PREDICTS biodiversity
-database merged with Cooney spectrophotometric colour data (ultraviolet-sensitive
-visual model, LociUVS) and AVONET morphological traits.
+database merged with Cooney et al. (2022) colour data (colourfulness measured from
+multispectral photographs of museum specimens under an ultraviolet-sensitive visual
+model, LociUVS, and plate-scored sexual dichromatism), the Delhey et al. (2023) plumage
+colour classes, and AVONET morphological traits.
 
 **Status: refitted.** The analytical dataset was rebuilt on 2026-08-11 after a filter
 bug was corrected and Temperate Open was dropped, and all ten models have since been
@@ -12,6 +14,47 @@ fitted against it. `results/` and `figures/` hold the current outputs. The
 pre-correction outputs are preserved in the git tag `prefilter-results-2026-08` and
 should not be quoted. `ANALYSIS_NOTES.md` records the design decisions and the open
 questions.
+
+## 2026-11 revision (current)
+
+After co-author review the reported analyses were revised. The decisions are recorded
+in `ANALYSIS_NOTES.md` under "2026-11 revision"; in short:
+
+- **Two colour metrics** in every reported model: male colourfulness (`malecolcooney`,
+  male LociUVS) and sexual dichromatism (`dichroplate`, the Cooney et al. 2022 plate
+  score), set by `RESP_MAIN` in `scripts/00_config.R`. The plate score replaces the
+  male-minus-female LociUVS difference.
+- **Specific colours** come from Delhey et al. (2023) as the proportion of the male
+  plumage in each of ten colour classes (`data/external/`, built by
+  `scripts/00b_external_colour.R`; helpers in `scripts/cooney/delhey_colours.R`). Each
+  colour is a separate variable; no ratios or composite scores are formed.
+- **Reported models**, refitted: A1b, A2d and A3b (with A3a for its LOO comparison).
+  A2c, A1 and the Dale (B) family were not refitted and their results predate the
+  revision.
+- **New analyses**:
+
+| Analysis | Script | Question |
+|---|---|---|
+| A2d per colour | `A2d_colours_02_fit.R`, `A2d_colours_03_summary.R` | A2d refitted once per colour class, colour proportion as the predictor |
+| A4 MR-PMM | `A4_colour_mrpmm.R` (MCMCglmm) | Eight colours and four land-use scores as joint responses (Halliwell et al. 2025); correlations, phylogenetic signal, conditional colour on land-use slopes |
+| C1 sample bias | `C1_sample_bias.R` | Do the PREDICTS passerines differ in colour from all passerines? PGLS and KS tests |
+| C2 sex-averaged | `C2_sex_averaged.R` | Do A1b, A2d and A3b reach the same conclusions with mean male and female colourfulness? |
+
+- **Supplementary outputs** in `figures/pub/cooney/`: Figure S1 (tree with colour
+  rings, `supp_fig_S1_tree.R`), S2 (sample bias, `C1_sample_bias.R`), S3 and S4
+  (MR-PMM and per-colour effects, `supp_fig_S3_S4.R`), Tables S1 to S3
+  (`supp_tables.R`). Legends are in `figures/pub/cooney/Figure_and_Table_legends.txt`.
+- **Two trees.** All phylogenetic analyses are repeated on the Jetz et al. (2012) MCC
+  tree with identical data (`hpc/run_jetz.sh`, outputs in `runs/jetz/`), and compared
+  with the reported Claramunt et al. (2025) runs by `T1_tree_comparison.R`
+  (Table S3). 509 of 550 quantities reach the same conclusion under both trees. Two
+  results reported in the main text are not credible with the Jetz tree: more black
+  plumage in pasture-associated species (A4) and smaller losses of white-plumaged
+  species in croplands (A2d per colour).
+- The revision ran on GenomeDK through Slurm; see "Running on GenomeDK" below.
+
+The rest of this README describes the pre-revision pipeline, which the scripts still
+support.
 
 ## Analyses
 
@@ -53,8 +96,9 @@ carries one model per analysis.
 **A2e / A2f** are sensitivity checks that add the full three-way colour x biome x land
 use interaction to A2c / A2d. They exist to justify reporting the two-way models.
 
-Colour is summarised by four metrics: mean colourfulness, male colourfulness, the
-dichromatism ratio, and the sexual dichromatism.
+Before the revision, colour was summarised by four metrics: mean colourfulness, male
+colourfulness, the dichromatism ratio, and the male-minus-female difference. The
+reported models now use male colourfulness and the plate-scored dichromatism (above).
 
 ## Structure
 
@@ -63,11 +107,17 @@ scripts/
   00_config.R              Every shared decision. Read this first.
   00_data_preparation.R    Raw data -> data/present.csv
   00_descriptive_figures.R Descriptive plots
-  cooney/                  A1 A1b A2c A2d A2e A2f A3a A3b, pub_figures.R
+  00b_external_colour.R    Cooney 2022 and Delhey 2023 tables -> data/external/
+  cooney/                  A1 A1b A2c A2d A2e A2f A3a A3b, pub_figures.R,
+                           2026-11: A2d_colours_*, A4_colour_mrpmm, C1, C2,
+                           supp_fig_S1_tree, supp_fig_S3_S4, supp_tables
   dale/                    B1 B1b B2c B2d B3a B3b, exploratory_figures_dale.R
 data/                      present.csv, raw .csv.gz, BBtree2.tre phylogeny
+data/external/             Derived Cooney 2022 and Delhey 2023 species tables
+hpc/                       Slurm job scripts for GenomeDK (run_all.sh submits everything)
 results/cooney|dale/       Summary tables (CSV): convergence, fixed effects, variance, R2, LOO
-figures/pub/cooney|dale/   Publication figures 3, 5, 6 and Tables 1 to 2
+figures/pub/cooney|dale/   Publication figures 3, 5, 6, Tables 1 to 2, and (cooney) the
+                           supplementary Figures S1 to S4 and Tables S1 to S2
                            (1 and 2 are introductory and live outside this repo)
 figures/exploratory/       Earlier exploratory figure set, not for publication
 figures/cooney|dale/       Per-analysis diagnostics, with desc_* descriptives at the root
@@ -117,7 +167,23 @@ each model wants 4 chains times `nthreads` cores, and budget roughly 20 GB of di
 a full `fits/`. Check `results/*/[AB]*_convergence.csv` after each family, and raise
 `adapt_delta` before changing any model.
 
+## Running on GenomeDK
+
+The 2026-11 revision runs through Slurm, charged to the project account. From the
+repository root:
+
+```bash
+bash hpc/run_all.sh     # submits every step with dependencies; see the header
+```
+
+`hpc/env.sh` defines `$RSCRIPT`, an R 4.4.1 container with the project libraries
+(`tools/Rlib_colour` before `tools/Rlib`). Fit scripts skip fits that exist, so a rerun
+only fills gaps. Do not edit an R script while a job is running it, since R reads the
+script as it executes. Any script that loads a saved brmsfit must attach `rstan` first.
+
 ## Requirements
 
 R packages: `brms`, `cmdstanr`, `tidyverse`, `posterior`, `loo`, `ape`, `phytools`,
-`patchwork`, `scales`, plus `svglite` and `plotrix` for the figures.
+`patchwork`, `scales`, plus `svglite` and `plotrix` for the figures. The revision
+analyses also use `MCMCglmm` (A4), `phylolm` (C1) and `igraph` (built from source into
+`tools/Rlib_colour` for phytools in the container).

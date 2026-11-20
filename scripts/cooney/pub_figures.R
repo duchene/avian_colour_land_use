@@ -23,6 +23,9 @@
 # Run from repo root: Rscript scripts/cooney/pub_figures.R
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 suppressMessages({
   library(dplyr); library(tidyr); library(ggplot2); library(stringr)
   library(patchwork); library(scales); library(ape); library(phytools)
@@ -172,10 +175,10 @@ try_fig({
            block = factor(str_remove(held_fixed, "^Biome = "), levels = biome_levels))
 
   mass_c <- read.csv("results/cooney/A3b_fixed_effects.csv") |>
-    filter(model %in% c("malecolcooney_covariate", "dichrodiff_covariate"),
+    filter(model %in% c("malecolcooney_covariate", "dichroplate_covariate"),
            parameter == "z_logMass") |>
     transmute(response = c(malecolcooney_covariate = "Male colourfulness",
-                           dichrodiff_covariate = "Sexual dichromatism")[model],
+                           dichroplate_covariate = "Sexual dichromatism")[model],
               estimate = Estimate, lo = Q2.5, hi = Q97.5,
               credible = sign(Q2.5) == sign(Q97.5),
               label = "Body mass (+1 SD)", block = "Mass")
@@ -192,8 +195,9 @@ try_fig({
 
   # Panel b/d: the same 15 cells in the observed data.
   raw <- read.csv("data/present.csv") |>
-    select(Predominant_simple, Biome4, malecolcooney, dichrodiff) |>
-    pivot_longer(c(malecolcooney, dichrodiff), names_to = "resp_raw", values_to = "value") |>
+    # Dichro: Cooney et al. 2022 plate-scored dichromatism (2026-11 revision)
+    select(Predominant_simple, Biome4, malecolcooney, dichroplate = Dichro) |>
+    pivot_longer(c(malecolcooney, dichroplate), names_to = "resp_raw", values_to = "value") |>
     filter(!is.na(value)) |>
     mutate(Predominant_simple = factor(relabel(Predominant_simple), levels = lu_levels),
            Biome4 = factor(relabel(Biome4), levels = biome_levels),
@@ -359,7 +363,7 @@ try_fig({
     group_by(SS)  |> mutate(r = diff_abund - mean(diff_abund)) |> ungroup() |>
     group_by(Best_guess_binomial) |> mutate(r = r - mean(r)) |> ungroup() |>
     select(Biome4, Predominant_simple, r,
-           `Male colourfulness` = malecolcooney, `Sexual dichromatism` = dichrodiff) |>
+           `Male colourfulness` = malecolcooney, `Sexual dichromatism` = dichroplate) |>
     pivot_longer(c(`Male colourfulness`, `Sexual dichromatism`),
                  names_to = "response", values_to = "x") |>
     filter(!is.na(x)) |>
@@ -517,11 +521,10 @@ try_fig({
     list(obj = obj, lims = if (logscale) round(exp(lims)) else round(lims))
   }
   lim_mal <- unname(log(quantile(spdat$malecolcooney, c(0.02, 0.98), na.rm = TRUE)))
-  # 2%/98% spans -119 to +119, but 82% of species sit within +/-30, so
-  # that range parks almost every branch at the midpoint of the ramp.
-  # The 10%/90% magnitude puts the colour where the species actually are
-  # and clips only the tails, which were already clipped.
-  q_dich  <- unname(max(abs(quantile(spdat$dichrodiff, c(0.10, 0.90), na.rm = TRUE))))
+  # Plate-scored dichromatism runs from -2 to 2, with most species at 0
+  # or above. The ramp is centred on 0 (no dichromatism) and its limits
+  # are the 10%/90% magnitude, so the few extreme tails are clipped.
+  q_dich  <- unname(max(abs(quantile(spdat$dichroplate, c(0.10, 0.90), na.rm = TRUE))))
   # Mako, not magma. Zissou 1 in panel d is warm throughout, so a warm
   # sequential ramp here would let the two trees read as one scale. Mako
   # is cool from end to end (hues 94 to 300) and shares no hue with it.
@@ -530,7 +533,7 @@ try_fig({
   # at lightness 82 against 97 for Blue-Red 3, and its whole range spans
   # only L 52 to 82, so a near-zero branch stays visible on white instead
   # of disappearing into the page. It also shares no hue with panel a.
-  m_dich <- build_map("dichrodiff", FALSE, hcl.colors(20, "Zissou 1"), c(-q_dich, q_dich))
+  m_dich <- build_map("dichroplate", FALSE, hcl.colors(20, "Zissou 1"), c(-q_dich, q_dich))
 
   contr <- read.csv("results/cooney/posthoc_contrasts.csv") |> filter(model == "A1b")
 
@@ -680,11 +683,11 @@ try_fig({
     forest_base("Male colourfulness", "c", "log difference")
 
     tree_panel(m_dich, "(d) Sexual dichromatism across the phylogeny",
-               "Sexual dichromatism (LociUVS)")
+               "Sexual dichromatism (plate score)")
     par(mar = c(4.2, 4.6, 2.4, 1.2))
-    scatter_panel("dichrodiff", "Sexual dichromatism (LociUVS)", FALSE, "e",
+    scatter_panel("dichroplate", "Sexual dichromatism (plate score)", FALSE, "e",
                   "Sexual dichromatism vs land-use association", FALSE)
-    forest_base("Sexual dichromatism", "f", "LociUVS diff.")
+    forest_base("Sexual dichromatism", "f", "score difference")
   }
 
   pdf(file.path(OUT, "Figure_3_A1b_phylogeny_landuse.pdf"),

@@ -1,0 +1,551 @@
+"table","key","est_claramunt","lo_claramunt","hi_claramunt","cred_claramunt","est_jetz","lo_jetz","hi_jetz","cred_jetz","same_conclusion"
+"A1b_landuse_contrasts","dichroplate | Cropland - Primary vegetation",0.059497253,-0.047847711975,0.16468000065,FALSE,0.04387175,-0.06411485435,0.1515112640675,FALSE,TRUE
+"A1b_landuse_contrasts","dichroplate | Pasture - Primary vegetation",0.107745523,-0.01077422175,0.22810318475,FALSE,0.09048431,-0.0390844161,0.2122116615,FALSE,TRUE
+"A1b_landuse_contrasts","dichroplate | Plantation_forest - Primary vegetation",0.0118156955,-0.082266374175,0.105414455725,FALSE,-0.005664365,-0.099446678,0.0947461187499999,FALSE,TRUE
+"A1b_landuse_contrasts","dichroplate | Secondary - Primary vegetation",0.02991178,-0.04009342225,0.098312727875,FALSE,0.0216472,-0.049154769045,0.0925983455,FALSE,TRUE
+"A1b_landuse_contrasts","malecolcooney | Cropland - Primary vegetation",0.0229255999999998,-0.0708404149999996,0.1172799325,FALSE,0.0256433,-0.0724058550000005,0.122832600000001,FALSE,TRUE
+"A1b_landuse_contrasts","malecolcooney | Pasture - Primary vegetation",-0.0827697999999999,-0.19219368,0.021371305,FALSE,-0.08410465,-0.1994891,0.0275017400000003,FALSE,TRUE
+"A1b_landuse_contrasts","malecolcooney | Plantation_forest - Primary vegetation",-0.0385366,-0.1246818875,0.0483005099999995,FALSE,-0.0491769,-0.1356616325,0.0368160749999996,FALSE,TRUE
+"A1b_landuse_contrasts","malecolcooney | Secondary - Primary vegetation",-0.0114945,-0.0729303574999996,0.0508885625,FALSE,-0.00109404999999985,-0.06679869,0.0604922575000003,FALSE,TRUE
+"A1b_r2_summary","dichroplate",0.780472620933578,0.734078254199091,0.825011605991205,TRUE,0.709261618295961,0.667075946299747,0.747487631793035,TRUE,TRUE
+"A1b_r2_summary","malecolcooney",0.864224592088096,0.819771895383178,0.9023725716803,TRUE,0.809883449483928,0.7597650418949,0.852835232557285,TRUE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Cropland - Plantation",0.0619086499999995,-0.0498320674999995,0.1680593875,FALSE,0.0751261000000003,-0.0372264350000003,0.18503874,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Cropland - Primary vegetation",0.0229255999999998,-0.0708404149999996,0.1172799325,FALSE,0.0256433,-0.0724058550000005,0.122832600000001,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Cropland - Secondary",0.0340366999999997,-0.0577627275000003,0.125920195,FALSE,0.0274120499999997,-0.066726325,0.1233524625,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Pasture - Cropland",-0.10562,-0.2386764425,0.0249533299999998,FALSE,-0.1107332,-0.2499979475,0.0249379324999995,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Pasture - Plantation",-0.0452967000000002,-0.1665330325,0.0751131900000006,FALSE,-0.0361272499999998,-0.159341169999999,0.0881420550000003,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Pasture - Primary vegetation",-0.0827697999999999,-0.19219368,0.021371305,FALSE,-0.08410465,-0.1994891,0.0275017400000003,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Pasture - Secondary",-0.0726257000000001,-0.1845874775,0.0368082849999998,FALSE,-0.0830327499999997,-0.196670065000001,0.0307372449999999,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Plantation - Primary vegetation",-0.0385366,-0.1246818875,0.0483005099999995,FALSE,-0.0491769,-0.1356616325,0.0368160749999996,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Plantation - Secondary",-0.0272483499999998,-0.1119336975,0.0591186850000005,FALSE,-0.0473284499999997,-0.1359461075,0.0421268025000002,FALSE,TRUE
+"posthoc_contrasts","A1b | Male colourfulness | Land use | Secondary - Primary vegetation",-0.0114945,-0.0729303574999996,0.0508885625,FALSE,-0.00109404999999985,-0.06679869,0.0604922575000003,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Cropland - Plantation",0.04811787,-0.077008211375,0.16949745025,FALSE,0.0483988496,-0.077588893,0.17483924,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Cropland - Primary vegetation",0.059497253,-0.047847711975,0.16468000065,FALSE,0.04387175,-0.06411485435,0.1515112640675,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Cropland - Secondary",0.02975834,-0.0766346855,0.1348738745,FALSE,0.02181921,-0.087688167725,0.127868512,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Pasture - Cropland",0.04968467,-0.10472644675,0.19981578795,FALSE,0.047401795,-0.11326818725,0.198812781775,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Pasture - Plantation",0.0975907045,-0.0367328244,0.23019071775,FALSE,0.09429291,-0.04522181525,0.23271520995,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Pasture - Primary vegetation",0.107745523,-0.01077422175,0.22810318475,FALSE,0.09048431,-0.0390844161,0.2122116615,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Pasture - Secondary",0.078689905,-0.0445391695,0.201827495425,FALSE,0.067146765,-0.0603592975,0.196213994,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Plantation - Primary vegetation",0.0118156955,-0.082266374175,0.105414455725,FALSE,-0.005664365,-0.099446678,0.0947461187499999,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Plantation - Secondary",-0.018141205,-0.111846226425,0.07646351592,FALSE,-0.0263986893,-0.123904532,0.071586692,FALSE,TRUE
+"posthoc_contrasts","A1b | Sexual dichromatism | Land use | Secondary - Primary vegetation",0.02991178,-0.04009342225,0.098312727875,FALSE,0.0216472,-0.049154769045,0.0925983455,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Biome | Temperate closed - Tropical closed",-0.0126054597375,-0.025992322151875,0.000486362448124995,FALSE,-0.012405089285,-0.0259960709861875,0.00153568324,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Biome | Tropical open - Temperate closed",0.021709279033,0.0026536889039125,0.0407807785826187,TRUE,0.02497238745,0.00530359727075,0.0442374608866875,TRUE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Biome | Tropical open - Tropical closed",0.0092528745,-0.0071697675965,0.0248003157573437,FALSE,0.0124523416625,-0.003447412999375,0.028787091589375,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Cropland - Plantation",-0.00416049766666667,-0.00680166550329166,-0.00150926795408334,TRUE,-0.00414971497583333,-0.00680068074,-0.00151469408405833,TRUE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Cropland - Secondary",-0.00446433433333333,-0.00943278310166667,0.000469674426666666,FALSE,-0.00434831463333333,-0.00930557179666667,0.000659195852499999,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Pasture - Cropland",0.00326824343333334,0.000549904990333335,0.00597311520983333,TRUE,0.00328242063,0.000504952404350003,0.006016179625,TRUE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Pasture - Plantation",-0.000886157086666668,-0.00378910864275,0.00187389336791367,FALSE,-0.000880537958500001,-0.00366584602466666,0.00199687838908333,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Pasture - Secondary",-0.001173725816,-0.00632511521891667,0.00379246916741666,FALSE,-0.001072792425,-0.00607713159233333,0.00394131502225,FALSE,TRUE
+"posthoc_contrasts","A2d | Male colourfulness | Land use | Plantation - Secondary",-0.000311235783333336,-0.0049491455095,0.00428615716083333,FALSE,-0.000217490557333332,-0.00482201853925,0.004511112239,FALSE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Biome | Temperate closed - Tropical closed",-0.0161020171625,-0.029345953825875,-0.0023390719963125,TRUE,-0.01612684465,-0.029999931884375,-0.00238008388,TRUE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Biome | Tropical open - Temperate closed",0.023885764375,0.004774270231,0.042870270335375,TRUE,0.0282385554725,0.00829193367287499,0.0478872928063375,TRUE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Biome | Tropical open - Tropical closed",0.0078383614125,-0.0088371411941875,0.0235413152786875,FALSE,0.01198080321875,-0.00450715803775,0.0287372253894375,FALSE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Cropland - Plantation",-0.00406500222521667,-0.00665016871166667,-0.00140463550433333,TRUE,-0.00405329967966666,-0.00675061711725,-0.001348821301,TRUE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Cropland - Secondary",-0.00462004196333333,-0.00955218168083333,0.0003068624825,FALSE,-0.00457600889066667,-0.00947685990166666,0.000613483914166664,FALSE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Pasture - Cropland",0.00299546336833333,0.000324013784249993,0.00566022227483333,TRUE,0.00300481758,0.000302738011333333,0.00571247603016666,TRUE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Pasture - Plantation",-0.00105768956833333,-0.00377281261703334,0.00170231077031666,FALSE,-0.00104673377833333,-0.00381010623925833,0.00169823347683333,FALSE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Pasture - Secondary",-0.00164126784833333,-0.0065346920135,0.0033931467565,FALSE,-0.00158045935666667,-0.00644274251775,0.00369989286416666,FALSE,TRUE
+"posthoc_contrasts","A2d | Sexual dichromatism | Land use | Plantation - Secondary",-0.000541793716666666,-0.00502500356666666,0.00391074918683333,FALSE,-0.000536434323333331,-0.00507999226433333,0.004275534311175,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Biome | NA | Temperate closed - Tropical closed",0.0099144795,0.0037630279825,0.016435486175,TRUE,0.0107682375,0.0043421003525,0.0173274721,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Biome | NA | Tropical open - Temperate closed",-0.001316921,-0.0089351470925,0.0060569917475,FALSE,-0.00287989805,-0.01047823466,0.0048506603475,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Biome | NA | Tropical open - Tropical closed",0.0086759984,0.00397383994500001,0.013237363775,TRUE,0.00792419985,0.0031852697075,0.012657888,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Cropland - Plantation",-0.001014806145,-0.0025420959055,0.000498125638,FALSE,-0.000946338440000001,-0.00244634870350002,0.000560788723725002,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Cropland - Secondary",0.000759609465,-0.0005178574135,0.0020477589125,FALSE,0.00068053322,-0.000612551718249999,0.0019653708725,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Pasture - Cropland",0.000752986745000001,-0.001819123018,0.00317600971425,FALSE,0.000726666139199999,-0.001760728866375,0.003303438345125,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Pasture - Plantation",-0.000264601509999999,-0.0028715932685,0.00227419043175,FALSE,-0.000213832364999998,-0.002829816425875,0.002463842716,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Pasture - Secondary",0.00148875425,-0.000990791812500002,0.0039150395825,FALSE,0.0014155381,-0.0010737972825,0.0039090441975,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Colour slope | Land use | NA | Plantation - Secondary",0.0017672225,0.000348458363500001,0.00316369088,TRUE,0.0016327259,0.000241239236749997,0.0030447846,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Cropland | Temperate closed - Tropical closed",-0.01053431612,-0.02543360648,0.0040470752075,FALSE,-0.0102986292,-0.025496831515,0.005041112029,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Cropland | Tropical open - Temperate closed",0.0152618933,-0.00501953245275,0.036029933425,FALSE,0.01825787295,-0.00245592874,0.0391230635675,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Cropland | Tropical open - Tropical closed",0.0049714772,-0.011917041325,0.0209732383475,FALSE,0.0079429434,-0.0085395354975,0.0246461495375,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Pasture | Temperate closed - Tropical closed",-0.01325112945,-0.0285428900625,0.00179975540999999,FALSE,-0.0129294995,-0.0282332961075,0.0028692803225,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Pasture | Tropical open - Temperate closed",0.022745666735,0.00218231306,0.0432813125721,TRUE,0.025729642285,0.00466706074125,0.0463552863375,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Pasture | Tropical open - Tropical closed",0.00967599595,-0.00771240607825,0.02613419282,FALSE,0.0128940969,-0.00392722969,0.0300967311625,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Plantation | Temperate closed - Tropical closed",-0.01231879085,-0.0267031391175,0.00206100372149999,FALSE,-0.0121553581,-0.02672392663625,0.00278124199499998,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Plantation | Tropical open - Temperate closed",0.0242229860095,0.00396157722,0.044240608691,TRUE,0.02754736095,0.006996806681,0.04774078521,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Plantation | Tropical open - Tropical closed",0.01211389705,-0.00417296321875,0.02785362038725,FALSE,0.01537788675,-0.000512883439,0.0317536584325,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Secondary | Temperate closed - Tropical closed",-0.014266102,-0.0297422204,0.000463651853999989,FALSE,-0.014391258,-0.029433680925,0.001054765805,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Secondary | Tropical open - Temperate closed",0.024627959,0.004537264695,0.044996557075,TRUE,0.028180883,0.00768756532625,0.048361809575,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Biome | Land use = Secondary | Tropical open - Tropical closed",0.010417067,-0.00596448899,0.026030875,FALSE,0.0136190495,-0.0023646034725,0.029926664775,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Cropland - Plantation",-0.000601582434999999,-0.00620732847925,0.00486032139775,FALSE,-0.000389140364999999,-0.00593348175525,0.0050889211575,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Cropland - Secondary",-5.73245999999994e-05,-0.014264912005,0.0134034958625,FALSE,0.000206219550000001,-0.0136617251975,0.0143675440275,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Cropland",-7.9686275e-05,-0.0037871157225,0.0035467186575,FALSE,-0.00011241191,-0.0036102581821,0.0035241505775,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Plantation",-0.000680749655000001,-0.00664265142225,0.00509060261625,FALSE,-0.000546235464999999,-0.006304008765,0.005132875255,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Secondary",-0.00016403355,-0.01436187288625,0.01357329869,FALSE,7.64136550000004e-05,-0.01382732347825,0.0142170832855,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Temperate closed | Plantation - Secondary",0.000383358199999999,-0.0130419640925,0.01372969636,FALSE,0.000607498250000001,-0.01265993442,0.0143377259175,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Cropland - Plantation",-0.0023437121,-0.0043338705375,-0.000270088569999998,TRUE,-0.0022841285,-0.004285014373,-0.000264169042499998,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Cropland - Secondary",-0.0038659074,-0.005630568275,-0.00206583625,TRUE,-0.00383757605,-0.0056191030175,-0.002039155875,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Cropland",0.00260616774,-0.001322048285,0.00633615585,FALSE,0.002503113145,-0.0012081005975,0.00639742439925,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Plantation",0.00023666936,-0.00362718290025,0.004009746685,FALSE,0.000218681699999998,-0.003605884381175,0.00409918183955,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Secondary",-0.00129361525,-0.0051459533425,0.0024440949425,FALSE,-0.0013028012,-0.0051698860775,0.0026629827625,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical closed | Plantation - Secondary",-0.0015483602,-0.003513200335,0.000454953793,FALSE,-0.00153052435,-0.003525062815,0.000493960046999998,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Cropland - Plantation",-0.0095974294,-0.0149481502475,-0.0041628183805,TRUE,-0.009740614421,-0.0151597810025,-0.00421959894775,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Cropland - Secondary",-0.0093322541,-0.0142765601475,-0.004482077479,TRUE,-0.0094925382,-0.0143839652675,-0.00470272744250001,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Pasture - Cropland",0.007333537815,0.00097370519325,0.01363237766,TRUE,0.00745079738,0.00118162079825,0.0136619918375,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Pasture - Plantation",-0.00223609348,-0.00691161706749999,0.002515021479,FALSE,-0.0022817961,-0.0069571831375,0.00233936198,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Pasture - Secondary",-0.00204928902,-0.00609469130475,0.0020268213205,FALSE,-0.00206239155,-0.00608226771425,0.001918443071,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with male colourfulness (z) | Level mean | Land use | Biome = Tropical open | Plantation - Secondary",0.0002123889,-0.00215883112225,0.0025972884225,FALSE,0.000225203960000005,-0.0022184035635,0.0026697994425,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Biome | NA | Temperate closed - Tropical closed",0.000102393599999998,-0.0050731935975,0.0050719227875,FALSE,0.00140141635,-0.0038462268175,0.00664471835000001,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Biome | NA | Tropical open - Temperate closed",0.01055700212,0.00423297613099999,0.0170004564975,TRUE,0.00673227538,0.0001488593975,0.013413313489175,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Biome | NA | Tropical open - Tropical closed",0.0107436915,0.0060847205775,0.0153141779,TRUE,0.0081105023,0.0034403010625,0.01289381405,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Cropland - Plantation",0.000961218859999999,-0.000523222125974999,0.0024984034835,FALSE,0.000865481284999998,-0.000672830975499999,0.002350593098,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Cropland - Secondary",0.000794081615,-0.000605959012000001,0.0021921052925,FALSE,0.000718171010000002,-0.000685782181999999,0.0021384126425,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Pasture - Cropland",8.60961499999984e-06,-0.00204010247225,0.002074096957,FALSE,1.9220335e-05,-0.0020142159605,0.00209848410325,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Pasture - Plantation",0.000992680509999998,-0.00121450040175,0.003220318244,FALSE,0.000891886115500001,-0.001355153081175,0.00308693216325,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Pasture - Secondary",0.000807544079999998,-0.00122733247,0.0028907014175,FALSE,0.000737123174999999,-0.001331950535,0.002796728705,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Colour slope | Land use | NA | Plantation - Secondary",-0.00018381231,-0.00151459682,0.0011989090825,FALSE,-0.000139096955000001,-0.001562677035,0.0012413551025,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Cropland | Temperate closed - Tropical closed",-0.014095955835,-0.028887966515,0.00105307434249998,FALSE,-0.0142100164,-0.0293831441975,0.00130888298004999,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Cropland | Tropical open - Temperate closed",0.01779955525,-0.00259018192,0.03799756231975,FALSE,0.02190107405,0.000331546547500026,0.0433420886125,TRUE,FALSE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Cropland | Tropical open - Tropical closed",0.00374450755,-0.0137053559875,0.01999051826,FALSE,0.0078482755,-0.0093217750875,0.0250779121975,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Pasture | Temperate closed - Tropical closed",-0.01703198299,-0.0322051960675,-0.00121284307,TRUE,-0.01692443245,-0.03319611276,-0.00126245804750001,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Pasture | Tropical open - Temperate closed",0.02472828015,0.00411681445,0.04472698492,TRUE,0.028941986435,0.00729688904325,0.05015927654075,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Pasture | Tropical open - Tropical closed",0.007726618045,-0.0096731795345,0.02410439347,FALSE,0.01192805895,-0.0054535638195,0.0295105936875,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Plantation | Temperate closed - Tropical closed",-0.01612812625,-0.03040409199,-0.001431522555,TRUE,-0.0160022444,-0.03082255105625,-0.00131001223250001,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Plantation | Tropical open - Temperate closed",0.026569820745,0.0067868367225,0.0464621011525,TRUE,0.031144290495,0.01009650572925,0.05149225862275,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Plantation | Tropical open - Tropical closed",0.0106460366,-0.00596917674,0.0264186688725,FALSE,0.01486512755,-0.0018188842185,0.0315065612775,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Secondary | Temperate closed - Tropical closed",-0.017140301,-0.03197873,-0.00189759182250001,TRUE,-0.0172417835,-0.032763706675,-0.00235312007000002,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Secondary | Tropical open - Temperate closed",0.0261168995,0.00603785019075,0.046750028925,TRUE,0.030915491,0.0101948234125,0.052122916875,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Biome | Land use = Secondary | Tropical open - Tropical closed",0.0093451688,-0.00725223828,0.02501763815,FALSE,0.013518052,-0.0030634880875,0.03022327925,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Cropland - Plantation",-0.000496091685,-0.005878901092,0.00494324757775,FALSE,-0.000448673504999992,-0.005949461798,0.005302966426,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Cropland - Secondary",-0.000819962749999999,-0.01452208764,0.013043991585,FALSE,-0.000633002699999999,-0.0145856956425,0.014246530175,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Cropland",-0.000274047350000002,-0.0038754020925,0.00328209311825,FALSE,-0.000279781905,-0.0037481865505,0.0033234806,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Plantation",-0.000705727155000001,-0.00655524441374999,0.004966555950925,FALSE,-0.00071650067,-0.0064321461915,0.0050482841695,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Pasture - Secondary",-0.00117211228,-0.014726352468225,0.0129160156985,FALSE,-0.000898508667,-0.01488550466775,0.01413841917025,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Temperate closed | Plantation - Secondary",-0.0003066778,-0.013399446384,0.0129107779175,FALSE,-0.000184779604999999,-0.0135121548925,0.0139580917825,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Cropland - Plantation",-0.00238260743,-0.0043908466125,-0.000380583295000001,TRUE,-0.00234884147,-0.004351111660575,-0.000357847009999999,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Cropland - Secondary",-0.0037156807,-0.005471301175,-0.00193710618,TRUE,-0.00367436785,-0.0054235139975,-0.001902399935,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Cropland",0.00260355647,-0.001057043245,0.00626815165,FALSE,0.00256197462,-0.00118669212500001,0.0063933213625,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Plantation",0.000191756265,-0.0035289763375,0.00397295497,FALSE,0.000241248265000001,-0.00362352371625,0.004037961487,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Pasture - Secondary",-0.0011007459,-0.0048655611475,0.0025568528975,FALSE,-0.00108066695,-0.0049646995325,0.0026631276125,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical closed | Plantation - Secondary",-0.00133098395,-0.003262531355,0.000677838359499999,FALSE,-0.00133335175,-0.0033475387425,0.00067853802875,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Cropland - Plantation",-0.00932111662550001,-0.01471002228725,-0.003768148844,TRUE,-0.009394750838,-0.01488057166275,-0.00389699282675,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Cropland - Secondary",-0.0092996249,-0.01415190314,-0.00439391596974,TRUE,-0.00939812875,-0.014419494885,-0.004478174361,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Pasture - Cropland",0.00658182947,0.000541860092499999,0.012688210069,TRUE,0.006660599486005,0.000500445224749985,0.01275420941875,TRUE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Pasture - Plantation",-0.00267543026,-0.00720960929725,0.00194301599875,FALSE,-0.002698505099,-0.00719747565875,0.00188651045675,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Pasture - Secondary",-0.002651298215,-0.006556472863,0.0011464951475,FALSE,-0.002701037297,-0.00644575469,0.0011464735225,FALSE,TRUE
+"posthoc_interactions","A2d | Abundance change vs primary | fitted with sexual dichromatism (z) | Level mean | Land use | Biome = Tropical open | Plantation - Secondary",-2.96271999999992e-05,-0.00238390967875,0.00240642647775,FALSE,-4.25158850000246e-06,-0.00239216022425,0.00237670774224999,FALSE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Biome | Temperate closed",0.00920531725674999,0.00281265642831251,0.0157228257248125,TRUE,0.00955923889875,0.0029877078976875,0.0163279903014375,TRUE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Biome | Tropical closed",-0.000781582136249999,-0.0041852260969625,0.0027730892260625,FALSE,-0.0011987010775,-0.0046604547640625,0.00218544813662499,FALSE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Biome | Tropical open",0.007877591335,0.0024753902156875,0.0131696099396481,TRUE,0.00670818355124999,0.00118839828156249,0.0121743382328312,TRUE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Land use | Cropland",0.00522100251166667,0.00126320063066667,0.00911237140360833,TRUE,0.00475701454666667,0.000810342464666674,0.00874814301833334,TRUE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Land use | Pasture",0.00597164686166667,0.00150435106758334,0.0102680302475667,TRUE,0.00551929189,0.00108982226233334,0.0100237836204,TRUE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Land use | Plantation",0.00624986903333333,0.00233400187333333,0.0100856107256667,TRUE,0.00569713476666667,0.00188217643058333,0.00970183154474149,TRUE,TRUE
+"colour_simple_slopes","A2d | Male colourfulness (z) | Land use | Secondary",0.00447142195,0.000611562675833339,0.00828524872583333,TRUE,0.00405308825,0.000248817887500004,0.00798380366849149,TRUE,TRUE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Biome | Temperate closed",0.001048607657625,-0.00401521146733439,0.005942739369875,FALSE,0.000662770276999992,-0.0043385145714375,0.0055399058199375,FALSE,TRUE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Biome | Tropical closed",0.000926753753749999,-0.0025379765712,0.004374695926,FALSE,-0.000771470271250001,-0.00418403988988312,0.0026774901365,FALSE,TRUE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Biome | Tropical open",0.01163821524125,0.006801319129,0.016592681781375,TRUE,0.00737265769875,0.00228498065674374,0.0124519703376875,TRUE,TRUE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Land use | Cropland",0.00495450407333333,0.00159370316085,0.00837451935016667,TRUE,0.00280305282,-0.000612653754583328,0.00614146659566666,FALSE,FALSE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Land use | Pasture",0.00496483578333333,0.00131574764416667,0.00864197901441667,TRUE,0.00282409281666666,-0.000852666211808337,0.00643235599008334,FALSE,FALSE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Land use | Plantation",0.0039770471,0.000698421409608327,0.00737034207783333,TRUE,0.00195505979666667,-0.001371984410275,0.00518774541816667,FALSE,FALSE
+"colour_simple_slopes","A2d | Sexual dichromatism (z) | Land use | Secondary",0.0041524794,0.000945968934666669,0.00752003275666667,TRUE,0.00210186029833333,-0.00119386230333333,0.0053929847945,FALSE,FALSE
+"A2d_colours_slopes","Black | Biome | Temperate closed",-0.00757870280625,-0.01357374214325,-0.00152489927695001,TRUE,-0.008555217313875,-0.0146045867245125,-0.0024694192640625,TRUE,TRUE
+"A2d_colours_slopes","Black | Biome | Tropical closed",-0.00137530305875,-0.00443447420829376,0.0016187744736875,FALSE,-0.001128621106325,-0.00433476001476875,0.00208036183684375,FALSE,TRUE
+"A2d_colours_slopes","Black | Biome | Tropical open",-0.00629722241249999,-0.0108240482424375,-0.00178331185269375,TRUE,-0.00568571995012499,-0.0107153061071125,-0.000856952125000004,TRUE,TRUE
+"A2d_colours_slopes","Black | Land use | Cropland",-0.00554497909666667,-0.00904251927385,-0.00212861988916667,TRUE,-0.00560975774333333,-0.00923828567175,-0.002000512615725,TRUE,TRUE
+"A2d_colours_slopes","Black | Land use | Pasture",-0.0043457128,-0.00811347083375,-0.000621390370133336,TRUE,-0.00437177459166667,-0.00829448271008333,-0.000494803140833332,TRUE,TRUE
+"A2d_colours_slopes","Black | Land use | Plantation",-0.00511769454916667,-0.00853737437475,-0.0017952042425,TRUE,-0.00508880528666667,-0.008667008533,-0.00158199812525,TRUE,TRUE
+"A2d_colours_slopes","Black | Land use | Secondary",-0.00531643151666667,-0.00872341440333333,-0.00203373456758334,TRUE,-0.00539530219883334,-0.00893073002416667,-0.00189878467008334,TRUE,TRUE
+"A2d_colours_slopes","Black | Overall | All land uses and biomes",-0.00508068247866667,-0.0084517400945,-0.00180456781541667,TRUE,-0.00512746741375,-0.00858985477339583,-0.00167265529464583,TRUE,TRUE
+"A2d_colours_slopes","Blue | Biome | Temperate closed",0.0028443920975,-0.00236487166386875,0.0081808021880625,FALSE,0.003292930125,-0.0021995662161875,0.00884794662487499,FALSE,TRUE
+"A2d_colours_slopes","Blue | Biome | Tropical closed",0.00492758791,0.0022849834255,0.0076016834581875,TRUE,0.004886285145,0.002386682704125,0.007398869240625,TRUE,TRUE
+"A2d_colours_slopes","Blue | Biome | Tropical open",-0.00198677801675,-0.00594734327173125,0.0019235561891875,FALSE,-0.0026563995525,-0.00657681186750001,0.0013505190375625,FALSE,TRUE
+"A2d_colours_slopes","Blue | Land use | Cropland",0.00363321873333333,0.00074478687241667,0.00646959126666666,TRUE,0.00358543621166667,0.000794599584166665,0.00647467065416667,TRUE,TRUE
+"A2d_colours_slopes","Blue | Land use | Pasture",0.00234920309166666,-0.000823578281499998,0.00555574406266666,FALSE,0.00227996378216667,-0.000893133816933335,0.00551394821183333,FALSE,TRUE
+"A2d_colours_slopes","Blue | Land use | Plantation",0.000213510456666666,-0.00268775515775,0.0031965223725,FALSE,0.000127619154999995,-0.0027973253275,0.00310770548191667,FALSE,TRUE
+"A2d_colours_slopes","Blue | Land use | Secondary",0.00151061891666667,-0.00135443609683333,0.00432165295250001,FALSE,0.00139477749666666,-0.00143909663416667,0.00429355781,FALSE,TRUE
+"A2d_colours_slopes","Blue | Overall | All land uses and biomes",0.00192174975666667,-0.000835658269312502,0.00470429999941667,FALSE,0.001853866825,-0.000873939392825001,0.00469512438699166,FALSE,TRUE
+"A2d_colours_slopes","Brown | Biome | Temperate closed",-0.0043106694175,-0.0096127674750625,0.000957727139624992,FALSE,-0.00399231134875,-0.00920640951625,0.00123573068696,FALSE,TRUE
+"A2d_colours_slopes","Brown | Biome | Tropical closed",0.0005985563925,-0.00238592354674375,0.0036341893101875,FALSE,0.000211671547500001,-0.002971014223625,0.0034123429055,FALSE,TRUE
+"A2d_colours_slopes","Brown | Biome | Tropical open",0.0054786210875,0.000343521116812498,0.0105775616660625,TRUE,0.003795903725,-0.001749380065375,0.0093244270425,FALSE,FALSE
+"A2d_colours_slopes","Brown | Land use | Cropland",-0.00112027883333334,-0.00455164202675,0.00228825094424999,FALSE,-0.0016563009,-0.005184988567,0.0019505823275,FALSE,TRUE
+"A2d_colours_slopes","Brown | Land use | Pasture",-0.00106472405,-0.00493347439191667,0.00273876451383333,FALSE,-0.00162647684833333,-0.00555532770041667,0.00235813507083333,FALSE,TRUE
+"A2d_colours_slopes","Brown | Land use | Plantation",0.00188249605666667,-0.00151623006191667,0.00537919434258333,FALSE,0.00117023027833334,-0.00234523934791666,0.0048417288285,FALSE,TRUE
+"A2d_colours_slopes","Brown | Land use | Secondary",0.002664922845,-0.000651894264166657,0.0060516149825,FALSE,0.00211678015166666,-0.00132989095616667,0.00570121965399999,FALSE,TRUE
+"A2d_colours_slopes","Brown | Overall | All land uses and biomes",0.000603132009458338,-0.002738513543,0.0039500491228125,FALSE,-5.91310000000066e-06,-0.0033811814135625,0.00352436276458333,FALSE,TRUE
+"A2d_colours_slopes","Green | Biome | Temperate closed",-0.17681651645125,-0.366548116268187,0.0204339140179998,FALSE,-0.21395413694125,-0.423629132720931,-0.00665637876493759,TRUE,FALSE
+"A2d_colours_slopes","Green | Biome | Tropical closed",-0.00198928757125,-0.0055886149599375,0.00175982691060625,FALSE,-0.0020367022375,-0.0056398679339375,0.001684798098775,FALSE,TRUE
+"A2d_colours_slopes","Green | Biome | Tropical open",0.0297082173375,0.021522040973625,0.0379734147131875,TRUE,0.02572052684625,0.017619832489375,0.0341153776470569,TRUE,TRUE
+"A2d_colours_slopes","Green | Land use | Cropland",-0.0494665728733333,-0.112925003603917,0.0167350651005833,FALSE,-0.0631367889833333,-0.133746739561833,0.00675402430475,FALSE,TRUE
+"A2d_colours_slopes","Green | Land use | Pasture",-0.0488347375533333,-0.112581920500083,0.0174212151741666,FALSE,-0.0624601368183333,-0.133509609052083,0.00720469061783333,FALSE,TRUE
+"A2d_colours_slopes","Green | Land use | Plantation",-0.0496195827818333,-0.113213611128333,0.0166849327165833,FALSE,-0.0634282977753333,-0.134104397470667,0.00659189179916665,FALSE,TRUE
+"A2d_colours_slopes","Green | Land use | Secondary",-0.0504661275666667,-0.1140877507625,0.0157881951548333,FALSE,-0.0641346842833333,-0.13448390059475,0.0055745776875,FALSE,TRUE
+"A2d_colours_slopes","Green | Overall | All land uses and biomes",-0.04953863506375,-0.113187182704646,0.0167766121296458,FALSE,-0.06327898354375,-0.134015610315521,0.00666548405892081,FALSE,TRUE
+"A2d_colours_slopes","Grey | Biome | Temperate closed",0.002847244575,-0.0011889317971875,0.00709816132858125,FALSE,0.00312709791875,-0.0010754193320625,0.0073498662775,FALSE,TRUE
+"A2d_colours_slopes","Grey | Biome | Tropical closed",-0.00326770362625,-0.005815325524375,-0.000627489121562502,TRUE,-0.0032789682325,-0.00592673036955,-0.0006495924663125,TRUE,TRUE
+"A2d_colours_slopes","Grey | Biome | Tropical open",-0.001605173276125,-0.006575438668375,0.00328904752875,FALSE,-0.00125577166750001,-0.00662672353618751,0.0039879603700625,FALSE,TRUE
+"A2d_colours_slopes","Grey | Land use | Cropland",0.000418845366666667,-0.00242029934066668,0.00339850202516667,FALSE,0.00062460565,-0.00235816710416667,0.0036534597575,FALSE,TRUE
+"A2d_colours_slopes","Grey | Land use | Pasture",-0.0013366319815,-0.0045773114835,0.00189782336166667,FALSE,-0.00122404998833333,-0.004605161949,0.00208841027816667,FALSE,TRUE
+"A2d_colours_slopes","Grey | Land use | Plantation",-0.000392586284999998,-0.00325744631619167,0.00252128786225,FALSE,-5.97878633333329e-05,-0.00304721275199167,0.00299883294166666,FALSE,TRUE
+"A2d_colours_slopes","Grey | Land use | Secondary",-0.00142517593333333,-0.00416992161083333,0.0014501552475,FALSE,-0.00124300106666667,-0.00421772270758333,0.00172073634583333,FALSE,TRUE
+"A2d_colours_slopes","Grey | Overall | All land uses and biomes",-0.000699706813333334,-0.00339425412313542,0.0021103069779375,FALSE,-0.000461571416666663,-0.0034004656769375,0.00244564119467916,FALSE,TRUE
+"A2d_colours_slopes","Purple | Biome | Temperate closed",-0.00196187226125,-0.010554245993125,0.00661100020699999,FALSE,-0.0017274293225,-0.0106695089063313,0.0072401169405625,FALSE,TRUE
+"A2d_colours_slopes","Purple | Biome | Tropical closed",0.00162349138,-0.00292894278875,0.00645822878099999,FALSE,0.000890264157499998,-0.0041316202539375,0.00624480455925,FALSE,TRUE
+"A2d_colours_slopes","Purple | Biome | Tropical open",0.00036037121875,-0.004423553820125,0.0052557389154125,FALSE,-0.000263943782499999,-0.0055435622405,0.0050879716645,FALSE,TRUE
+"A2d_colours_slopes","Purple | Land use | Cropland",0.00207400744833333,-0.00260381085383333,0.0068778669586,FALSE,0.00155231546666667,-0.00338493111083333,0.00635476787416666,FALSE,TRUE
+"A2d_colours_slopes","Purple | Land use | Pasture",-0.000140078853333336,-0.00736701038141667,0.00729576245908333,FALSE,2.01593966666667e-05,-0.0077047561925,0.00772955544716666,FALSE,TRUE
+"A2d_colours_slopes","Purple | Land use | Plantation",-0.00165774033333333,-0.00600347036383333,0.00269264819749167,FALSE,-0.00212606726333333,-0.00657134682155833,0.00242847097516666,FALSE,TRUE
+"A2d_colours_slopes","Purple | Land use | Secondary",-0.000271072216666666,-0.00453341960758333,0.00401654043933333,FALSE,-0.000742527583333334,-0.00519809726508333,0.00373728497916667,FALSE,TRUE
+"A2d_colours_slopes","Purple | Overall | All land uses and biomes",1.60137120833347e-05,-0.004276968891375,0.00442651529891667,FALSE,-0.000348612876666665,-0.005002344034875,0.00423811968070832,FALSE,TRUE
+"A2d_colours_slopes","Red | Biome | Temperate closed",0.001574373055,-0.0025589388056875,0.005784765598,FALSE,0.001663529312,-0.0023308976326875,0.00574597246775,FALSE,TRUE
+"A2d_colours_slopes","Red | Biome | Tropical closed",0.0023158385725,-0.001137890334625,0.0058289315863125,FALSE,0.002356345765,-0.00142398216349999,0.0059642113031625,FALSE,TRUE
+"A2d_colours_slopes","Red | Biome | Tropical open",-0.00688200898125,-0.014905358414,0.0012885520791375,FALSE,-0.010331887855,-0.0187548767811906,-0.0018060833805625,TRUE,FALSE
+"A2d_colours_slopes","Red | Land use | Cropland",-0.00132879236333333,-0.00499449448086667,0.0023127688845,FALSE,-0.00244026408233334,-0.00626533354033333,0.00131099531283333,FALSE,TRUE
+"A2d_colours_slopes","Red | Land use | Pasture",-0.000349065783333333,-0.004345294416,0.00362454982333333,FALSE,-0.001519582895,-0.00562894147564167,0.00264843288366667,FALSE,TRUE
+"A2d_colours_slopes","Red | Land use | Plantation",-0.000342899983333334,-0.00394587573625,0.00335102081625,FALSE,-0.00152012904333334,-0.00535469780833333,0.00226404799383334,FALSE,TRUE
+"A2d_colours_slopes","Red | Land use | Secondary",-0.00188622718166667,-0.00540264288991667,0.00175666636833333,FALSE,-0.00299734991,-0.00669628995175,0.000687499795583334,FALSE,TRUE
+"A2d_colours_slopes","Red | Overall | All land uses and biomes",-0.000995432045416669,-0.004519057173875,0.00257395514117083,FALSE,-0.00209273690475,-0.0058227856095,0.00155810177587501,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Biome | Temperate closed",0.00054989016625,-0.0045296013103125,0.005679867457,FALSE,0.001174678865,-0.0043895356772775,0.0066738351691875,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Biome | Tropical closed",0.000134601615,-0.0027810748850375,0.0030246654405,FALSE,9.73636162499986e-05,-0.0028673752633125,0.003133679728375,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Biome | Tropical open",-0.00628046977,-0.0103800791177969,-0.002247583342,TRUE,-0.00734618968525,-0.0115254375080625,-0.003121689017,TRUE,TRUE
+"A2d_colours_slopes","Rufous | Land use | Cropland",-0.00175494021666666,-0.0047365044005,0.00127738625999167,FALSE,-0.00184183248683333,-0.00497999661995833,0.00136254565941666,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Land use | Pasture",-0.00163952753166666,-0.00533612839608333,0.00200385157658332,FALSE,-0.001886566735,-0.005723062671425,0.001847402049,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Land use | Plantation",-0.00287694555166667,-0.005845723923,9.54808266166658e-05,FALSE,-0.00307906838666667,-0.00630455671508333,0.000123386811166663,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Land use | Secondary",-0.00113440860166667,-0.003961409811,0.00172329729416666,FALSE,-0.00132970676666667,-0.00440021729625,0.00178745083083333,FALSE,TRUE
+"A2d_colours_slopes","Rufous | Overall | All land uses and biomes",-0.0018598111675,-0.00473059750600625,0.001072195465875,FALSE,-0.00202193234125,-0.00511926445579167,0.00106577017413333,FALSE,TRUE
+"A2d_colours_slopes","White | Biome | Temperate closed",0.00240684716375,-0.00221020458275,0.00718256562881249,FALSE,0.000689572028749997,-0.00392252195631251,0.0054316130535,FALSE,TRUE
+"A2d_colours_slopes","White | Biome | Tropical closed",0.001848938601375,-0.000924295977000004,0.0046319973618125,FALSE,7.87552737499982e-05,-0.0028267393708875,0.003008049945875,FALSE,TRUE
+"A2d_colours_slopes","White | Biome | Tropical open",0.0019669739425,-0.0022898527766875,0.0062227409665625,FALSE,0.00283547193874999,-0.00172224934251249,0.0074879746275,FALSE,TRUE
+"A2d_colours_slopes","White | Land use | Cropland",0.00356404736733333,0.000637344383583332,0.00653982377231666,TRUE,0.00268379891666667,-0.000293658704250003,0.00575497451058333,FALSE,FALSE
+"A2d_colours_slopes","White | Land use | Pasture",0.00301368958666666,-0.000132648744366669,0.00631623523358333,FALSE,0.00227767695666666,-0.00102307482283332,0.00567021837966666,FALSE,TRUE
+"A2d_colours_slopes","White | Land use | Plantation",0.000688174918333335,-0.00224093100316666,0.0036599439435,FALSE,-0.000206873786666666,-0.00320219220391666,0.00284777091566666,FALSE,TRUE
+"A2d_colours_slopes","White | Land use | Secondary",0.00102144951766667,-0.00180264763491666,0.00387934580858333,FALSE,0.000102069733333337,-0.00283545448558333,0.00308643036408333,FALSE,TRUE
+"A2d_colours_slopes","White | Overall | All land uses and biomes",0.00207459387858333,-0.000705688017979167,0.00489152230799999,FALSE,0.00122309688958333,-0.00161868726797916,0.00411215225472916,FALSE,TRUE
+"A2d_colours_slopes","Yellow | Biome | Temperate closed",0.00144832183375,-0.0040179136663125,0.007089463478875,FALSE,0.00268451918,-0.002858630562575,0.007992061821,FALSE,TRUE
+"A2d_colours_slopes","Yellow | Biome | Tropical closed",0.00058711035625,-0.002337123828875,0.00360025750589375,FALSE,0.00266197368875,-0.000402757308499999,0.005623608114125,FALSE,TRUE
+"A2d_colours_slopes","Yellow | Biome | Tropical open",0.004896626555,0.00089613720293751,0.00883484185975,TRUE,0.00798261755125,0.00385841306706875,0.012272366187375,TRUE,TRUE
+"A2d_colours_slopes","Yellow | Land use | Cropland",0.000848084038833332,-0.0022087605265,0.00384659875058333,FALSE,0.00299987316,-0.000115303825499998,0.0061517367165,FALSE,TRUE
+"A2d_colours_slopes","Yellow | Land use | Pasture",0.002741951125,-0.000556125771999998,0.00607067341333333,FALSE,0.00485835212666667,0.00151472287808333,0.00823239412416667,TRUE,FALSE
+"A2d_colours_slopes","Yellow | Land use | Plantation",0.00381164670666667,0.000817764122333331,0.00682905987358333,TRUE,0.00594819236666667,0.00287240284458333,0.00898709640916667,TRUE,TRUE
+"A2d_colours_slopes","Yellow | Land use | Secondary",0.00183234318,-0.00107772519916667,0.00481783712691667,FALSE,0.00400352155,0.000949833120083332,0.007027323075,TRUE,FALSE
+"A2d_colours_slopes","Yellow | Overall | All land uses and biomes",0.00228957424125,-0.000595039993499994,0.00519502454663958,FALSE,0.00445492588291667,0.00147549452580208,0.00741853396458333,TRUE,FALSE
+"A4_colour_landuse_slopes","phylogenetic | black | Cropland",0.0920792149252234,-0.294736524867795,0.462990425754359,FALSE,0.158172717589017,-0.267159764709948,0.567605331890356,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | black | Pasture",0.274230197365369,-0.0202705961370085,0.556654527782613,FALSE,0.242242115402197,-0.0765025821642488,0.543099067554004,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | black | Plantation",0.204477401556796,-0.149188174260658,0.537773452056772,FALSE,0.290001500408349,-0.102311280204342,0.677303571417739,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | black | Secondary",-0.140205824495752,-0.518285313631675,0.233337999795998,FALSE,-0.140495018786013,-0.566305920100782,0.283181372873877,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | blue | Cropland",0.225670620557192,-0.0967387207742797,0.545153882711846,FALSE,0.251925038681625,-0.0998778829275053,0.611740437385448,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | blue | Pasture",-0.231012541305325,-0.482927391573601,0.0103542213236968,FALSE,-0.326262326342458,-0.606192241406339,-0.0429582782257476,TRUE,FALSE
+"A4_colour_landuse_slopes","phylogenetic | blue | Plantation",-0.00209296466538069,-0.281979481850626,0.308653919963841,FALSE,0.0708744317641092,-0.262437098199186,0.421330533116294,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | blue | Secondary",-0.104609234713426,-0.416166802240832,0.18846168493863,FALSE,-0.159888175882465,-0.532495756636305,0.207463831136595,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | brown | Cropland",-0.239394621894205,-0.574912466913364,0.115805966687771,FALSE,-0.336550362095814,-0.681878367125541,0.0261298633326603,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | brown | Pasture",-0.275131113141009,-0.530377783515132,-0.00876031470785601,TRUE,-0.270964416347702,-0.536722845971349,0.00919999515107792,FALSE,FALSE
+"A4_colour_landuse_slopes","phylogenetic | brown | Plantation",-0.097494766939914,-0.411377808170501,0.216156167486925,FALSE,-0.188733023231667,-0.524936256803073,0.154965803799634,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | brown | Secondary",0.260854953013032,-0.0780549235171451,0.592162981602984,FALSE,0.215079001947869,-0.153633057745931,0.578735559231439,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | green | Cropland",-0.0622262328547707,-0.404711334934401,0.286706216793456,FALSE,0.00351011856666566,-0.37324555760237,0.384438674145421,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | green | Pasture",-0.273522785307994,-0.547993972672934,-0.0137889406706906,TRUE,-0.296998424530246,-0.57938482882701,-0.0108462879393762,TRUE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | green | Plantation",-0.154604317885046,-0.478083566196699,0.161146369024538,FALSE,-0.230270242761119,-0.572928186016249,0.123025822218511,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | green | Secondary",0.073817452873665,-0.262774772710959,0.405153410094127,FALSE,0.0872531712923405,-0.301823113998966,0.471343757496216,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | red | Cropland",-0.0780747174012298,-0.536209191677245,0.387348427134495,FALSE,-0.140706116015102,-0.579597275991082,0.313247584478626,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | red | Pasture",-0.122448457959672,-0.474342323647555,0.224576588740804,FALSE,-0.134800707033654,-0.478818790182947,0.211467010385817,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | red | Plantation",0.00954168328490021,-0.407745478460906,0.435261710039827,FALSE,0.163227961849286,-0.26122310899105,0.588065089087777,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | red | Secondary",-0.0506243057287227,-0.48986902687711,0.39949855311026,FALSE,-0.065459863755262,-0.534735821046094,0.390355116306207,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | rufous | Cropland",-0.0152992605525565,-0.41625121490902,0.373357361752918,FALSE,-0.0932361265359884,-0.482608593805602,0.284976532983853,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | rufous | Pasture",-0.225978453229821,-0.530973237043659,0.0781123408174646,FALSE,-0.23133753886258,-0.524923766148634,0.0773063053394054,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | rufous | Plantation",-0.0228729136893901,-0.38515943688738,0.345918386544663,FALSE,0.0962688471407421,-0.27182834956241,0.471118205553628,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | rufous | Secondary",0.0694370900583104,-0.31724836642402,0.455601235902509,FALSE,0.0188434306389224,-0.387571546575366,0.417108875742148,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | white | Cropland",0.16185734932524,-0.216745159624336,0.527302590978875,FALSE,0.148299607183553,-0.252218307356426,0.546938903765517,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | white | Pasture",0.27702355318289,-0.022359625207062,0.574332428013409,FALSE,0.390676539335191,0.0906396088200716,0.693347170196649,TRUE,FALSE
+"A4_colour_landuse_slopes","phylogenetic | white | Plantation",0.0960838234533994,-0.258619479432967,0.451325666514244,FALSE,0.0671165919476689,-0.322238515815766,0.449843280200889,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | white | Secondary",0.0595199805231224,-0.311672231011711,0.430844373597613,FALSE,0.0977289168878893,-0.324455744341089,0.504249426222834,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | yellow | Cropland",-0.242689702706282,-0.586971764150133,0.121347191060537,FALSE,-0.345009555737026,-0.681058896696398,0.0318998401709366,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | yellow | Pasture",-0.172948218029357,-0.44919927409406,0.102187810625618,FALSE,-0.146793095768143,-0.414377151639804,0.135923864416442,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | yellow | Plantation",-0.0112817582434833,-0.349440337245795,0.315439076669649,FALSE,-0.00999862611054046,-0.353611221169857,0.336645603518348,FALSE,TRUE
+"A4_colour_landuse_slopes","phylogenetic | yellow | Secondary",0.33575370603079,-0.0188769522994209,0.672715106445399,FALSE,0.336305000395869,-0.0316798263766984,0.705374372801181,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | black | Cropland",-0.0392140870531571,-0.0931045781723674,0.0166513326208838,FALSE,-0.0558793450977916,-0.110092750765007,-0.00145508479003852,TRUE,FALSE
+"A4_colour_landuse_slopes","residual | black | Pasture",-0.0144033866629551,-0.0750516667324102,0.0456259530042172,FALSE,-0.0046308902046151,-0.0635387808828679,0.0549466326602984,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | black | Plantation",-0.0242546512249128,-0.0864606060876711,0.035703295374354,FALSE,-0.0383325981385371,-0.0979261720652061,0.0222837295579839,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | black | Secondary",-0.0188758606369554,-0.0769354273685885,0.0392924523261781,FALSE,-0.0270268768818927,-0.0827627629051311,0.0295839437872023,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | blue | Cropland",-0.000524673208643379,-0.046347897159561,0.0446368118370016,FALSE,0.00108842544267458,-0.0477541251629528,0.0486019337762755,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | blue | Pasture",0.0557297288984589,0.00595200868771847,0.103550200951795,TRUE,0.0677048835214169,0.014093939873772,0.122568303862694,TRUE,TRUE
+"A4_colour_landuse_slopes","residual | blue | Plantation",-0.0165224613589329,-0.0670097448950609,0.031751286418014,FALSE,-0.0298028294998414,-0.0830492225723752,0.023855669768158,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | blue | Secondary",0.00347407661620764,-0.0427668042459654,0.0514005024423745,FALSE,0.011430766217032,-0.0373816177149237,0.0629030437265234,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | brown | Cropland",0.0724887439245471,0.0188355250556136,0.127461779084714,TRUE,0.0926116273906263,0.0406473819765436,0.145646147819244,TRUE,TRUE
+"A4_colour_landuse_slopes","residual | brown | Pasture",0.0237919425871088,-0.0354975308787902,0.0830068392843145,FALSE,0.0264493767262499,-0.0310181703819402,0.0840668558459737,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | brown | Plantation",-0.00753066864497097,-0.0685159588237977,0.0529375076323353,FALSE,0.014409971180451,-0.0446605472009704,0.071666724040283,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | brown | Secondary",-0.004848775200831,-0.0632963862922748,0.0531467446652366,FALSE,0.0128392658585077,-0.0422374504284061,0.0700326252476833,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | green | Cropland",0.020895463686614,-0.0282705877168435,0.0697455308811287,FALSE,0.0100987097598439,-0.035793307010901,0.0573734907749782,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | green | Pasture",0.028834642255538,-0.0231840389088196,0.0815071499560678,FALSE,0.021756785220634,-0.0295570004100726,0.0734602527420178,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | green | Plantation",0.0320662661941737,-0.0210039003464852,0.0860883352600877,FALSE,0.0330352745511573,-0.0167215265658545,0.0853132302034823,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | green | Secondary",0.0136051980292688,-0.0389640477461434,0.066531221725899,FALSE,0.0147712552352066,-0.0356147342965926,0.0631132932919448,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | red | Cropland",-0.00610699156008232,-0.0695014792055681,0.0546900687437188,FALSE,-0.00510034487511951,-0.0633231423435385,0.0547108113264347,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | red | Pasture",0.00369821064650748,-0.0622035523674693,0.0716147416098553,FALSE,0.01680980321895,-0.0481556644104132,0.084009436216879,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | red | Plantation",-0.0476005181355523,-0.115212424571061,0.0224664477769319,FALSE,-0.0721914086646372,-0.136683731761267,-0.00498825143926441,TRUE,FALSE
+"A4_colour_landuse_slopes","residual | red | Secondary",-0.00628022943828905,-0.0736817512188321,0.06039318477825,FALSE,-0.00899111244465724,-0.0722091970605766,0.0541919468050381,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | rufous | Cropland",-0.0207403178293892,-0.080291741447567,0.0378155922511608,FALSE,-0.00995145599420592,-0.0671239074317488,0.0485901821736208,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | rufous | Pasture",0.0609018515327289,-0.00573841354860594,0.125987877732843,FALSE,0.0717933635268158,0.00414958996346195,0.137231807925154,TRUE,FALSE
+"A4_colour_landuse_slopes","residual | rufous | Plantation",-0.0413333146008062,-0.107639849639626,0.0247842339553268,FALSE,-0.0569257795151239,-0.121723844118294,0.00661172506972129,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | rufous | Secondary",-0.0154935633041568,-0.0780719765416652,0.0492120240055668,FALSE,-0.00383290096851563,-0.0634632574294783,0.0590956670150717,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | white | Cropland",0.00780335492393779,-0.0546098949736679,0.0704121497863959,FALSE,0.0153637114219513,-0.0453424320232948,0.07536194422551,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | white | Pasture",0.0186915651739233,-0.0515627042579432,0.085051855080059,FALSE,-0.0110464310239158,-0.0788391215467684,0.0541030749064935,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | white | Plantation",0.0623288609148702,-0.00864956999434555,0.133442000614686,FALSE,0.0719525686270995,0.00320589153397848,0.138917804239629,TRUE,FALSE
+"A4_colour_landuse_slopes","residual | white | Secondary",0.0171884051373383,-0.0520493030062191,0.0857316891267483,FALSE,0.0145430039176324,-0.0497813428363488,0.0780966672248884,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | yellow | Cropland",0.0411272319558265,-0.0165848987525634,0.0997797903948434,FALSE,0.0593002402744522,0.00277487432711221,0.116539326424093,TRUE,FALSE
+"A4_colour_landuse_slopes","residual | yellow | Pasture",0.0221615709395569,-0.0423210380650147,0.0859000962733193,FALSE,0.0226368789640664,-0.0411539679235929,0.0866615112938734,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | yellow | Plantation",-0.00339629351557064,-0.0666225420959256,0.0609698112833371,FALSE,-0.000286409960387158,-0.0627408614252054,0.061969807493681,FALSE,TRUE
+"A4_colour_landuse_slopes","residual | yellow | Secondary",-0.0255785862636654,-0.0881503842482185,0.038014072830081,FALSE,-0.015939893340306,-0.0757944191549096,0.044492112165258,FALSE,TRUE
+"A4_colour_landuse_slopes","total | black | Cropland",0.0234467357356264,-0.0874765502367798,0.129305260344305,FALSE,0.0488987388560695,-0.0821911411099624,0.174755583025651,FALSE,TRUE
+"A4_colour_landuse_slopes","total | black | Pasture",0.11657598363411,0.00675932109375423,0.219539080559434,TRUE,0.113263597493849,-0.0124728212233495,0.234901145076502,FALSE,FALSE
+"A4_colour_landuse_slopes","total | black | Plantation",0.0530358547509773,-0.0579385440423407,0.166062576348131,FALSE,0.0901007569518292,-0.040993314883608,0.224610939510158,FALSE,TRUE
+"A4_colour_landuse_slopes","total | black | Secondary",-0.0378081829573054,-0.151921879342255,0.0776382560938655,FALSE,-0.0349815478162138,-0.167272548608132,0.0992866757450716,FALSE,TRUE
+"A4_colour_landuse_slopes","total | blue | Cropland",0.0614465516076814,-0.0279676727056782,0.153249238678352,FALSE,0.075346823750542,-0.0325171656186182,0.184844675781776,FALSE,TRUE
+"A4_colour_landuse_slopes","total | blue | Pasture",-0.0618741577117403,-0.151609321237193,0.0287705883983055,FALSE,-0.117709804165831,-0.224039360158567,-0.0070382019958341,TRUE,FALSE
+"A4_colour_landuse_slopes","total | blue | Plantation",0.00436790443358382,-0.0842319717112074,0.0984252428758504,FALSE,0.0313474409465884,-0.081478721876789,0.146097940084271,FALSE,TRUE
+"A4_colour_landuse_slopes","total | blue | Secondary",-0.026242109850811,-0.123489313665814,0.0665023952814194,FALSE,-0.0433996167650615,-0.160696776040106,0.0721838354792246,FALSE,TRUE
+"A4_colour_landuse_slopes","total | brown | Cropland",-0.0396305677735592,-0.136815326208725,0.0631274392711648,FALSE,-0.0839740049294935,-0.192599715662215,0.0323846732034546,FALSE,TRUE
+"A4_colour_landuse_slopes","total | brown | Pasture",-0.130424900148816,-0.225517040605206,-0.0317071869198135,TRUE,-0.138090409027184,-0.245407370534808,-0.0268894612699007,TRUE,TRUE
+"A4_colour_landuse_slopes","total | brown | Plantation",-0.0328515067880908,-0.135489728155493,0.0703256785637335,FALSE,-0.0701365757797193,-0.184893247445379,0.0479626703784625,FALSE,TRUE
+"A4_colour_landuse_slopes","total | brown | Secondary",0.0629204173798362,-0.0417042775310054,0.166434679148037,FALSE,0.0486060393178011,-0.069264164275296,0.166945120401828,FALSE,TRUE
+"A4_colour_landuse_slopes","total | green | Cropland",-0.0266265276574289,-0.124024178045839,0.0748085095294882,FALSE,-0.0199206995383791,-0.136834966121204,0.0964615565044828,FALSE,TRUE
+"A4_colour_landuse_slopes","total | green | Pasture",-0.105966347961623,-0.202772041484385,-0.00981191934579301,TRUE,-0.119436805110326,-0.229248518362809,-0.00733574484096935,TRUE,TRUE
+"A4_colour_landuse_slopes","total | green | Plantation",-0.0291243507283895,-0.130049287542674,0.0727066465155627,FALSE,-0.0570258500978364,-0.172795921812404,0.0624290869780129,FALSE,TRUE
+"A4_colour_landuse_slopes","total | green | Secondary",0.0161850088103964,-0.0862701948390569,0.116337192527227,FALSE,0.0187679631436517,-0.101271555348766,0.13823128482341,FALSE,TRUE
+"A4_colour_landuse_slopes","total | red | Cropland",-0.0339658733956536,-0.163641947520267,0.0956814037502651,FALSE,-0.0477698825181171,-0.185850153083989,0.0913309719670063,FALSE,TRUE
+"A4_colour_landuse_slopes","total | red | Pasture",-0.0607927054705883,-0.18566247157118,0.0649149906485983,FALSE,-0.0797382320633233,-0.214283710183184,0.0568916668191645,FALSE,TRUE
+"A4_colour_landuse_slopes","total | red | Plantation",-0.025091693016311,-0.156049249933171,0.107951030242177,FALSE,0.0198502570347439,-0.122433430797234,0.161318336974572,FALSE,TRUE
+"A4_colour_landuse_slopes","total | red | Secondary",-0.0237582437604295,-0.155238395192062,0.112392656150348,FALSE,-0.0284443095085505,-0.174076928308981,0.116584186228706,FALSE,TRUE
+"A4_colour_landuse_slopes","total | rufous | Cropland",-0.0267566065185708,-0.139202414908094,0.086895919410499,FALSE,-0.0459183248859446,-0.167712132443689,0.0734846949553814,FALSE,TRUE
+"A4_colour_landuse_slopes","total | rufous | Pasture",-0.0720101283024123,-0.182109720963053,0.0371981985858886,FALSE,-0.0937346608253871,-0.207383429946316,0.0271384065364788,FALSE,TRUE
+"A4_colour_landuse_slopes","total | rufous | Plantation",-0.0182875407724274,-0.136769834296366,0.0973733989996492,FALSE,0.0131011578196428,-0.110688078677716,0.135228371465411,FALSE,TRUE
+"A4_colour_landuse_slopes","total | rufous | Secondary",0.0105389760809804,-0.105528216478157,0.128966898119489,FALSE,-0.000801513115067408,-0.127160981671763,0.123758779975918,FALSE,TRUE
+"A4_colour_landuse_slopes","total | white | Cropland",0.0729902972747748,-0.0358810505206795,0.178357020748814,FALSE,0.0834962846469938,-0.0424151519911548,0.205416143832849,FALSE,TRUE
+"A4_colour_landuse_slopes","total | white | Pasture",0.145652139021999,0.0375569288698796,0.255634161612979,TRUE,0.199257535920277,0.0773185232604428,0.319128056346557,TRUE,TRUE
+"A4_colour_landuse_slopes","total | white | Plantation",0.0748269846297896,-0.0373729604948925,0.188486991960877,FALSE,0.0627954368229209,-0.064904229173518,0.193631439539736,FALSE,TRUE
+"A4_colour_landuse_slopes","total | white | Secondary",0.0446477369723832,-0.0670957228716591,0.158095344868136,FALSE,0.0590759339736963,-0.075169175996996,0.187845807873709,FALSE,TRUE
+"A4_colour_landuse_slopes","total | yellow | Cropland",-0.0504970790514909,-0.152937427890888,0.0560295974653508,FALSE,-0.0892677337543699,-0.199716503751747,0.0275878133759381,FALSE,TRUE
+"A4_colour_landuse_slopes","total | yellow | Pasture",-0.0854165309418243,-0.186535521792088,0.0161525991952184,FALSE,-0.0853573410948738,-0.197215423980082,0.030686514489559,FALSE,TRUE
+"A4_colour_landuse_slopes","total | yellow | Plantation",0.00585708901058983,-0.105151269147638,0.112218196665637,FALSE,-0.00501441630155342,-0.123767507312809,0.115456129221452,FALSE,TRUE
+"A4_colour_landuse_slopes","total | yellow | Secondary",0.0829359677626063,-0.0240337572901621,0.191659556147079,FALSE,0.0856896042190235,-0.0328062213030377,0.204816167714863,FALSE,TRUE
+"A4_correlations","phylogenetic | black | blue",0.107466363699483,0.017102640795726,0.199994570264743,TRUE,0.154575445510434,0.0411798287375399,0.264005298689193,TRUE,TRUE
+"A4_correlations","phylogenetic | black | brown",-0.520608814566786,-0.603173128038073,-0.428071254997581,TRUE,-0.527375921071119,-0.614739957038403,-0.431492813849894,TRUE,TRUE
+"A4_correlations","phylogenetic | black | Cropland",0.100485071697003,-0.0973346006630771,0.286972427011743,FALSE,0.13866964468316,-0.0680363045390652,0.330023505783837,FALSE,TRUE
+"A4_correlations","phylogenetic | black | green",-0.181714587260423,-0.271561847389763,-0.0859441677478859,TRUE,-0.194940568092971,-0.292009456298562,-0.0927399975740128,TRUE,TRUE
+"A4_correlations","phylogenetic | black | Pasture",0.17072715007563,0.00649471978750498,0.322179637955381,TRUE,0.14124369979008,-0.0330790063690913,0.304753833416984,FALSE,FALSE
+"A4_correlations","phylogenetic | black | Plantation",0.0824756236737449,-0.105171679003117,0.266722198007999,FALSE,0.130301977933341,-0.0677580201863874,0.32560471401209,FALSE,TRUE
+"A4_correlations","phylogenetic | black | red",0.216377773098274,0.103563208103435,0.325286633520761,TRUE,0.197802218761082,0.0737254931851894,0.319904442072069,TRUE,TRUE
+"A4_correlations","phylogenetic | black | rufous",-0.0452797482629551,-0.163959593592782,0.0769631597534718,FALSE,-0.0661151259590558,-0.196557502389973,0.0682780601753275,FALSE,TRUE
+"A4_correlations","phylogenetic | black | Secondary",-0.10610196307704,-0.302306676484936,0.0904986923137115,FALSE,-0.106448860175133,-0.311482315156879,0.110301332227951,FALSE,TRUE
+"A4_correlations","phylogenetic | black | white",-0.209045829032898,-0.325330642718384,-0.087784095567835,TRUE,-0.23102086141787,-0.350021210967171,-0.110392054728915,TRUE,TRUE
+"A4_correlations","phylogenetic | black | yellow",-0.411615614442764,-0.513041859636361,-0.307604566535928,TRUE,-0.403813804320337,-0.512115960081228,-0.285300446125317,TRUE,TRUE
+"A4_correlations","phylogenetic | blue | Cropland",0.0960824376370422,-0.0697324026449876,0.259393840820715,FALSE,0.0975613914037944,-0.0816152027058003,0.272896415922,FALSE,TRUE
+"A4_correlations","phylogenetic | blue | Pasture",-0.116261546574282,-0.260898767415646,0.0266077111360672,FALSE,-0.184300640832492,-0.335655994580184,-0.024126905622329,TRUE,FALSE
+"A4_correlations","phylogenetic | blue | Plantation",0.0421324322293697,-0.112732355598056,0.209341838482632,FALSE,0.107383251237381,-0.0745268420196442,0.28804754179433,FALSE,TRUE
+"A4_correlations","phylogenetic | blue | Secondary",-0.0486963385362481,-0.218525503244,0.115285510463039,FALSE,-0.0836918640315692,-0.274441234445176,0.108369885470307,FALSE,TRUE
+"A4_correlations","phylogenetic | brown | blue",-0.351578024338907,-0.437748243721238,-0.258995804371051,TRUE,-0.424956220569489,-0.519264202474453,-0.319379351916452,TRUE,TRUE
+"A4_correlations","phylogenetic | brown | Cropland",-0.197322066439577,-0.377318469601335,0.00215959302247944,FALSE,-0.260120626524489,-0.436640863255756,-0.0621262635387005,TRUE,FALSE
+"A4_correlations","phylogenetic | brown | green",0.217175484978753,0.118328542181893,0.309328918999035,TRUE,0.202853448057622,0.0950755634897395,0.304216533592539,TRUE,TRUE
+"A4_correlations","phylogenetic | brown | Pasture",-0.228968611867949,-0.379991240180673,-0.0689193665344308,TRUE,-0.220238375243849,-0.372959508316986,-0.0464271933555369,TRUE,TRUE
+"A4_correlations","phylogenetic | brown | Plantation",-0.0296616414699994,-0.220208176204938,0.158406047648479,FALSE,-0.0884750258856142,-0.277199787833612,0.109449739363973,FALSE,TRUE
+"A4_correlations","phylogenetic | brown | red",-0.0694393255873225,-0.183997286396726,0.0511389109156615,FALSE,-0.0648164590773299,-0.189555725852914,0.0638672466984454,FALSE,TRUE
+"A4_correlations","phylogenetic | brown | rufous",0.267702590780445,0.146702983699625,0.383014021478807,TRUE,0.281042654335106,0.146987721906875,0.400543548999104,TRUE,TRUE
+"A4_correlations","phylogenetic | brown | Secondary",0.189060983889509,-0.0136527671305632,0.373943039090216,FALSE,0.170414266621022,-0.0386804994296456,0.36517746752745,FALSE,TRUE
+"A4_correlations","phylogenetic | brown | yellow",0.760407754909152,0.700794734472569,0.80900352985155,TRUE,0.752477579373449,0.684738351308239,0.805243765116969,TRUE,TRUE
+"A4_correlations","phylogenetic | Cropland | Pasture",0.236865911759171,0.0337341866811011,0.419465505003487,TRUE,0.246839519310373,0.0409405799362748,0.427861437435404,TRUE,TRUE
+"A4_correlations","phylogenetic | green | blue",0.0650297054758379,-0.0176633769131373,0.148708492394342,FALSE,0.111225420597009,0.0148814144973467,0.210253975388105,TRUE,FALSE
+"A4_correlations","phylogenetic | green | Cropland",-0.0807837632983092,-0.246826766165686,0.0951935214114688,FALSE,-0.0581677990420545,-0.237317398187201,0.123087182781351,FALSE,TRUE
+"A4_correlations","phylogenetic | green | Pasture",-0.165483024650321,-0.311155406537004,-0.0212617351422968,TRUE,-0.155597827813543,-0.306517862298018,-0.00429376115265955,TRUE,TRUE
+"A4_correlations","phylogenetic | green | Plantation",-0.0508867860006944,-0.214146549874083,0.11711575667576,FALSE,-0.0821620411930803,-0.25038985022653,0.0926145839847392,FALSE,TRUE
+"A4_correlations","phylogenetic | green | Secondary",0.0694149571729327,-0.11094088752679,0.238806183525368,FALSE,0.0707508910860355,-0.118600374583218,0.253069913552715,FALSE,TRUE
+"A4_correlations","phylogenetic | Plantation | Cropland",0.046721181630544,-0.173430533167332,0.264471018454004,FALSE,0.0717713293331057,-0.154342655891576,0.291699247313933,FALSE,TRUE
+"A4_correlations","phylogenetic | Plantation | Pasture",-0.234145735888895,-0.424291301160464,-0.023663600613125,TRUE,-0.245910339435674,-0.439459991727972,-0.0333414194714062,TRUE,TRUE
+"A4_correlations","phylogenetic | red | blue",-0.00482337686077662,-0.10309488988389,0.0920935745074499,FALSE,0.0236850959289072,-0.0929623321804423,0.138189742220637,FALSE,TRUE
+"A4_correlations","phylogenetic | red | Cropland",-0.0507456985534502,-0.25305889704712,0.155737090673997,FALSE,-0.077786937093002,-0.28051929692463,0.131901588201776,FALSE,TRUE
+"A4_correlations","phylogenetic | red | green",-0.085204556901043,-0.179406597012508,0.0145725900460025,FALSE,-0.0930878635393981,-0.201300645101027,0.0142855032421505,FALSE,TRUE
+"A4_correlations","phylogenetic | red | Pasture",-0.0758669402700273,-0.252523877296582,0.0999932099771203,FALSE,-0.114827964538532,-0.290458997307721,0.0672726206475925,FALSE,TRUE
+"A4_correlations","phylogenetic | red | Plantation",0.0212563338060255,-0.18135367118861,0.221021258845409,FALSE,0.103338356568555,-0.103866854062782,0.302738428866314,FALSE,TRUE
+"A4_correlations","phylogenetic | red | Secondary",-0.0128047026825039,-0.222691754012047,0.203669781493966,FALSE,-0.0219496463774069,-0.241529175467059,0.198869110981881,FALSE,TRUE
+"A4_correlations","phylogenetic | rufous | blue",-0.0938608044950558,-0.196303885062082,0.00529909003083968,FALSE,-0.0885802665867998,-0.212662712958789,0.0304028544177692,FALSE,TRUE
+"A4_correlations","phylogenetic | rufous | Cropland",-0.046966593389237,-0.249557344927549,0.160971154754021,FALSE,-0.0903329370247574,-0.292361816410292,0.117048949767462,FALSE,TRUE
+"A4_correlations","phylogenetic | rufous | green",-0.114969696895036,-0.220531463757339,-0.0102506574770333,TRUE,-0.114497781502192,-0.2301243983949,8.61722143892085e-05,FALSE,FALSE
+"A4_correlations","phylogenetic | rufous | Pasture",-0.153649037054836,-0.32354916756617,0.0258980122053486,FALSE,-0.189223316380573,-0.356816385642598,-0.00611185025437615,TRUE,FALSE
+"A4_correlations","phylogenetic | rufous | Plantation",0.0179600575515636,-0.184751654056939,0.222254771683496,FALSE,0.0926090136554068,-0.115039481959284,0.295507184987767,FALSE,TRUE
+"A4_correlations","phylogenetic | rufous | red",0.689613243038177,0.611839903362849,0.752799816599502,TRUE,0.670109991045904,0.580650762752803,0.739955706469777,TRUE,TRUE
+"A4_correlations","phylogenetic | rufous | Secondary",0.05791132688597,-0.149939871822135,0.266921035191577,FALSE,0.0273004422577177,-0.193399556075616,0.246193691036786,FALSE,TRUE
+"A4_correlations","phylogenetic | rufous | yellow",0.081263022154408,-0.0479406695752833,0.212975094891248,FALSE,0.126836861656412,-0.0186930763685918,0.266634490040862,FALSE,TRUE
+"A4_correlations","phylogenetic | Secondary | Cropland",-0.0879073985607182,-0.30944194226919,0.142154964014067,FALSE,-0.132412161949472,-0.34584866552627,0.097965170129912,FALSE,TRUE
+"A4_correlations","phylogenetic | Secondary | Pasture",-0.135641545249807,-0.338907126940596,0.0855924206181825,FALSE,-0.0987915257117876,-0.310108480956517,0.127675728693209,FALSE,TRUE
+"A4_correlations","phylogenetic | Secondary | Plantation",-0.0423704113547258,-0.270582686375369,0.184298429307474,FALSE,-0.0712547887711503,-0.29846923032941,0.159538306828025,FALSE,TRUE
+"A4_correlations","phylogenetic | white | blue",-0.126365339323372,-0.232781394258881,-0.020298846952908,TRUE,-0.143307855414895,-0.263446665275759,-0.0240835548089934,TRUE,TRUE
+"A4_correlations","phylogenetic | white | brown",-0.115036376262032,-0.242175077846341,0.0143789428361361,FALSE,-0.112999538332624,-0.239621126654988,0.0233847204849686,FALSE,TRUE
+"A4_correlations","phylogenetic | white | Cropland",0.133070211689227,-0.0729903109654284,0.326518798699056,FALSE,0.139184879802415,-0.0709831072281017,0.333360998081901,FALSE,TRUE
+"A4_correlations","phylogenetic | white | green",-0.151448006106201,-0.257509564764693,-0.0429261785277889,TRUE,-0.162304918138791,-0.273227632766669,-0.052708224909108,TRUE,TRUE
+"A4_correlations","phylogenetic | white | Pasture",0.189227172956131,0.0110815795846525,0.360445241017082,TRUE,0.262265462147029,0.0898228856645622,0.42483944328425,TRUE,TRUE
+"A4_correlations","phylogenetic | white | Plantation",0.0195528872194016,-0.182651332613434,0.218226068195593,FALSE,-0.0236881949302171,-0.22559665234646,0.182839967976179,FALSE,TRUE
+"A4_correlations","phylogenetic | white | red",-0.28656053307788,-0.405488952980686,-0.162783176326783,TRUE,-0.224115121789749,-0.349060454670085,-0.096418936420504,TRUE,TRUE
+"A4_correlations","phylogenetic | white | rufous",-0.218507842997644,-0.348621866899983,-0.0866927262712314,TRUE,-0.140751605394041,-0.276495973565452,0.000498744421546142,FALSE,FALSE
+"A4_correlations","phylogenetic | white | Secondary",-0.00197846207741542,-0.207388303887235,0.209303767502012,FALSE,0.0126950956302404,-0.210830536295144,0.228444496875594,FALSE,TRUE
+"A4_correlations","phylogenetic | white | yellow",0.0540410339371307,-0.0809173187121273,0.187854772365747,FALSE,0.0502405459135842,-0.0882595994399815,0.193920906517969,FALSE,TRUE
+"A4_correlations","phylogenetic | yellow | blue",-0.232532511181942,-0.326898911125088,-0.131568260124809,TRUE,-0.298411471077741,-0.408395923444784,-0.180283169101114,TRUE,TRUE
+"A4_correlations","phylogenetic | yellow | Cropland",-0.180846533426538,-0.365634333660797,0.0204103963361872,FALSE,-0.248471284087798,-0.42730568294781,-0.0450309291866684,TRUE,FALSE
+"A4_correlations","phylogenetic | yellow | green",0.29251819923071,0.192703773158676,0.386735352649893,TRUE,0.296405973367272,0.185933355134985,0.402393783112033,TRUE,TRUE
+"A4_correlations","phylogenetic | yellow | Pasture",-0.172792194819405,-0.330258829946951,-0.00403651734976801,TRUE,-0.169264897036478,-0.333675702626296,0.00725195954659396,FALSE,FALSE
+"A4_correlations","phylogenetic | yellow | Plantation",0.00436218201564548,-0.190900817479033,0.196083944228181,FALSE,-0.00918412239715607,-0.207598620724622,0.197845305666926,FALSE,TRUE
+"A4_correlations","phylogenetic | yellow | red",-0.141295608687701,-0.256170279336686,-0.01849486354239,TRUE,-0.0987756515498479,-0.236005322840085,0.038919987287011,FALSE,FALSE
+"A4_correlations","phylogenetic | yellow | Secondary",0.217665051798562,0.0141606445751581,0.398338503651043,TRUE,0.223370127862345,0.00929891491539028,0.419084740138546,TRUE,TRUE
+"A4_correlations","residual | black | blue",-0.0163554367961356,-0.138405173360048,0.110160268997861,FALSE,-0.0740517452793351,-0.18822057826279,0.0400141807754378,FALSE,TRUE
+"A4_correlations","residual | black | brown",-0.219974956503165,-0.337332172924302,-0.0982363146212467,TRUE,-0.268354447947533,-0.371330325134355,-0.159444520992905,TRUE,TRUE
+"A4_correlations","residual | black | Cropland",-0.0626966998231766,-0.161564310234717,0.0390352720894902,FALSE,-0.0840702150019222,-0.175961826406054,0.0102454737905934,FALSE,TRUE
+"A4_correlations","residual | black | green",-0.161904329624768,-0.281604050331463,-0.0359218827591123,TRUE,-0.153552525592474,-0.271709433767438,-0.0328351201588507,TRUE,TRUE
+"A4_correlations","residual | black | Pasture",-0.020796867486771,-0.125060868781191,0.0817551903792778,FALSE,-0.00153322174833978,-0.0969391097421335,0.0936504840872456,FALSE,TRUE
+"A4_correlations","residual | black | Plantation",-0.0286269078548734,-0.13603003393685,0.0748034315153761,FALSE,-0.0457739013237301,-0.143163220882299,0.0535290069048398,FALSE,TRUE
+"A4_correlations","residual | black | red",-0.0589936861668184,-0.198095939895335,0.0823697679155693,FALSE,0.0191759966480177,-0.106972167974305,0.137203048907069,FALSE,TRUE
+"A4_correlations","residual | black | rufous",-0.0505728001201733,-0.177688335979054,0.077499414698301,FALSE,-0.0393384365205446,-0.155839040942261,0.0750714266176463,FALSE,TRUE
+"A4_correlations","residual | black | Secondary",-0.00400109704474657,-0.10609983253523,0.0950978982266142,FALSE,-0.0104798323680449,-0.104969731561101,0.0843706928954619,FALSE,TRUE
+"A4_correlations","residual | black | white",-0.110724532453387,-0.225100165527935,0.0138716951775738,FALSE,-0.11401496720036,-0.220414495488098,0.00208390012482259,FALSE,TRUE
+"A4_correlations","residual | black | yellow",-0.144720301078138,-0.261988114992094,-0.0193948085823056,TRUE,-0.190775031912969,-0.298970088199267,-0.0777536098001068,TRUE,TRUE
+"A4_correlations","residual | blue | Cropland",0.00515513037315186,-0.100160612111768,0.11008141563675,FALSE,0.00799462550077871,-0.0847069204553533,0.0967848745826392,FALSE,TRUE
+"A4_correlations","residual | blue | Pasture",0.123599381788732,0.0176051347448465,0.227126287646238,TRUE,0.118349659530668,0.0230728408336353,0.212314666794347,TRUE,TRUE
+"A4_correlations","residual | blue | Plantation",-0.045466968152141,-0.157309080886918,0.0626790662173827,FALSE,-0.0669881439694589,-0.159735937604515,0.0268236211734319,FALSE,TRUE
+"A4_correlations","residual | blue | Secondary",-4.91602778625359e-05,-0.105208686054419,0.107870839345168,FALSE,0.0170805750566273,-0.0718677259569107,0.111603742516766,FALSE,TRUE
+"A4_correlations","residual | brown | blue",-0.0691514941279559,-0.190543887648737,0.0542108623976812,FALSE,-0.0201234678195552,-0.129450457937713,0.0925324275235276,FALSE,TRUE
+"A4_correlations","residual | brown | Cropland",0.137061598116106,0.0434081142791384,0.228896953784702,TRUE,0.153846755881366,0.0670617594927449,0.238061650557568,TRUE,TRUE
+"A4_correlations","residual | brown | green",0.14953096678285,0.0220172117703492,0.269255999092075,TRUE,0.169643973595806,0.0500414411404529,0.28059094574748,TRUE,TRUE
+"A4_correlations","residual | brown | Pasture",0.0463693725924931,-0.0509207339684775,0.143800918762458,FALSE,0.0427539243304458,-0.0467108914922636,0.133508610811768,FALSE,TRUE
+"A4_correlations","residual | brown | Plantation",-0.0236076638664374,-0.120920428714766,0.0760567971114593,FALSE,0.00243115434767334,-0.0901891607144356,0.0932438727793345,FALSE,TRUE
+"A4_correlations","residual | brown | red",-0.11164284565165,-0.238537363755925,0.0234624565767606,FALSE,-0.101891665089341,-0.214325155661883,0.0162297859735266,FALSE,TRUE
+"A4_correlations","residual | brown | rufous",0.206924957151535,0.0850518661890069,0.319923469339705,TRUE,0.214067872255315,0.108338277774174,0.314068474071637,TRUE,TRUE
+"A4_correlations","residual | brown | Secondary",-0.0414540307967758,-0.137732269755721,0.0544551627700234,FALSE,-0.0232668868340635,-0.110521666637056,0.0655921533025658,FALSE,TRUE
+"A4_correlations","residual | brown | yellow",0.590811798339032,0.511578666095217,0.65803356101933,TRUE,0.621516698602275,0.553611985745683,0.678864944945806,TRUE,TRUE
+"A4_correlations","residual | Cropland | Pasture",0.042334267156459,-0.0275727066848938,0.109031267963646,FALSE,0.0427834681809811,-0.02369022876425,0.110920628895608,FALSE,TRUE
+"A4_correlations","residual | green | blue",-0.0338280474501582,-0.155956205059541,0.0907296088940464,FALSE,-0.0560728093943778,-0.173312682469491,0.0602188503142542,FALSE,TRUE
+"A4_correlations","residual | green | Cropland",0.0366939637951469,-0.0703706642889082,0.140490927598464,FALSE,0.0109924240956664,-0.0869011950425892,0.110560067899091,FALSE,TRUE
+"A4_correlations","residual | green | Pasture",0.055067717412431,-0.052439611964854,0.15925433504759,FALSE,0.0368742804905094,-0.065513830066835,0.13833800044154,FALSE,TRUE
+"A4_correlations","residual | green | Plantation",0.0569258660530796,-0.0511694174302787,0.168164821957799,FALSE,0.0593930921124569,-0.0406122905380006,0.162326253452665,FALSE,TRUE
+"A4_correlations","residual | green | Secondary",-0.00687003016925128,-0.11554547456864,0.101629606298877,FALSE,0.00488171868913998,-0.100116358538492,0.103258216061431,FALSE,TRUE
+"A4_correlations","residual | Plantation | Cropland",-0.0809145067635511,-0.147532670372435,-0.0146428980381099,TRUE,-0.086934203794511,-0.153787814426536,-0.0216282472702603,TRUE,TRUE
+"A4_correlations","residual | Plantation | Pasture",-0.0311543965740232,-0.103023417843802,0.043606207309927,FALSE,-0.0348812650006761,-0.10387855553493,0.0374474695650007,FALSE,TRUE
+"A4_correlations","residual | red | blue",0.0177956302629661,-0.113237191667647,0.145815185115521,FALSE,-0.0522978234446104,-0.16748650777158,0.0627635577446168,FALSE,TRUE
+"A4_correlations","residual | red | Cropland",-0.000985873465303833,-0.110914830281907,0.102182585781321,FALSE,0.00569075976262622,-0.0846013620567067,0.0970491197956875,FALSE,TRUE
+"A4_correlations","residual | red | green",0.0349177557923339,-0.100419465554522,0.166759281593946,FALSE,0.014571072505272,-0.108047986972858,0.13826209935092,FALSE,TRUE
+"A4_correlations","residual | red | Pasture",0.00951978181485123,-0.0970468128767147,0.117181921103316,FALSE,0.0297933441011832,-0.0632645283515312,0.12586314860665,FALSE,TRUE
+"A4_correlations","residual | red | Plantation",-0.0776984661347319,-0.187476773730151,0.0340450895836313,FALSE,-0.107719986834721,-0.201885824689859,-0.00972874510458133,TRUE,FALSE
+"A4_correlations","residual | red | Secondary",0.0104328874870777,-0.0999870626825671,0.117811907868036,FALSE,0.0102079860792532,-0.0812860269244213,0.104314531932719,FALSE,TRUE
+"A4_correlations","residual | rufous | blue",0.0220392968935891,-0.102801734751948,0.143693282739896,FALSE,-0.035104633010882,-0.143720932931842,0.0718773554183016,FALSE,TRUE
+"A4_correlations","residual | rufous | Cropland",-0.0192489529813773,-0.111142571033724,0.070568008615333,FALSE,-0.00279656062334373,-0.0846155539029151,0.0801469212064284,FALSE,TRUE
+"A4_correlations","residual | rufous | green",-0.00503070912783727,-0.128444725979512,0.124774713896394,FALSE,-0.0355788245023818,-0.150339610190065,0.0850664345921089,FALSE,TRUE
+"A4_correlations","residual | rufous | Pasture",0.0935564505803113,-0.00194334615290745,0.187454145277695,FALSE,0.0999782673244448,0.00981173173236019,0.187274035659809,TRUE,FALSE
+"A4_correlations","residual | rufous | Plantation",-0.0590209766013185,-0.156350454858039,0.038816013646877,FALSE,-0.0839634144611075,-0.171789225409725,0.00298736983320246,FALSE,TRUE
+"A4_correlations","residual | rufous | red",0.390001875238413,0.278127434451925,0.492114415043061,TRUE,0.457158042608317,0.366782074235903,0.538589231939605,TRUE,TRUE
+"A4_correlations","residual | rufous | Secondary",-0.0149861908775724,-0.106867160913305,0.0817608157104875,FALSE,0.0030273987328845,-0.081056497417299,0.0902693639596877,FALSE,TRUE
+"A4_correlations","residual | rufous | yellow",0.0097135879627596,-0.112783722845887,0.128841948436495,FALSE,-0.0127611237480157,-0.121258162621489,0.0942039715312472,FALSE,TRUE
+"A4_correlations","residual | Secondary | Cropland",-0.226142802099961,-0.286814071758434,-0.163124976260565,TRUE,-0.213043961065244,-0.273744178231198,-0.152828970861923,TRUE,TRUE
+"A4_correlations","residual | Secondary | Pasture",-0.15549028860205,-0.222514289851413,-0.0865544244045389,TRUE,-0.159331724767905,-0.225241356763547,-0.0927553056920837,TRUE,TRUE
+"A4_correlations","residual | Secondary | Plantation",-0.254504624605048,-0.318879392219325,-0.188956820792604,TRUE,-0.244381941139812,-0.304988983647959,-0.182478782150272,TRUE,TRUE
+"A4_correlations","residual | white | blue",0.004564578881199,-0.120926084184461,0.128652292824297,FALSE,-0.0143889828071227,-0.122768959380916,0.0978438776450634,FALSE,TRUE
+"A4_correlations","residual | white | brown",-0.309460819905531,-0.411952126943521,-0.197617258138069,TRUE,-0.263344578706886,-0.365167584412395,-0.158815075498031,TRUE,TRUE
+"A4_correlations","residual | white | Cropland",-0.000466071963963055,-0.0878244573667985,0.0884421694125254,FALSE,0.0087377505734585,-0.0782901885799984,0.0948574619848469,FALSE,TRUE
+"A4_correlations","residual | white | green",-0.0826099416791427,-0.204327393342969,0.0417256794248067,FALSE,-0.054243941207273,-0.17039974630935,0.0643174677844164,FALSE,TRUE
+"A4_correlations","residual | white | Pasture",0.0189367955974424,-0.0744029602028908,0.108326330653421,FALSE,-0.0202608461147794,-0.109834953819681,0.0664672265934854,FALSE,TRUE
+"A4_correlations","residual | white | Plantation",0.0811026810477866,-0.0141728653653619,0.174338699287559,FALSE,0.0963856625905848,0.00460177777384982,0.185056457717372,TRUE,FALSE
+"A4_correlations","residual | white | red",0.0193842559210393,-0.109068352478531,0.148920923192097,FALSE,-0.0869201452692087,-0.200578377932242,0.0259349580657021,FALSE,TRUE
+"A4_correlations","residual | white | rufous",-0.0577489400595856,-0.177839196504643,0.064318394636085,FALSE,-0.139798361132816,-0.244101827271825,-0.0347047617935711,TRUE,FALSE
+"A4_correlations","residual | white | Secondary",-0.00288233535785592,-0.0931889681663068,0.0869006929553503,FALSE,-0.00527037274958958,-0.0950061686264661,0.0816843587538884,FALSE,TRUE
+"A4_correlations","residual | white | yellow",-0.222043193222536,-0.33063766976753,-0.107960236917497,TRUE,-0.182310889725944,-0.286924226646086,-0.075180571845393,TRUE,TRUE
+"A4_correlations","residual | yellow | blue",0.00513832450868469,-0.117855436913898,0.129407137816994,FALSE,0.0586508416815001,-0.0518550827870405,0.172146420078269,FALSE,TRUE
+"A4_correlations","residual | yellow | Cropland",0.0782578567504005,-0.0108280445531957,0.16883935753827,FALSE,0.0950230450072324,0.0128701639275018,0.178729807865672,TRUE,FALSE
+"A4_correlations","residual | yellow | green",0.168528794899139,0.0463334433913843,0.290309140817977,TRUE,0.169759380160794,0.0545960679741571,0.283691103295468,TRUE,TRUE
+"A4_correlations","residual | yellow | Pasture",0.0421630411120392,-0.0531871289037305,0.134425896497973,FALSE,0.0388082802095746,-0.047510181810141,0.124001899648256,FALSE,TRUE
+"A4_correlations","residual | yellow | Plantation",-0.00128657964799207,-0.0940791958185172,0.0948816690914894,FALSE,-0.00353971507167357,-0.0898783098524648,0.0817306877477187,FALSE,TRUE
+"A4_correlations","residual | yellow | red",-0.141828216470496,-0.265932552951404,-0.00899287024733129,TRUE,-0.184689812925614,-0.291192040000106,-0.0698505969558521,TRUE,TRUE
+"A4_correlations","residual | yellow | Secondary",-0.0601315002784625,-0.152668275052777,0.0313932061135918,FALSE,-0.0477426026607395,-0.131760257084173,0.0361177147596301,FALSE,TRUE
+"A4_correlations","total | black | blue",0.0934801580497626,0.0188661058139094,0.169296708439687,TRUE,0.126230310049566,0.0350226009480124,0.214360693418341,TRUE,TRUE
+"A4_correlations","total | black | brown",-0.475633434682331,-0.541478382990726,-0.405018179263217,TRUE,-0.489916671152221,-0.559786781287957,-0.414405077719798,TRUE,TRUE
+"A4_correlations","total | black | Cropland",0.0359932431330016,-0.0577488647608471,0.126793017917216,FALSE,0.0545966278860285,-0.0492877947893057,0.154608763320123,FALSE,TRUE
+"A4_correlations","total | black | green",-0.179304221454788,-0.253188868252482,-0.102225004164072,TRUE,-0.190199287319823,-0.272421776163496,-0.106140170483479,TRUE,TRUE
+"A4_correlations","total | black | Pasture",0.103452235730625,0.0101800616232401,0.191456313901474,TRUE,0.0940320031561087,-0.00945224699282742,0.19313969216121,FALSE,FALSE
+"A4_correlations","total | black | Plantation",0.0390683925627611,-0.0562354045999115,0.135267028736293,FALSE,0.0649561672595657,-0.0396753066526845,0.171085777299257,FALSE,TRUE
+"A4_correlations","total | black | red",0.180273944337311,0.0935427783869544,0.263868895391129,TRUE,0.173260931139665,0.0761082203738412,0.26816036348755,TRUE,TRUE
+"A4_correlations","total | black | rufous",-0.0459819067541476,-0.135010614707783,0.0451934302344139,FALSE,-0.0612349678164503,-0.160481622359695,0.039919530359825,FALSE,TRUE
+"A4_correlations","total | black | Secondary",-0.0585690966285748,-0.152976661204244,0.0350462993762198,FALSE,-0.0608793357855791,-0.163365468647648,0.0445486860025261,FALSE,TRUE
+"A4_correlations","total | black | white",-0.191011859240557,-0.274928363456363,-0.101814586359725,TRUE,-0.211830999652093,-0.303345468953058,-0.119057917024312,TRUE,TRUE
+"A4_correlations","total | black | yellow",-0.367439798472398,-0.444100539923427,-0.28872851691416,TRUE,-0.367091518133115,-0.45113321003366,-0.277316300450861,TRUE,TRUE
+"A4_correlations","total | blue | Cropland",0.0546196989755702,-0.0264400870161546,0.138844269952257,FALSE,0.0575680147394975,-0.0355849982393519,0.148961970055828,FALSE,TRUE
+"A4_correlations","total | blue | Pasture",-0.0479132034153747,-0.130705326043355,0.0353401606684446,FALSE,-0.0942038995308993,-0.187609939468345,0.000295989962834358,FALSE,TRUE
+"A4_correlations","total | blue | Plantation",0.0138682083788572,-0.0681268177140123,0.0995109081802121,FALSE,0.0450299409023836,-0.051168751839312,0.141707767940273,FALSE,TRUE
+"A4_correlations","total | blue | Secondary",-0.0268100661407031,-0.111567996206122,0.054819112885884,FALSE,-0.0409044416325199,-0.135361389809864,0.0525811642794343,FALSE,TRUE
+"A4_correlations","total | brown | blue",-0.314425371752027,-0.384620796190454,-0.241044078260056,TRUE,-0.367702925322806,-0.443340476394707,-0.284059570102344,TRUE,TRUE
+"A4_correlations","total | brown | Cropland",-0.0598955208924287,-0.14893967697925,0.0329095293884678,FALSE,-0.0960624438860505,-0.190361815857647,0.00432709123872231,FALSE,TRUE
+"A4_correlations","total | brown | green",0.207171178736648,0.129274284293339,0.282527083535246,TRUE,0.197216712891108,0.110595902598027,0.280876698276182,TRUE,TRUE
+"A4_correlations","total | brown | Pasture",-0.130435205303647,-0.217107946271976,-0.0406481783465374,TRUE,-0.131695896671347,-0.226254658104284,-0.0310297222268986,TRUE,TRUE
+"A4_correlations","total | brown | Plantation",-0.0242490471962205,-0.118146391203404,0.0690773233395384,FALSE,-0.0514916797219001,-0.150559590066076,0.0513987939156518,FALSE,TRUE
+"A4_correlations","total | brown | red",-0.0752211671385952,-0.164144162443319,0.0152134321508994,FALSE,-0.0701027071228015,-0.167118887998696,0.0277246553750817,FALSE,TRUE
+"A4_correlations","total | brown | rufous",0.256721283591149,0.168815138588144,0.342576623869246,TRUE,0.268094882103559,0.170681561244214,0.35784540987512,TRUE,TRUE
+"A4_correlations","total | brown | Secondary",0.0867623845354583,-0.00673770680122346,0.176555054803395,FALSE,0.0837607543378826,-0.0170174592859578,0.181060276101929,FALSE,TRUE
+"A4_correlations","total | brown | yellow",0.729897569817524,0.685308315285272,0.768569076839624,TRUE,0.727292886191227,0.677132547566576,0.769631490628398,TRUE,TRUE
+"A4_correlations","total | Cropland | Pasture",0.119236441115182,0.0425073776607357,0.194787972039115,TRUE,0.130917481802285,0.0465610647298422,0.212292557129826,TRUE,TRUE
+"A4_correlations","total | green | blue",0.0557742624513783,-0.0152897639187463,0.126962830805672,FALSE,0.0935865931864059,0.011884414006633,0.176501613725049,TRUE,FALSE
+"A4_correlations","total | green | Cropland",-0.035698479437517,-0.120933085503007,0.0503888331770092,FALSE,-0.0307082495284953,-0.12696380869156,0.0650058678540156,FALSE,TRUE
+"A4_correlations","total | green | Pasture",-0.0954733557277714,-0.178777437051348,-0.0102613787571354,TRUE,-0.0983481958654958,-0.192201746671531,-0.00442855428629862,TRUE,TRUE
+"A4_correlations","total | green | Plantation",-0.0159328517557104,-0.101709158393484,0.0710822924335247,FALSE,-0.0361765984510866,-0.129865190029085,0.0588576275018063,FALSE,TRUE
+"A4_correlations","total | green | Secondary",0.0362286339641299,-0.0497954890262994,0.119941053180031,FALSE,0.0399788771027828,-0.0555620677316013,0.134301227941869,FALSE,TRUE
+"A4_correlations","total | Plantation | Cropland",-0.0340824252340307,-0.108695577931403,0.0407869802696424,FALSE,-0.0255954212680041,-0.107205444546974,0.0563253853640221,FALSE,TRUE
+"A4_correlations","total | Plantation | Pasture",-0.117494780060023,-0.197257152876937,-0.0378984729043153,TRUE,-0.12983760129566,-0.216521184154207,-0.0428401521405903,TRUE,TRUE
+"A4_correlations","total | red | blue",-0.00198247601828348,-0.0829314871784503,0.0767856664965735,FALSE,0.0134127556314833,-0.0807077153299003,0.104774270349419,FALSE,TRUE
+"A4_correlations","total | red | Cropland",-0.0286108170537128,-0.127039544851486,0.0712969112881557,FALSE,-0.0415240345705038,-0.146684584323926,0.0633363171241984,FALSE,TRUE
+"A4_correlations","total | red | green",-0.0716107288497146,-0.149729544392083,0.00876646072361512,FALSE,-0.0805204545795572,-0.167433610701144,0.00790069318109733,FALSE,TRUE
+"A4_correlations","total | red | Pasture",-0.0457142593124868,-0.145189570874559,0.0532612821158316,FALSE,-0.0672202162390468,-0.170792741762514,0.0380813802563945,FALSE,TRUE
+"A4_correlations","total | red | Plantation",-0.00854526461916125,-0.109223192497625,0.0905943597829617,FALSE,0.0282465967910192,-0.0785430096540888,0.135009308410262,FALSE,TRUE
+"A4_correlations","total | red | Secondary",-0.00341184058834762,-0.103723662408455,0.0979484638803965,FALSE,-0.00841079561046309,-0.114404138601942,0.0976523138643374,FALSE,TRUE
+"A4_correlations","total | rufous | blue",-0.0779669607761692,-0.15721711006139,6.53797295728158e-05,FALSE,-0.0798971824800886,-0.174928859176179,0.0108923753098478,FALSE,TRUE
+"A4_correlations","total | rufous | Cropland",-0.0311358508735313,-0.124963990264803,0.0652447111538682,FALSE,-0.0493319956694396,-0.151093929151302,0.0517957566506057,FALSE,TRUE
+"A4_correlations","total | rufous | green",-0.0991181648109406,-0.180288873863295,-0.0165422451675946,TRUE,-0.102191401715318,-0.192668395163573,-0.0128899989342056,TRUE,TRUE
+"A4_correlations","total | rufous | Pasture",-0.0654938238405298,-0.159270104663109,0.0295006501836347,FALSE,-0.0887426254415881,-0.186829547070117,0.015908076861349,FALSE,TRUE
+"A4_correlations","total | rufous | Plantation",-0.00935204405311315,-0.108890433676439,0.0893263495949237,FALSE,0.0228312365200565,-0.081273361106899,0.127419543111255,FALSE,TRUE
+"A4_correlations","total | rufous | red",0.641265445544669,0.581627873509627,0.692261299692481,TRUE,0.631173438739482,0.564029249077449,0.686582083634695,TRUE,TRUE
+"A4_correlations","total | rufous | Secondary",0.0253518564251907,-0.0710653097226626,0.124229830462553,FALSE,0.0152196887386577,-0.0887842058371933,0.118732095448076,FALSE,TRUE
+"A4_correlations","total | rufous | yellow",0.0679452818315597,-0.0241681459972117,0.162858229534316,FALSE,0.0980345019727887,-0.00598244547731281,0.1988709630234,FALSE,TRUE
+"A4_correlations","total | Secondary | Cropland",-0.179113565091751,-0.249563749103078,-0.106489460731497,TRUE,-0.184828012560715,-0.259425899436362,-0.108384099200118,TRUE,TRUE
+"A4_correlations","total | Secondary | Pasture",-0.145182263939059,-0.222470751027562,-0.0675267781621628,TRUE,-0.131516306604577,-0.215113593973506,-0.0452764220083511,TRUE,TRUE
+"A4_correlations","total | Secondary | Plantation",-0.176334505143995,-0.251124453479394,-0.0972847482645489,TRUE,-0.179756411740135,-0.259646853685123,-0.0970070493127792,TRUE,TRUE
+"A4_correlations","total | white | blue",-0.105365006702698,-0.186088001770882,-0.0247860644322628,TRUE,-0.123073989046069,-0.214484386553714,-0.029940381734378,TRUE,TRUE
+"A4_correlations","total | white | brown",-0.151821677192703,-0.242127389256711,-0.0605928311457745,TRUE,-0.138771602343953,-0.233742384895453,-0.038140868594898,TRUE,TRUE
+"A4_correlations","total | white | Cropland",0.0683613550408587,-0.0233449765009445,0.156908426734313,FALSE,0.0789889844930546,-0.0240050323698428,0.176390697201296,FALSE,TRUE
+"A4_correlations","total | white | green",-0.13902294343663,-0.220143049539257,-0.0562626482764415,TRUE,-0.146475037396038,-0.233906673952291,-0.0597665914938171,TRUE,TRUE
+"A4_correlations","total | white | Pasture",0.120661441634888,0.0278013310268014,0.213652862552692,TRUE,0.161865394991413,0.0615588348965954,0.260074021480709,TRUE,TRUE
+"A4_correlations","total | white | Plantation",0.0404048876208914,-0.0549637002465707,0.135298372040722,FALSE,0.0194516101937426,-0.0825337805178933,0.123974455252236,FALSE,TRUE
+"A4_correlations","total | white | red",-0.233158719802889,-0.319767905224521,-0.143434318208083,TRUE,-0.200913292590282,-0.295160060085054,-0.104861750154827,TRUE,TRUE
+"A4_correlations","total | white | rufous",-0.185699139474897,-0.275757776002518,-0.093342794445254,TRUE,-0.140401466997033,-0.239279175773905,-0.0396112758603902,TRUE,TRUE
+"A4_correlations","total | white | Secondary",-0.00245699774524792,-0.0946727838455028,0.0902622281345408,FALSE,0.00375240431751477,-0.10126664125045,0.106238024797714,FALSE,TRUE
+"A4_correlations","total | white | yellow",-0.00265154839328156,-0.0970894091377684,0.090040801177653,FALSE,0.00424332068604486,-0.0947203658725175,0.105925531452311,FALSE,TRUE
+"A4_correlations","total | yellow | blue",-0.198057280058065,-0.2724150044179,-0.119834486288708,TRUE,-0.239702414107085,-0.324878493786001,-0.149468354373049,TRUE,TRUE
+"A4_correlations","total | yellow | Cropland",-0.0669226996860744,-0.157176025552092,0.0249328311796391,FALSE,-0.100581668361044,-0.194960345502505,0.000903861599967007,FALSE,TRUE
+"A4_correlations","total | yellow | green",0.272590407158455,0.196384665093835,0.347053039391882,TRUE,0.275224842449895,0.188898262136647,0.358883047400849,TRUE,TRUE
+"A4_correlations","total | yellow | Pasture",-0.0932185127817586,-0.181730933066811,-0.00204955252769478,TRUE,-0.0950373060455997,-0.193394738672535,0.00770864134690469,FALSE,FALSE
+"A4_correlations","total | yellow | Plantation",0.00212742182702651,-0.0937995170769421,0.0957109847777129,FALSE,-0.00597081586806243,-0.106919387357517,0.0990551080939547,FALSE,TRUE
+"A4_correlations","total | yellow | red",-0.140436032966166,-0.226757483955834,-0.0507782994928341,TRUE,-0.113001297465384,-0.214387359428622,-0.0121682202678912,TRUE,TRUE
+"A4_correlations","total | yellow | Secondary",0.0916368489852106,2.95988039791265e-05,0.181187859966147,TRUE,0.0990550665201815,-0.000874910421635387,0.194117131548136,FALSE,FALSE
+"A4_phylogenetic_signal","black",0.867510739186193,0.829122528330703,0.898915467712603,TRUE,0.873290584407527,0.834473371001282,0.904421189237507,TRUE,TRUE
+"A4_phylogenetic_signal","blue",0.907041688897258,0.884166920536901,0.925398971465755,TRUE,0.879209481515672,0.847337515599495,0.903417762075176,TRUE,TRUE
+"A4_phylogenetic_signal","brown",0.836970337201986,0.789801397443488,0.874480654678763,TRUE,0.840528266254821,0.79560124770755,0.876633128626494,TRUE,TRUE
+"A4_phylogenetic_signal","Cropland",0.343877992749742,0.269189881122604,0.425231816999348,TRUE,0.371111644028842,0.291910240788246,0.45433173420834,TRUE,TRUE
+"A4_phylogenetic_signal","green",0.903959170966678,0.878593633431095,0.923752370851323,TRUE,0.912694305677308,0.888445145016184,0.931241251632504,TRUE,TRUE
+"A4_phylogenetic_signal","Pasture",0.47325199555362,0.39133510566411,0.555245540796327,TRUE,0.510535710266501,0.4266364820723,0.590732209168281,TRUE,TRUE
+"A4_phylogenetic_signal","Plantation",0.390668529301164,0.304919464813533,0.485924409171736,TRUE,0.403660499948211,0.315826534269515,0.498189624228467,TRUE,TRUE
+"A4_phylogenetic_signal","red",0.873883094357517,0.830478664536165,0.905948046152839,TRUE,0.851927184667607,0.805546287600338,0.889239533486982,TRUE,TRUE
+"A4_phylogenetic_signal","rufous",0.816537293604465,0.763566996162409,0.860537687457728,TRUE,0.797256131444139,0.739171427390796,0.84397959684339,TRUE,TRUE
+"A4_phylogenetic_signal","Secondary",0.338757606689069,0.260079499532661,0.429202669619415,TRUE,0.342976673345962,0.264476206078063,0.433826032669121,TRUE,TRUE
+"A4_phylogenetic_signal","white",0.778682054682393,0.716067909768747,0.828641572981216,TRUE,0.812010592194418,0.757217580125392,0.853825440556599,TRUE,TRUE
+"A4_phylogenetic_signal","yellow",0.809842655946135,0.756356449087164,0.852056576265558,TRUE,0.796193064629762,0.738214693041137,0.842213105462092,TRUE,TRUE
+"C1_sample_bias","Black | PREDICTS passerines",-0.00267711117868689,NA,NA,FALSE,-0.00147736410207781,NA,NA,FALSE,TRUE
+"C1_sample_bias","Black | Species-level model (A1b)",-0.00229220434893678,NA,NA,FALSE,-0.000592567995893722,NA,NA,FALSE,TRUE
+"C1_sample_bias","Blue | PREDICTS passerines",0.000574811943025638,NA,NA,FALSE,0.00185648879468547,NA,NA,FALSE,TRUE
+"C1_sample_bias","Blue | Species-level model (A1b)",0.000288620351637675,NA,NA,FALSE,0.00154150813985273,NA,NA,FALSE,TRUE
+"C1_sample_bias","Brown | PREDICTS passerines",-0.000563662270288129,NA,NA,FALSE,0.00211443814661729,NA,NA,FALSE,TRUE
+"C1_sample_bias","Brown | Species-level model (A1b)",-0.000167523859329907,NA,NA,FALSE,0.00246209280888319,NA,NA,FALSE,TRUE
+"C1_sample_bias","Green | PREDICTS passerines",0.000283246093064679,NA,NA,FALSE,0.000547443545110243,NA,NA,FALSE,TRUE
+"C1_sample_bias","Green | Species-level model (A1b)",0.00028651292282798,NA,NA,FALSE,0.000546422324504982,NA,NA,FALSE,TRUE
+"C1_sample_bias","Grey | PREDICTS passerines",-0.0045295654982997,NA,NA,FALSE,-0.00777408251840173,NA,NA,FALSE,TRUE
+"C1_sample_bias","Grey | Species-level model (A1b)",-0.00470991361209077,NA,NA,FALSE,-0.00813903231107723,NA,NA,FALSE,TRUE
+"C1_sample_bias","Male colourfulness | PREDICTS passerines",0.0111505936413391,NA,NA,FALSE,0.0178387547576073,NA,NA,FALSE,TRUE
+"C1_sample_bias","Male colourfulness | Species-level model (A1b)",0.0110454473856414,NA,NA,FALSE,0.0181608505620079,NA,NA,FALSE,TRUE
+"C1_sample_bias","Purple | PREDICTS passerines",-0.000274930269467966,NA,NA,FALSE,-0.000190202682373158,NA,NA,FALSE,TRUE
+"C1_sample_bias","Purple | Species-level model (A1b)",-0.000250951250579181,NA,NA,FALSE,-0.000167831718565557,NA,NA,FALSE,TRUE
+"C1_sample_bias","Red | PREDICTS passerines",0.00172943974461267,NA,NA,FALSE,0.00170107076149839,NA,NA,FALSE,TRUE
+"C1_sample_bias","Red | Species-level model (A1b)",0.00170295991036523,NA,NA,FALSE,0.00166670032501284,NA,NA,FALSE,TRUE
+"C1_sample_bias","Rufous | PREDICTS passerines",-0.00231872259311925,NA,NA,FALSE,-0.00263305114031906,NA,NA,FALSE,TRUE
+"C1_sample_bias","Rufous | Species-level model (A1b)",-0.00241710347873842,NA,NA,FALSE,-0.00271369403572831,NA,NA,FALSE,TRUE
+"C1_sample_bias","Sexual dichromatism | PREDICTS passerines",0.00659253407912548,NA,NA,FALSE,0.00201618217068626,NA,NA,FALSE,TRUE
+"C1_sample_bias","Sexual dichromatism | Species-level model (A1b)",0.0069812692917067,NA,NA,FALSE,0.00231158644018206,NA,NA,FALSE,TRUE
+"C1_sample_bias","White | PREDICTS passerines",0.00553314068103459,NA,NA,FALSE,0.00308580962816268,NA,NA,FALSE,TRUE
+"C1_sample_bias","White | Species-level model (A1b)",0.00507707157426394,NA,NA,FALSE,0.00259489464238926,NA,NA,FALSE,TRUE
+"C1_sample_bias","Yellow | PREDICTS passerines",0.00247774898444844,NA,NA,FALSE,0.00315228680398061,NA,NA,FALSE,TRUE
+"C1_sample_bias","Yellow | Species-level model (A1b)",0.00263110535856463,NA,NA,FALSE,0.00321135736301658,NA,NA,FALSE,TRUE

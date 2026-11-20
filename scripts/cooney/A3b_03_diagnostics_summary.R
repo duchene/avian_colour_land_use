@@ -5,6 +5,9 @@
 #          results/A3b_r2_summary.csv
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 library(brms)
 library(posterior)
 source("scripts/00_config.R")

@@ -4,6 +4,10 @@
 # Colour ~ land-use proportion scores
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
+source("scripts/00_config.R")   # family_prior(), RESP_MAIN
 library(tidyverse)
 library(brms)
 library(cmdstanr)
@@ -13,6 +17,10 @@ options(mc.cores = parallel::detectCores())
 
 # Load setup
 load("fits/A1b_model_setup.RData")
+# Threads per chain from THIS job's allocation (the setup .RData stores the
+# value of whatever job ran the setup).
+if (nzchar(Sys.getenv("SLURM_CPUS_PER_TASK")))
+  nthreads <- max(1, floor(as.integer(Sys.getenv("SLURM_CPUS_PER_TASK")) / 4))
 cat("Setup loaded. nthreads =", nthreads, "\n")
 cat("Species:", nrow(spdat), "\n")
 cat("Predictors:", paste(lu_predictors, collapse = ", "), "\n")
@@ -61,8 +69,9 @@ for (resp in responses) {
 
   # Select family and priors per response
   fam_name <- response_families[[resp]]
-  fam <- if (fam_name == "gaussian") gaussian() else lognormal()
-  pr  <- if (fam_name == "gaussian") priors_A1bb_gaussian else priors_A1b
+  fp  <- family_prior(resp, "species")   # 2026-11: one source for family + priors
+  fam <- fp$family
+  pr  <- fp$prior
 
   cat("\nFitting:", resp, "| Family:", fam_name, "| N =", nrow(d), "\n")
 

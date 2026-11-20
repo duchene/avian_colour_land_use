@@ -15,8 +15,11 @@
 # Sampler backend and threading
 # ------------------------------------------------------------
 options(brms.backend = "cmdstanr")
-options(mc.cores = parallel::detectCores())
-nthreads <- max(2, floor(parallel::detectCores() / 4))
+# Under Slurm, use the allocated CPUs, not every core on the node
+# (detectCores() reports the whole machine and oversubscribes threads).
+n_cores <- as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", parallel::detectCores()))
+options(mc.cores = n_cores)
+nthreads <- max(1, floor(n_cores / 4))
 
 # ------------------------------------------------------------
 # Biome policy
@@ -214,6 +217,48 @@ empty_cell_params <- function(dat, ref_biome = BIOME_REF, ref_lu = LU_REF) {
 }
 
 # ------------------------------------------------------------
+# Phylogeny (2026-11)
+# ------------------------------------------------------------
+# Two trees. The reported analyses use the maximum-likelihood time tree of
+# Claramunt et al. (2025), data/BBtree2.tre. Every phylogenetic analysis
+# is repeated on the maximum clade credibility tree of 1,000 Jetz et al.
+# (2012) Hackett-backbone posterior trees (scripts/00c_jetz_mcc.R).
+# Select with the environment variable PHYLO = claramunt (default) | jetz;
+# the Jetz runs write to runs/jetz/ (see hpc/run_jetz.sh).
+PHYLO <- Sys.getenv("PHYLO", "claramunt")
+TREE_FILE <- c(claramunt = "data/BBtree2.tre",
+               jetz      = "data/external/jetz2012_hackett_mcc_passerines.tre")[[PHYLO]]
+
+# The tree for the current PHYLO. The Jetz tree must carry exactly the
+# species and tip labels of the Claramunt runs, so that only the tree
+# differs: every species matched to BBtree2 (match_to_tree) is located on
+# the Jetz tree under its BBtree2 label, its jetz_sp name or its
+# underscored binomial, and that Jetz tip is renamed to the BBtree2 label.
+# match_to_tree() then keeps only the species matched under BBtree2.
+read_phylo <- function() {
+  tr <- ape::read.tree(TREE_FILE)
+  if (PHYLO == "claramunt") return(tr)
+  bb  <- ape::read.tree("data/BBtree2.tre")
+  raw <- read.csv(gzfile("data/aves_predicts_passerines_dale_cooney_avonet.csv.gz"),
+                  stringsAsFactors = FALSE)
+  sp  <- unique(raw[, c("Best_guess_binomial", "jetz_sp")])
+  sp$binom_u <- gsub(" ", "_", sp$Best_guess_binomial)
+  x <- merge(match_to_tree(raw, bb, verbose = FALSE, phylo = "claramunt"), sp,
+             by = "Best_guess_binomial")
+  x$jz <- ifelse(x$phylo %in% tr$tip.label, x$phylo,
+          ifelse(x$jetz_sp %in% tr$tip.label, x$jetz_sp,
+          ifelse(x$binom_u %in% tr$tip.label, x$binom_u, NA_character_)))
+  stopifnot(!anyNA(x$jz), !anyDuplicated(x$jz))
+  ren <- x[x$jz != x$phylo, ]
+  stopifnot(!any(ren$phylo %in% tr$tip.label))   # no collision with an existing tip
+  i <- match(ren$jz, tr$tip.label)
+  tr$tip.label[i] <- ren$phylo
+  cat("Jetz tree:", nrow(ren), "tips renamed to their BBtree2 labels;",
+      nrow(x), "PREDICTS species located\n")
+  tr
+}
+
+# ------------------------------------------------------------
 # Phylogenetic tree matching
 # ------------------------------------------------------------
 # Genus reclassifications where the same biological species sits
@@ -238,7 +283,14 @@ TREE_SYNONYMS <- c(
 # Three-stage match: jetz_sp, then underscored Best_guess_binomial,
 # then the synonym table. Returns a species -> tip lookup with
 # ambiguous tips (claimed by >1 species) removed.
-match_to_tree <- function(df, tree, verbose = TRUE) {
+match_to_tree <- function(df, tree, verbose = TRUE, phylo = PHYLO) {
+  # Jetz runs: the species set and labels are those matched to BBtree2
+  # (read_phylo() has renamed the Jetz tips accordingly).
+  if (phylo == "jetz") {
+    sp <- match_to_tree(df, ape::read.tree("data/BBtree2.tre"), verbose, phylo = "claramunt")
+    stopifnot(all(sp$phylo %in% tree$tip.label))
+    return(sp)
+  }
   stopifnot(all(TREE_SYNONYMS %in% tree$tip.label))
   sp <- unique(df[, c("Best_guess_binomial", "jetz_sp")])
   sp$binom_u <- gsub(" ", "_", sp$Best_guess_binomial)
@@ -314,6 +366,54 @@ RESP_FAMILY <- c(meancolcooney = "lognormal", dichrocooney   = "lognormal",
 # Metrics carried into the abundance models (A2c/A2d, B2c/B2d).
 COLOUR_COONEY <- c("z_malecolcooney", "z_dichrodiff")
 COLOUR_DALE   <- c("z_malecoldale",   "z_dichrodiffdale")
+
+# ------------------------------------------------------------
+# Primary colour metrics (revision of 2026-11, after co-author review)
+# ------------------------------------------------------------
+# The reported models (A1b, A2d, A3b and its LOO partner A3a) now use:
+#   malecolcooney  male LociUVS colourfulness (Cooney et al. 2022), unchanged.
+#   dichroplate    plate-scored sexual dichromatism (Cooney et al. 2022 `Dichro`:
+#                  mean of five body regions scored -2..2). REPLACES dichrodiff,
+#                  which scores two equally colourful sexes as monochromatic even
+#                  when they differ in colour.
+# The superseded metrics stay in RESP_COONEY / COLOUR_COONEY so archived
+# results remain reproducible.
+RESP_MAIN   <- c("malecolcooney", "dichroplate")
+COLOUR_MAIN <- paste0("z_", RESP_MAIN)
+RESP_FAMILY <- c(RESP_FAMILY, dichroplate = "gaussian")
+RESP_LABELS <- c(malecolcooney = "Male colourfulness",
+                 dichroplate   = "Sexual dichromatism",
+                 dichrodiff    = "Sexual dichromatism (male - female LociUVS)")
+
+# Attach the primary metrics to any record- or species-level table that
+# carries the Cooney columns of the raw extract.
+add_colour_metrics <- function(df) {
+  df$malecolcooney <- df$LociUVS_male_cooney
+  df$dichroplate   <- df$Dichro
+  df
+}
+
+# brms family and priors for one primary metric as a RESPONSE.
+#   level = "species": A1b, one row per species, no intercept (the
+#                      land-use proportions span it), phylogenetic sd.
+#   level = "record":  A3a/A3b, record level, intercept, PREDICTS sds.
+# Scales: LociUVS is lognormal (log scale); Dichro spans -0.8..2.
+family_prior <- function(resp, level = c("species", "record")) {
+  level <- match.arg(level)
+  sp <- brms::set_prior
+  fam <- RESP_FAMILY[[resp]]
+  b <- switch(paste(fam, level),
+              "lognormal species" = "normal(0, 5)",   # absolute levels (no intercept)
+              "lognormal record"  = "normal(0, 0.5)",
+              "gaussian species"  = "normal(0, 2)",
+              "gaussian record"   = "normal(0, 1)")
+  pri <- c(sp(b, class = "b"), sp("exponential(2)", class = "sd"),
+           sp("exponential(2)", class = "sigma"))
+  if (level == "record") pri <- c(pri, sp("normal(0, 2)", class = "Intercept"))
+  stopifnot(resp %in% RESP_MAIN)   # legacy metrics keep model_priors()
+  list(family = switch(fam, lognormal = brms::lognormal(), gaussian = gaussian()),
+       prior  = pri)
+}
 
 # ------------------------------------------------------------
 # Helpers

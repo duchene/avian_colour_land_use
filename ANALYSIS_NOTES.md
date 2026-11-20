@@ -26,6 +26,84 @@ minutes, A1 28 minutes, A3a 50 minutes, A2c 80 minutes, A2f about 400 minutes, a
 dense species covariance matrix over 53,551 records. Budget about 60 hours for a full
 A and B sequence.
 
+## 2026-11 revision
+
+Decisions taken with the co-authors after review (November 2026). Fitted numbers are
+in `results/cooney/`, not here.
+
+**Colour metrics.** Every reported model uses two metrics, `RESP_MAIN` in the config:
+male colourfulness (`malecolcooney`) and the Cooney et al. (2022) plate-scored sexual
+dichromatism (`dichroplate`, the mean of five body regions each scored -2 to 2). The
+plate score replaces `dichrodiff` (male minus female LociUVS), which scores two equally
+colourful but differently coloured sexes as monochromatic.
+
+**Specific colours.** Delhey et al. (2023, PNAS Dataset S7) male colour classes, with
+the dark and light shades of their 17 base classes combined into ten colours (black,
+white, grey, brown, rufous, yellow, red, green, blue, purple) that sum to one per
+species. Each colour is its own variable. The co-authors decided against ratios,
+log-ratios and composite scores (a gaudy-colour share and an additive log-ratio MR-PMM
+were built and then removed).
+
+**Reported models refitted:** A1b, A2d, A3b and A3a (for the A3a versus A3b LOO). A2c,
+A1, A2e, A2f and the Dale family were not refitted.
+
+**A2d per colour.** A2d refitted once per colour, with the z-scored colour proportion
+in place of colourfulness and nothing else changed. Black needed longer chains (7,500
+iterations, 2,500 warmup) to bring the maximum Rhat below 1.01. Green's slope in
+tropical open biomes is credible but rests on about two species and is not interpreted;
+its temperate closed slope is very imprecise because few green species occur there.
+
+**A4 MR-PMM (MCMCglmm, not brms).** Following Halliwell, Holland & Yates (2025, Biol
+Rev), the four land-use association scores are responses alongside eight colours, so
+colour on land use relationships are derived from the phylogenetic and residual
+covariance matrices rather than imposed as predictor and response. Grey and primary
+vegetation are omitted because each set sums to one (primary vegetation becomes the
+reference); purple is omitted because 96% of species carry almost none and no scale
+reproduced its distribution. Each variable is logit-transformed on its own after the
+Smithson & Verkuilen squeeze, because the raw-scale Gaussian model failed the
+posterior predictive check (negative predictions, no skew). The total level
+(phylogenetic plus residual) is the species-level analogue of A1b.
+
+**C1 sample bias.** Answers whether the PREDICTS passerines are a biased sample of
+passerine colour, against all passerines in Cooney et al. (2022) and Delhey et al.
+(2023). Raw distributions differ for several colours because of the clades sampled;
+PGLS with Pagel's lambda is the test that accounts for that.
+
+**C2 sex-averaged colourfulness.** The manuscript states that results with the mean of
+male and female colourfulness are nearly identical; C2 refits A1b, A2d and A3b with it
+(same rows, formula, priors and sampler) and tabulates every reported quantity under
+both metrics (Table S1).
+
+**Subtropical sites and assemblage structure** are explained in the manuscript rather
+than analysed: sites beyond the tropics are too few to model separately.
+
+**Two trees (decided 2026-11-19).** Every phylogenetic analysis is run on two
+single trees rather than a posterior distribution: the maximum-likelihood time tree
+of Claramunt et al. (2025), `data/BBtree2.tre` (reported; the repository has used it
+since the first phylogenetic model), and the maximum clade credibility tree of 1,000
+Jetz et al. (2012) Hackett-backbone posterior trees (`scripts/00c_jetz_mcc.R`,
+`data/external/jetz2012_hackett_mcc_passerines.tre`). The pre-revision manuscript
+described a Jetz MCC tree although the code used BBtree2. `PHYLO=jetz` selects the
+Jetz tree (`00_config.R`, `read_phylo()`); the Jetz tips are renamed to the BBtree2
+labels and only the species matched to BBtree2 are kept, so the data, species and
+labels are identical and only the tree differs (checked: 53,551 A2d records and 1,154
+species under both). The Jetz runs live in `runs/jetz/` (`hpc/run_jetz.sh`), and
+`scripts/cooney/T1_tree_comparison.R` sets every phylogenetic quantity from the two
+trees side by side. A3a/A3b have no phylogeny.
+
+Outcome (2026-11-20, `results/cooney/T1_tree_comparison{,_summary}.csv`, Table S3):
+509 of 550 quantities reach the same conclusion. Estimates correlate at 0.88 to 1.00
+across trees within each table. A1b, the C1 bias test, the A2d main-effect contrasts
+and the A4 phylogenetic signal agree completely. In every disagreement at least one
+interval has a bound close to zero. Main-text claims affected: A4 total pasture slope
+of black (Claramunt 0.12 SD [0.007, 0.220], Jetz 0.11 [-0.012, 0.235]) and the A2d
+white slope in croplands (Jetz [-0.0003, 0.0058]); the manuscript now flags both. Not
+in the text: under Jetz, blue is credibly lower in pasture-associated species (A4),
+and the A2d dichromatism slopes within land uses are about half as large and no longer
+credible (the tropical-open biome slope, which is reported, holds). The Jetz runs reuse
+the A3 fits and results through symlinks in `runs/jetz/`, because post-hoc scripts and
+figures read them.
+
 ## What changed on 2026-08-11
 
 **The primary-vegetation filter now reaches the saved data.** `00_data_preparation.R`
@@ -54,7 +132,7 @@ are recoverable from the archive tag.
 
 ### Raw
 
-PREDICTS site-level bird surveys merged with Cooney et al. spectrophotometric plumage
+PREDICTS site-level bird surveys merged with Cooney et al. (multispectral photography) plumage
 measurements (ultraviolet-sensitive visual model, LociUVS) and AVONET traits. Stored as
 `data/aves_predicts_passerines_dale_cooney_avonet.csv.gz`, holding 216,834 records from
 1,703 passerine species.

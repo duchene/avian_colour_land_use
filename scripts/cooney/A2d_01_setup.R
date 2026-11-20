@@ -28,13 +28,14 @@ fulldat <- read.csv(gzfile("data/aves_predicts_passerines_dale_cooney_avonet.csv
 fulldat$malecolcooney <- fulldat$LociUVS_male_cooney
 fulldat$dichrodiff    <- fulldat$LociUVS_male_cooney - fulldat$LociUVS_female_cooney
 
+fulldat <- add_colour_metrics(fulldat)   # dichroplate (2026-11)
 dat_final <- build_paired_differences(fulldat)
 check_cells(dat_final)
 
 # ------------------------------------------------------------
 # PHYLOGENETIC MATCHING
 # ------------------------------------------------------------
-tree <- read.tree("data/BBtree2.tre")
+tree <- read_phylo()   # 2026-11: PHYLO selects the tree (00_config.R)
 sp   <- match_to_tree(dat_final, tree)
 dat_final <- merge(dat_final, sp, by = "Best_guess_binomial")
 dat_final$phylo <- factor(dat_final$phylo)
@@ -47,7 +48,8 @@ A <- vcv.phylo(tree, corr = TRUE)
 # ------------------------------------------------------------
 dat_final$z_malecolcooney <- zscore(dat_final$malecolcooney)
 dat_final$z_dichrodiff    <- zscore(dat_final$dichrodiff)
-colour_vars <- COLOUR_COONEY
+for (v in RESP_MAIN) dat_final[[paste0("z_", v)]] <- zscore(dat_final[[v]])
+colour_vars <- COLOUR_MAIN   # 2026-11: was COLOUR_COONEY
 
 cat("\nFinal A2d set:", nrow(dat_final), "records |",
     length(tree$tip.label), "species/tips | SS:",

@@ -3,7 +3,8 @@ Avian plumage colour and land-use change (Cooney ultraviolet-sensitive metrics)
 
 Figures 1 and 2 are introductory and are prepared outside this repository.
 Legends below cover the three figures and two tables built by
-scripts/cooney/pub_figures.R and the two post-hoc scripts.
+scripts/cooney/pub_figures.R and the two post-hoc scripts, followed by the
+supplementary figures and tables (Tables S1-S3 built by scripts/cooney/supp_tables.R).
 
 
 FIGURE 3. Species-level colour against land-use association (model A1b).
@@ -80,3 +81,100 @@ stated level. Columns match Table 1. All 284 rows are reconstructed from the
 fitted coefficients as a check that none is missing and none depends on a term
 the models do not contain, including any three-way colour by biome by land-use
 term, which no reported model carries.
+
+
+SUPPLEMENTARY FIGURES
+(built by scripts/cooney/supp_fig_S1_tree.R, C1_sample_bias.R and
+supp_fig_S3_S4.R; each colour is a separate variable, the proportion of the
+male plumage in that colour, from Delhey et al. 2023, and no ratios are formed)
+
+
+FIGURE S1. Plumage colour across the passerine phylogeny.
+
+The BigBirdTree phylogeny pruned to the 4,118 passerines with Delhey et al.
+(2023) colour data. Rings from inner to outer: (1) species present in the
+PREDICTS data; (2) male colourfulness (Cooney et al. 2022, log scale, clipped
+to the 2.5th and 97.5th percentiles); (3) sexual dichromatism, the plate score
+of Cooney et al. (2022), clipped to -1 and 1; (4 to 13) the proportion of the
+male plumage in each of ten colours, shaded from white (none) to the full
+colour at the 97.5th percentile of that colour across passerines. Light grey
+cells mark species without the measurement.
+
+
+FIGURE S2. Sampling bias in plumage colour.
+
+Cumulative distributions of each colour metric for passerines in the PREDICTS
+data (blue) and all other passerines measured by the source data set (grey):
+male colourfulness (log10 scale) and sexual dichromatism (1,542 and 1,519
+sampled species against 2,985 and 2,896 others; Cooney et al. 2022) and the ten
+colour proportions (1,655 against 3,792; Delhey et al. 2023). Each panel gives
+the difference between sampled and other species estimated by phylogenetic
+generalised least squares with Pagel's lambda (PGLS), and its p-value. No
+metric differed credibly after accounting for phylogeny (all p > 0.1); the
+differences visible in some raw distributions reflect the clades sampled.
+
+
+FIGURE S3. Multi-response phylogenetic mixed model of colour and land use.
+
+Eight colour proportions and four land-use association scores were fitted
+jointly as responses (MCMCglmm; Halliwell et al. 2025), each on its own logit
+scale and standardised, for 1,313 species. Grey and purple, and primary
+vegetation, were omitted, because each set of proportions sums to one and
+purple is almost absent from most species. (a) Posterior median correlations,
+phylogenetic below the diagonal and residual (non-phylogenetic) above it.
+Outlined cells have 95% credible intervals excluding zero. (b) Phylogenetic
+signal of each response, the phylogenetic share of its variance, with 95%
+credible intervals.
+
+
+FIGURE S4. Land-use effects on each colour.
+
+(a) Multi-response model (Figure S3): conditional slope of each colour on each
+land-use score at the species level (phylogenetic plus residual covariance),
+in standard deviations, holding the other three scores constant, so that
+primary vegetation is the reference. (b) Abundance-change model (A2d) fitted
+once per colour: slope of abundance change on the standardised colour
+proportion, overall and within each land use, with random effects excluded.
+Lines are 95% credible intervals; filled symbols mark intervals excluding zero.
+In (b) the axis is truncated; green intervals extend beyond it (arrows) because
+its land-use slopes average over biomes and carry an imprecise temperate closed
+slope estimated from few green species.
+
+
+TABLE S1. Male versus sex-averaged colourfulness.
+
+Every colourfulness quantity reported from the species-level (A1b), abundance-change
+(A2d) and assemblage-level (A3b) models, estimated once with male colourfulness and once
+with the mean of male and female colourfulness (Cooney et al. 2022). The second fit of
+each model uses the same records, formula, priors and sampler. Estimates are posterior
+medians with 95% credible intervals, on the scale of each model as in Tables 1 and 2;
+same_conclusion marks rows where the interval excludes zero under both metrics with the
+same sign, or under neither.
+
+
+TABLE S2. Abundance change and specific colours.
+
+The abundance-change model (A2d) fitted once per colour, with the z-standardised
+proportion of the male plumage in that colour (Delhey et al. 2023) in place of
+colourfulness. Slopes are the change in abundance change per standard deviation of the
+colour proportion, overall and within each land use and biome, with random effects
+excluded. pd is the posterior probability of the sign of the estimate, and effect_size
+the slope divided by the standard deviation of the response. The last two columns give
+the maximum Rhat and minimum bulk effective sample size of each fit. n = 50,230 records
+from 1,099 species.
+
+
+TABLE S3. Results under two phylogenies.
+
+Every analysis that includes the phylogeny was repeated with the maximum clade
+credibility tree of 1,000 posterior trees of Jetz et al. (2012; Hackett backbone) in
+place of the maximum-likelihood time tree of Claramunt et al. (2025), with identical
+data and species. Each row gives one reported quantity: the posterior median with its
+95% credible interval under each tree. For the sample-bias test (C1), the estimate is the
+PGLS difference between the species in the data and other passerines, and "credible"
+means p < 0.05. same_conclusion marks rows where the interval excludes zero under both
+trees with the same sign, or under neither. 509 of 550 quantities agree; in each of
+the others, one bound of the interval under at least one tree lies close to zero. Of the results
+reported in the main text, two are not credible with the Jetz et al. (2012) tree: the
+higher proportion of black plumage in species associated with pastures (multi-response
+model) and the smaller losses of white-plumaged species in croplands (abundance change).

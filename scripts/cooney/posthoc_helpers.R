@@ -11,13 +11,18 @@
 # frequentist tests.
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 suppressMessages({ library(brms); library(dplyr); library(purrr); library(tibble) })
 
 # SD of the response on the scale the linear predictor lives on.
 # Contrasts divided by this are standardised effect sizes.
 link_sd <- function(fit) {
   y <- fit$data[[1]]
-  if (fit$family$family == "lognormal") sd(log(y)) else sd(y)
+  switch(fit$family$family,
+         lognormal = sd(log(y)),
+         sd(y))
 }
 
 # Balanced reference grid over the supplied factor levels, numeric
@@ -95,8 +100,21 @@ DISPLAY <- c("Tropical Forest"  = "Tropical closed",
              "Plantation forest" = "Plantation")
 relabel_levels <- function(x) stringr::str_replace_all(as.character(x), DISPLAY)
 
-RESP_LABEL <- c(malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
-                z_malecolcooney = "Male colourfulness", z_dichrodiff = "Sexual dichromatism")
+RESP_LABEL <- c(malecolcooney = "Male colourfulness", dichroplate = "Sexual dichromatism",
+                z_malecolcooney = "Male colourfulness", z_dichroplate = "Sexual dichromatism",
+                dichrodiff = "Sexual dichromatism (male - female)",
+                z_dichrodiff = "Sexual dichromatism (male - female)")
+
+# Metrics in the reported models (2026-11 revision; mirrors RESP_MAIN in
+# 00_config.R). Fits that do not exist (e.g. A2c and A1, not refitted in
+# the revision) are skipped with a message.
+RESP_PH <- c("malecolcooney", "dichroplate")
+CV_PH   <- paste0("z_", RESP_PH)
+fit_exists <- function(f) {
+  ok <- file.exists(f)
+  if (!ok) message("  skipped (no fit): ", f)
+  ok
+}
 
 LU5 <- c("Primary vegetation", "Secondary", "Plantation forest", "Cropland", "Pasture")
 LU4 <- c("Secondary", "Plantation forest", "Cropland", "Pasture")

@@ -99,12 +99,13 @@ simple_effects <- function(fit, grid, target, within, model, response, src) {
 }
 
 RESPONSE   <- c(A2c = "Relative abundance", A2d = "Abundance change vs primary")
-COLOUR_LAB <- c(malecolcooney = "Male colourfulness", dichrodiff = "Sexual dichromatism",
+COLOUR_LAB <- c(malecolcooney = "Male colourfulness", dichroplate = "Sexual dichromatism",
                 z_malecolcooney = "Male colourfulness (z)",
-                z_dichrodiff = "Sexual dichromatism (z)")
+                z_dichroplate = "Sexual dichromatism (z)")
 # Names the fit an estimate came from, not a term in the contrast.
 SRC_FIT    <- c(z_malecolcooney = "fitted with male colourfulness (z)",
-                z_dichrodiff    = "fitted with sexual dichromatism (z)")
+                z_dichroplate   = "fitted with sexual dichromatism (z)")
+A2_MODELS  <- c("A2c", "A2d")[file.exists(paste0("fits/", c("A2c", "A2d"), "_fit_", CV_PH[1], ".RData"))]
 
 out <- list()
 
@@ -114,7 +115,7 @@ out <- list()
 message("A3b ...")
 grid_a1b <- make_grid(Predominant_simple = LU5, Biome4 = BIOME3,
                       Trophic.Niche = TROPHIC6, z_logMass = 0)
-for (resp in c("malecolcooney", "dichrodiff")) {
+for (resp in RESP_PH) {
   load(paste0("fits/A3b_fit_", resp, "_covariate.RData"))
   rlab <- paste0("Community ", tolower(COLOUR_LAB[[resp]]))
   out[[paste0("A3b_lu_", resp)]] <-
@@ -130,10 +131,10 @@ for (resp in c("malecolcooney", "dichrodiff")) {
 # its mean (z = 0), so the colour interaction terms contribute
 # nothing to these contrasts.
 # ------------------------------------------------------------
-for (mod in c("A2c", "A2d")) {
+for (mod in A2_MODELS) {
   message(mod, " ...")
   lus <- if (mod == "A2c") LU5 else LU4
-  for (cv in c("z_malecolcooney", "z_dichrodiff")) {
+  for (cv in CV_PH) {
     load(paste0("fits/", mod, "_fit_", cv, ".RData"))
     g <- make_grid(Predominant_simple = lus, Biome4 = BIOME3)
     g[[cv]] <- 0
@@ -184,10 +185,8 @@ got <- tbl %>% count(model, response, source_fit, quantity, factor_compared) %>%
   left_join(expected, by = c("model", "quantity"))
 stopifnot(all(got$n_lu == got$n_lu_exp), all(got$n_bi == got$n_bi_exp))
 # every interaction term in every A2 fit must be represented
-stopifnot(all(c("Level mean", "Colour slope") %in%
-              tbl$quantity[tbl$model == "A2c"]),
-          all(c("Level mean", "Colour slope") %in%
-              tbl$quantity[tbl$model == "A2d"]))
+for (mod in A2_MODELS)
+  stopifnot(all(c("Level mean", "Colour slope") %in% tbl$quantity[tbl$model == mod]))
 # no duplicated rows, and no contrast of a level with itself
 stopifnot(!any(duplicated(tbl[, c("model", "response", "source_fit", "quantity",
                                   "factor_compared", "held_fixed", "contrast")])))
@@ -205,21 +204,12 @@ cat("completeness OK\n"); print(as.data.frame(got), row.names = FALSE)
 strip   <- function(x) gsub("[^A-Za-z0-9]", "", x)
 coef_of <- function(fx, nm) if (nm %in% names(fx)) unname(fx[[nm]]) else 0
 
-specs <- list(
-  list(m = "A3b", file = "results/cooney/A3b_fixed_effects.csv", lus = LU5,
-       fits = list(c(key = "malecolcooney_covariate", resp = "Community male colourfulness", cp = NA),
-                   c(key = "dichrodiff_covariate",
-                     resp = "Community sexual dichromatism", cp = NA))),
-  list(m = "A2c", file = "results/cooney/A2c_fixed_effects.csv", lus = LU5,
-       fits = list(c(key = "z_malecolcooney", resp = "Relative abundance",
-                     cp = "fitted with male colourfulness (z)"),
-                   c(key = "z_dichrodiff", resp = "Relative abundance",
-                     cp = "fitted with sexual dichromatism (z)"))),
-  list(m = "A2d", file = "results/cooney/A2d_fixed_effects.csv", lus = LU4,
-       fits = list(c(key = "z_malecolcooney", resp = "Abundance change vs primary",
-                     cp = "fitted with male colourfulness (z)"),
-                   c(key = "z_dichrodiff", resp = "Abundance change vs primary",
-                     cp = "fitted with sexual dichromatism (z)"))))
+a2_spec <- function(m, lus) list(m = m, file = sprintf("results/cooney/%s_fixed_effects.csv", m),
+  lus = lus, fits = lapply(CV_PH, function(cv) c(key = cv, resp = RESPONSE[[m]], cp = SRC_FIT[[cv]])))
+specs <- c(list(list(m = "A3b", file = "results/cooney/A3b_fixed_effects.csv", lus = LU5,
+       fits = lapply(RESP_PH, function(r) c(key = paste0(r, "_covariate"),
+         resp = paste0("Community ", tolower(COLOUR_LAB[[r]])), cp = NA)))),
+  lapply(A2_MODELS, function(m) a2_spec(m, if (m == "A2c") LU5 else LU4)))
 
 recon_max <- 0; n_checked <- 0
 for (sp in specs) {
@@ -290,7 +280,7 @@ cat("no row requires a term outside the fitted two-way structure\n")
 # ------------------------------------------------------------
 message("A2d change from primary (separate file) ...")
 prim <- list()
-for (cv in c("z_malecolcooney", "z_dichrodiff")) {
+for (cv in CV_PH) {
   load(paste0("fits/A2d_fit_", cv, ".RData"))
   g <- make_grid(Predominant_simple = LU4, Biome4 = BIOME3)
   g[[cv]] <- 0
@@ -323,9 +313,9 @@ cat("A2d change from primary:", nrow(prim), "rows ->",
 # ------------------------------------------------------------
 message("colour simple slopes (separate file) ...")
 slopes <- list()
-for (mod in c("A2c", "A2d")) {
+for (mod in A2_MODELS) {
   lus <- if (mod == "A2c") LU5 else LU4
-  for (cv in c("z_malecolcooney", "z_dichrodiff")) {
+  for (cv in CV_PH) {
     load(paste0("fits/", mod, "_fit_", cv, ".RData"))
     g <- make_grid(Predominant_simple = lus, Biome4 = BIOME3)
     g[[cv]] <- 0

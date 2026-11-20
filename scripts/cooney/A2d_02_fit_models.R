@@ -5,12 +5,19 @@
 # non-NA colour rows and align the phylo covariance matrix A.
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 library(tidyverse)
 library(brms)
 library(cmdstanr)
 options(brms.backend = "cmdstanr")
 
 load("fits/A2d_model_setup.RData")   # dat_final, A, colour_vars, formulas, priors_A2d, nthreads
+# Threads per chain from THIS job's allocation (the setup .RData stores the
+# value of whatever job ran the setup).
+if (nzchar(Sys.getenv("SLURM_CPUS_PER_TASK")))
+  nthreads <- max(1, floor(as.integer(Sys.getenv("SLURM_CPUS_PER_TASK")) / 4))
 
 fit_one <- function(cv) {
   f <- paste0("fits/A2d_fit_", cv, ".RData")
@@ -34,6 +41,14 @@ fit_one <- function(cv) {
   fit
 }
 
+# ONLY=z_dichroplate (comma-separated) fits a subset, so the colour
+# metrics can run as parallel Slurm jobs; rerun without ONLY to collect.
+only <- Sys.getenv("ONLY")
+if (nzchar(only)) {
+  todo <- intersect(colour_vars, strsplit(only, ",")[[1]])
+  for (cv in todo) fit_one(cv)
+  quit(save = "no")
+}
 fits <- setNames(lapply(colour_vars, fit_one), colour_vars)
 save(fits, file = "fits/A2d_all_fits.RData")
 cat("\nAll A2d fits complete. Saved to fits/A2d_all_fits.RData\n")

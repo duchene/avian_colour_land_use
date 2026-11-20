@@ -12,6 +12,9 @@
 # Requires the A3b covariate fits (run A3b first) for the LOO step.
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 library(brms)
 library(posterior)
 source("scripts/00_config.R")

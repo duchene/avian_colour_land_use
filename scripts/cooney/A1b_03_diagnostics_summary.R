@@ -3,6 +3,9 @@
 # Analysis 1b: Diagnostics, summaries, and visualizations
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
 library(tidyverse)
 library(brms)
 library(bayesplot)

@@ -51,6 +51,7 @@ cat("Total records:", nrow(fulldat),
 # occur in a single study, so their score carries nothing about them.
 # Here the proportions are built from detections only.
 detdat <- fulldat %>% filter(Effort_corrected_measurement != 0)
+detdat <- add_colour_metrics(detdat)   # dichroplate (2026-11)
 cat("Detections:", nrow(detdat), "of", nrow(fulldat), "rows |",
     length(unique(detdat$Best_guess_binomial)), "species\n")
 
@@ -77,13 +78,14 @@ species_colour <- detdat %>%
             malecolcooney = first(na.omit(LociUVS_male_cooney)),
             dichrodiff    = first(na.omit(LociUVS_male_cooney -
                                           LociUVS_female_cooney)),
+            dichroplate   = first(na.omit(dichroplate)),
             Mass          = first(na.omit(Mass)),
             Trophic.Niche = first(na.omit(Trophic.Niche)),
             .groups = "drop")
 
 spdat <- left_join(lu_wide, species_colour, by = "Best_guess_binomial")
 cat("Species-level dataset:", nrow(spdat), "species\n")
-for (v in RESP_COONEY)
+for (v in RESP_MAIN)
   cat("  non-NA", v, ":", sum(!is.na(spdat[[v]])), "\n")
 
 # ------------------------------------------------------------
@@ -91,7 +93,7 @@ for (v in RESP_COONEY)
 # ------------------------------------------------------------
 # Species absent from BBtree2 are dropped, never grafted onto a
 # congener: grafting invents branch lengths and distorts A.
-tree <- read.tree("data/BBtree2.tre")
+tree <- read_phylo()   # 2026-11: PHYLO selects the tree (00_config.R)
 cat("Tree loaded:", length(tree$tip.label), "tips\n")
 
 sp    <- match_to_tree(spdat, tree)
@@ -104,7 +106,7 @@ cat("Final dataset:", nrow(spdat), "species |", length(tree$tip.label), "tips\n"
 # ------------------------------------------------------------
 # RESPONSES, PREDICTORS, PRIORS
 # ------------------------------------------------------------
-responses         <- RESP_COONEY
+responses         <- RESP_MAIN   # 2026-11: was RESP_COONEY
 response_families <- RESP_FAMILY[responses]
 lu_predictors     <- grep("^prop_", names(spdat), value = TRUE)
 cat("\nPredictors:", paste(lu_predictors, collapse = " + "), "\n")

@@ -5,15 +5,24 @@
 # so the A3a-vs-A3b LOO comparison differs only in the fixed effects.
 # ============================================================
 
+# Attach rstan before any saved brmsfit is touched: loaded implicitly (by
+# methods dispatch on the stanfit slot) it fails in the GenomeDK container.
+suppressMessages(library(rstan))
+source("scripts/00_config.R")   # family_prior(), RESP_MAIN
 library(brms)
 library(cmdstanr)
 options(brms.backend = "cmdstanr")
 
 load("fits/A3a_model_setup.RData")
+# Threads per chain from THIS job's allocation (the setup .RData stores the
+# value of whatever job ran the setup).
+if (nzchar(Sys.getenv("SLURM_CPUS_PER_TASK")))
+  nthreads <- max(1, floor(as.integer(Sys.getenv("SLURM_CPUS_PER_TASK")) / 4))
 
 fit_one <- function(resp) {
-  fam  <- if (response_families[[resp]] == "lognormal") lognormal() else gaussian()
-  pri  <- if (response_families[[resp]] == "lognormal") priors_lognormal else priors_gaussian
+  fp   <- family_prior(resp, "record")   # 2026-11: one source for family + priors
+  fam  <- fp$family
+  pri  <- fp$prior
   form <- formulas[[resp]]
   f    <- paste0("fits/A3a_fit_", resp, ".RData")
 

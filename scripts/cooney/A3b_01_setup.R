@@ -17,9 +17,10 @@ library(brms)
 library(cmdstanr)
 
 dat <- load_community_data()
+dat <- add_colour_metrics(dat)   # dichroplate (2026-11)
 check_cells(dat)
 
-responses         <- RESP_COONEY
+responses         <- RESP_MAIN   # 2026-11: was RESP_COONEY
 response_families <- RESP_FAMILY[responses]
 
 # Biome4 * Predominant_simple expands to both main effects plus their
