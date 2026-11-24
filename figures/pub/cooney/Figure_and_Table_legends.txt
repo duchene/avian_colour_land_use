@@ -178,3 +178,14 @@ the others, one bound of the interval under at least one tree lies close to zero
 reported in the main text, two are not credible with the Jetz et al. (2012) tree: the
 higher proportion of black plumage in species associated with pastures (multi-response
 model) and the smaller losses of white-plumaged species in croplands (abundance change).
+
+
+TABLE S4. Assemblage colour and specific colours.
+
+Difference between each land-use type and primary vegetation in the proportion of the
+male plumage in each colour across the species recorded at a site, within each biome,
+from the assemblage-level model (A3b) fitted once per colour (23,407 records, 1,254
+species; results/cooney/A3b_colours_contrasts.csv). Standard deviations of the
+logit-transformed species-level colour proportion. For rufous, red, green and blue a
+dagger marks credible contrasts reversed in a presence (Bernoulli) model. Intervals are
+likely too narrow because each species is repeated at every site where it was detected.

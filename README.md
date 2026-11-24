@@ -37,13 +37,14 @@ in `ANALYSIS_NOTES.md` under "2026-11 revision"; in short:
 |---|---|---|
 | A2d per colour | `A2d_colours_02_fit.R`, `A2d_colours_03_summary.R` | A2d refitted once per colour class, colour proportion as the predictor |
 | A4 MR-PMM | `A4_colour_mrpmm.R` (MCMCglmm) | Eight colours and four land-use scores as joint responses (Halliwell et al. 2025); correlations, phylogenetic signal, conditional colour on land-use slopes |
+| A3b per colour | `A3b_colours.R` | Assemblage colour refitted once per colour (logit, z across species), with a presence (Bernoulli) check for rufous, red, green and blue |
 | C1 sample bias | `C1_sample_bias.R` | Do the PREDICTS passerines differ in colour from all passerines? PGLS and KS tests |
 | C2 sex-averaged | `C2_sex_averaged.R` | Do A1b, A2d and A3b reach the same conclusions with mean male and female colourfulness? |
 
 - **Supplementary outputs** in `figures/pub/cooney/`: Figure S1 (tree with colour
   rings, `supp_fig_S1_tree.R`), S2 (sample bias, `C1_sample_bias.R`), S3 and S4
   (MR-PMM and per-colour effects, `supp_fig_S3_S4.R`), Tables S1 to S3
-  (`supp_tables.R`). Legends are in `figures/pub/cooney/Figure_and_Table_legends.txt`.
+  (`supp_tables.R`) and S4 (assemblage colours, from `results/cooney/A3b_colours_*.csv`). Legends are in `figures/pub/cooney/Figure_and_Table_legends.txt`.
 - **Two trees.** All phylogenetic analyses are repeated on the Jetz et al. (2012) MCC
   tree with identical data (`hpc/run_jetz.sh`, outputs in `runs/jetz/`), and compared
   with the reported Claramunt et al. (2025) runs by `T1_tree_comparison.R`

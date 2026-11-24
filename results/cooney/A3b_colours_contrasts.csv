@@ -1,0 +1,271 @@
+"colour","biome","contrast","estimate","lo","hi","pd","credible"
+"Black","Tropical closed","Secondary - Primary vegetation",0.0075626882,-0.04143320305,0.0551697647,0.617333333333333,FALSE
+"Black","Tropical closed","Plantation - Primary vegetation",-0.023603039,-0.070490820425,0.0244070913,0.838166666666667,FALSE
+"Black","Tropical closed","Cropland - Primary vegetation",-0.015527037,-0.080180797025,0.04877931185,0.682666666666667,FALSE
+"Black","Tropical closed","Pasture - Primary vegetation",-0.0184168935,-0.1433740655,0.10770140925,0.611,FALSE
+"Black","Tropical closed","Plantation - Secondary",-0.0309597022199999,-0.085698851475,0.02466082381,0.862666666666667,FALSE
+"Black","Tropical closed","Cropland - Secondary",-0.022555908,-0.0909901726800001,0.0418415967049999,0.758166666666667,FALSE
+"Black","Tropical closed","Pasture - Secondary",-0.02545123115,-0.1521797970575,0.101878728625,0.654,FALSE
+"Black","Tropical closed","Cropland - Plantation",0.00818425350000002,-0.0615707922725,0.076842309325,0.5875,FALSE
+"Black","Tropical closed","Pasture - Plantation",0.00464118349999998,-0.125556778,0.135659960025,0.5295,FALSE
+"Black","Tropical closed","Pasture - Cropland",-0.00163104905,-0.137146914265,0.1317134687875,0.506666666666667,FALSE
+"Black","Temperate closed","Secondary - Primary vegetation",-0.13829806175,-0.2181465772,-0.0564568695000001,0.999833333333333,TRUE
+"Black","Temperate closed","Plantation - Primary vegetation",-0.065161424,-0.18709243555,0.0600379244999999,0.848333333333333,FALSE
+"Black","Temperate closed","Cropland - Primary vegetation",0.0220843285,-0.089063674135,0.135785959,0.654666666666667,FALSE
+"Black","Temperate closed","Pasture - Primary vegetation",0.0199516585,-0.1210776639925,0.1605486076,0.606666666666667,FALSE
+"Black","Temperate closed","Plantation - Secondary",0.0738537846,-0.07043931571,0.2172393759125,0.845333333333333,FALSE
+"Black","Temperate closed","Cropland - Secondary",0.1618845545,0.0255699590225,0.30017769525,0.988166666666667,TRUE
+"Black","Temperate closed","Pasture - Secondary",0.15834360795,-0.00465522179999994,0.3182085099375,0.970333333333333,FALSE
+"Black","Temperate closed","Cropland - Plantation",0.0879952,-0.0750832009675,0.2470464559775,0.863833333333333,FALSE
+"Black","Temperate closed","Pasture - Plantation",0.08364448745,-0.0982448163175,0.2584914339,0.827,FALSE
+"Black","Temperate closed","Pasture - Cropland",-0.00315701180000003,-0.173912844025,0.163252281975,0.5165,FALSE
+"Black","Tropical open","Secondary - Primary vegetation",0.0821398672,0.0197915575395,0.1427107304825,0.994333333333333,TRUE
+"Black","Tropical open","Plantation - Primary vegetation",0.0356509564,-0.0393264692275,0.108718578225,0.824333333333333,FALSE
+"Black","Tropical open","Cropland - Primary vegetation",0.5582559675,0.42790562958,0.6858540592625,1,TRUE
+"Black","Tropical open","Pasture - Primary vegetation",0.06847124945,-0.1227866951225,0.2619738140475,0.7635,FALSE
+"Black","Tropical open","Plantation - Secondary",-0.04700669435,-0.121883504175,0.0261076464749999,0.896666666666667,FALSE
+"Black","Tropical open","Cropland - Secondary",0.474385289,0.347822348925,0.605064573725,1,TRUE
+"Black","Tropical open","Pasture - Secondary",-0.01365084,-0.2045727498875,0.1854840318525,0.557166666666667,FALSE
+"Black","Tropical open","Cropland - Plantation",0.523276682055,0.382784109325,0.6648234565925,1,TRUE
+"Black","Tropical open","Pasture - Plantation",0.033902237,-0.1651111750975,0.24381670755,0.628666666666667,FALSE
+"Black","Tropical open","Pasture - Cropland",-0.4882451085,-0.714999795825,-0.258156703275,1,TRUE
+"White","Tropical closed","Secondary - Primary vegetation",0.060109217,0.011324898075,0.10751968275,0.993,TRUE
+"White","Tropical closed","Plantation - Primary vegetation",0.094472009,0.04965462545,0.140974863,0.999833333333333,TRUE
+"White","Tropical closed","Cropland - Primary vegetation",0.21134392,0.14817482325,0.27270518325,1,TRUE
+"White","Tropical closed","Pasture - Primary vegetation",0.026721419,-0.0960314734,0.14782856425,0.659833333333333,FALSE
+"White","Tropical closed","Plantation - Secondary",0.0340878234999999,-0.01882290595,0.0875331216500001,0.89,FALSE
+"White","Tropical closed","Cropland - Secondary",0.1506373225,0.085493637975,0.2157781257,1,TRUE
+"White","Tropical closed","Pasture - Secondary",-0.0336086245,-0.161909013475,0.09075618395,0.704166666666667,FALSE
+"White","Tropical closed","Cropland - Plantation",0.1164795485,0.0501870055,0.18209602305,0.999833333333333,TRUE
+"White","Tropical closed","Pasture - Plantation",-0.0677879855,-0.196147643525,0.0553324163999999,0.8595,FALSE
+"White","Tropical closed","Pasture - Cropland",-0.18471735188,-0.319947133225,-0.05612254475,0.995666666666667,TRUE
+"White","Temperate closed","Secondary - Primary vegetation",0.117896908,0.037893695,0.199666680975,0.998666666666667,TRUE
+"White","Temperate closed","Plantation - Primary vegetation",-0.0186662995,-0.137902802725,0.0986659273725,0.619166666666667,FALSE
+"White","Temperate closed","Cropland - Primary vegetation",-0.00965586999999998,-0.137867025,0.120211944425,0.556833333333333,FALSE
+"White","Temperate closed","Pasture - Primary vegetation",0.02956708955,-0.1191370681,0.1795404814,0.6535,FALSE
+"White","Temperate closed","Plantation - Secondary",-0.1369047765,-0.27356436465,0.00783344364999994,0.970333333333333,FALSE
+"White","Temperate closed","Cropland - Secondary",-0.12677452,-0.2768352425,0.02222136098,0.952166666666667,FALSE
+"White","Temperate closed","Pasture - Secondary",-0.0891352985,-0.252266674475,0.0812281115474997,0.847166666666667,FALSE
+"White","Temperate closed","Cropland - Plantation",0.0098089875,-0.159940868825,0.178967445725,0.541333333333333,FALSE
+"White","Temperate closed","Pasture - Plantation",0.0481159719999999,-0.13409222575,0.23397873375,0.698,FALSE
+"White","Temperate closed","Pasture - Cropland",0.03887773785,-0.1332483027175,0.2130483319575,0.675166666666667,FALSE
+"White","Tropical open","Secondary - Primary vegetation",0.1099823255,0.0448587495325001,0.177723939325,0.999333333333333,TRUE
+"White","Tropical open","Plantation - Primary vegetation",0.1095924175,0.01895044385,0.194223349675,0.9905,TRUE
+"White","Tropical open","Cropland - Primary vegetation",0.82940273,0.704003762,0.9517196955,1,TRUE
+"White","Tropical open","Pasture - Primary vegetation",0.147590624,-0.050796048375,0.3434318252075,0.9275,FALSE
+"White","Tropical open","Plantation - Secondary",-0.00145080645000004,-0.089241301175,0.08490550021,0.515,FALSE
+"White","Tropical open","Cropland - Secondary",0.7190122325,0.5891191991,0.8441352954575,1,TRUE
+"White","Tropical open","Pasture - Secondary",0.0381892790999999,-0.16173583249375,0.2365491516,0.642166666666667,FALSE
+"White","Tropical open","Cropland - Plantation",0.72080255465,0.5777594932,0.8626162072,1,TRUE
+"White","Tropical open","Pasture - Plantation",0.0398884795,-0.1709928073,0.25140048473925,0.6425,FALSE
+"White","Tropical open","Pasture - Cropland",-0.679057601,-0.9091776062,-0.455424928425,1,TRUE
+"Grey","Tropical closed","Secondary - Primary vegetation",0.0948306525,0.04869863635,0.14177462775,1,TRUE
+"Grey","Tropical closed","Plantation - Primary vegetation",0.13408607,0.089940451225,0.1782265055,1,TRUE
+"Grey","Tropical closed","Cropland - Primary vegetation",0.193323385,0.1327975285,0.2539592215,1,TRUE
+"Grey","Tropical closed","Pasture - Primary vegetation",0.180026375,0.063249926575,0.29861057175,0.998833333333333,TRUE
+"Grey","Tropical closed","Plantation - Secondary",0.039541333,-0.012468957425,0.0922222367249999,0.930333333333333,FALSE
+"Grey","Tropical closed","Cropland - Secondary",0.098670299,0.03616741925,0.15987218735,0.9985,TRUE
+"Grey","Tropical closed","Pasture - Secondary",0.086376114,-0.0342091414250001,0.2106681261,0.911666666666667,FALSE
+"Grey","Tropical closed","Cropland - Plantation",0.0588312795,-0.00736543475000009,0.1234223389,0.9605,FALSE
+"Grey","Tropical closed","Pasture - Plantation",0.045470065,-0.0750145439250001,0.1689628665,0.774,FALSE
+"Grey","Tropical closed","Pasture - Cropland",-0.011326145,-0.139015908975,0.11585327625,0.572333333333333,FALSE
+"Grey","Temperate closed","Secondary - Primary vegetation",0.0170775035,-0.06147048025,0.09514988115,0.665666666666667,FALSE
+"Grey","Temperate closed","Plantation - Primary vegetation",-0.00115650999999999,-0.11566682325,0.118457150075,0.510166666666667,FALSE
+"Grey","Temperate closed","Cropland - Primary vegetation",0.02978849,-0.0789316217499999,0.139983745525,0.7075,FALSE
+"Grey","Temperate closed","Pasture - Primary vegetation",0.0266203225,-0.11101514375,0.158490892975,0.649833333333333,FALSE
+"Grey","Temperate closed","Plantation - Secondary",-0.015923553,-0.1498916766,0.122215589975,0.592666666666667,FALSE
+"Grey","Temperate closed","Cropland - Secondary",0.01302276795,-0.1195557596,0.15107643785,0.574833333333333,FALSE
+"Grey","Temperate closed","Pasture - Secondary",0.01000801,-0.148122401875,0.1635732706,0.549,FALSE
+"Grey","Temperate closed","Cropland - Plantation",0.0307581165,-0.121547933175,0.1845641635,0.654666666666667,FALSE
+"Grey","Temperate closed","Pasture - Plantation",0.02763314,-0.1523451097525,0.198317583275,0.624,FALSE
+"Grey","Temperate closed","Pasture - Cropland",-0.00343278549999994,-0.16408649845,0.153509506175,0.518333333333333,FALSE
+"Grey","Tropical open","Secondary - Primary vegetation",0.00775930049999999,-0.050752785425,0.068152444225,0.596166666666667,FALSE
+"Grey","Tropical open","Plantation - Primary vegetation",-0.066126595,-0.13786206145,0.00622142424999992,0.966166666666667,FALSE
+"Grey","Tropical open","Cropland - Primary vegetation",-0.107821385,-0.22914504925,0.0128512919999999,0.961333333333333,FALSE
+"Grey","Tropical open","Pasture - Primary vegetation",-0.209372615,-0.39161646855,-0.0279808562500001,0.988,TRUE
+"Grey","Tropical open","Plantation - Secondary",-0.074201955,-0.14467502855,-0.0025494043,0.980333333333333,TRUE
+"Grey","Tropical open","Cropland - Secondary",-0.115523591,-0.237041644125,0.00535753049999994,0.966,FALSE
+"Grey","Tropical open","Pasture - Secondary",-0.216290872,-0.408355369025,-0.029509566275,0.9895,TRUE
+"Grey","Tropical open","Cropland - Plantation",-0.04182343,-0.17457134775,0.09124636175,0.725833333333333,FALSE
+"Grey","Tropical open","Pasture - Plantation",-0.143045975,-0.335532657,0.0486948917499998,0.927666666666667,FALSE
+"Grey","Tropical open","Pasture - Cropland",-0.10205649,-0.318165826475,0.115873447,0.818666666666667,FALSE
+"Brown","Tropical closed","Secondary - Primary vegetation",-0.0156377295,-0.064171916425,0.0328644155999998,0.736333333333333,FALSE
+"Brown","Tropical closed","Plantation - Primary vegetation",-0.02837378,-0.073008183275,0.016316474475,0.895,FALSE
+"Brown","Tropical closed","Cropland - Primary vegetation",-0.19235769,-0.25442264725,-0.12896943375,1,TRUE
+"Brown","Tropical closed","Pasture - Primary vegetation",-0.09936945,-0.2190038155,0.018495596125,0.946333333333333,FALSE
+"Brown","Tropical closed","Plantation - Secondary",-0.0129657117500002,-0.0659463033,0.0398067133500001,0.688833333333333,FALSE
+"Brown","Tropical closed","Cropland - Secondary",-0.17706367825,-0.241745858825,-0.11101533248325,1,TRUE
+"Brown","Tropical closed","Pasture - Secondary",-0.0829113071499999,-0.2075667455,0.0400191965749999,0.9085,FALSE
+"Brown","Tropical closed","Cropland - Plantation",-0.1645601271,-0.2299516784725,-0.0971964233000002,1,TRUE
+"Brown","Tropical closed","Pasture - Plantation",-0.0707675495,-0.19365187515,0.0529808537724998,0.864166666666667,FALSE
+"Brown","Tropical closed","Pasture - Cropland",0.093522081,-0.0317292927500001,0.2248135395875,0.920333333333333,FALSE
+"Brown","Temperate closed","Secondary - Primary vegetation",0.0342385691500001,-0.044486854,0.110008446975,0.815333333333333,FALSE
+"Brown","Temperate closed","Plantation - Primary vegetation",0.0927261715000001,-0.027341050825,0.209953375175,0.939,FALSE
+"Brown","Temperate closed","Cropland - Primary vegetation",0.042642415,-0.0728141369249999,0.16071747475,0.762166666666667,FALSE
+"Brown","Temperate closed","Pasture - Primary vegetation",-0.058453662,-0.194616914725,0.0783606713250001,0.803333333333333,FALSE
+"Brown","Temperate closed","Plantation - Secondary",0.05843810637,-0.075669494275,0.19430743545,0.802333333333333,FALSE
+"Brown","Temperate closed","Cropland - Secondary",0.0096017499999999,-0.129995296,0.14588166066,0.557166666666667,FALSE
+"Brown","Temperate closed","Pasture - Secondary",-0.093281931,-0.2470591412,0.0676630794250001,0.879666666666667,FALSE
+"Brown","Temperate closed","Cropland - Plantation",-0.048845409,-0.211286658975,0.10947986425,0.728666666666667,FALSE
+"Brown","Temperate closed","Pasture - Plantation",-0.152285348,-0.32071548525,0.0277545668075,0.9525,FALSE
+"Brown","Temperate closed","Pasture - Cropland",-0.1023879084,-0.26286735635,0.0612075468749999,0.891166666666667,FALSE
+"Brown","Tropical open","Secondary - Primary vegetation",-0.08950971,-0.148411705055,-0.02471594152625,0.997166666666667,TRUE
+"Brown","Tropical open","Plantation - Primary vegetation",0.02434139775,-0.0481870157999999,0.0997923371449999,0.741833333333333,FALSE
+"Brown","Tropical open","Cropland - Primary vegetation",-0.462108415,-0.585304242,-0.34506103625,1,TRUE
+"Brown","Tropical open","Pasture - Primary vegetation",0.030697815,-0.1564764592,0.214830989875,0.627333333333333,FALSE
+"Brown","Tropical open","Plantation - Secondary",0.11330363525,0.0399669018875,0.187474478775,0.999166666666667,TRUE
+"Brown","Tropical open","Cropland - Secondary",-0.3739813024,-0.4983932695,-0.2533728245,1,TRUE
+"Brown","Tropical open","Pasture - Secondary",0.11677562025,-0.072330131675,0.303599063375,0.886166666666667,FALSE
+"Brown","Tropical open","Cropland - Plantation",-0.488149282,-0.6201357035225,-0.359300619875,1,TRUE
+"Brown","Tropical open","Pasture - Plantation",0.00476336280000011,-0.1909750554875,0.2025855620925,0.517166666666667,FALSE
+"Brown","Tropical open","Pasture - Cropland",0.4921028935,0.27006883215,0.708773035,1,TRUE
+"Rufous","Tropical closed","Secondary - Primary vegetation",-0.0413407195,-0.0919901201,0.00856958545249995,0.947666666666667,FALSE
+"Rufous","Tropical closed","Plantation - Primary vegetation",-0.0899371165,-0.1365462595,-0.041564940225,0.9995,TRUE
+"Rufous","Tropical closed","Cropland - Primary vegetation",-0.137366005,-0.20285828975,-0.0729322615500001,1,TRUE
+"Rufous","Tropical closed","Pasture - Primary vegetation",-0.142780335,-0.26761014025,-0.0184519989000001,0.987333333333333,TRUE
+"Rufous","Tropical closed","Plantation - Secondary",-0.04809191755,-0.1026851525625,0.00666063732499998,0.956166666666667,FALSE
+"Rufous","Tropical closed","Cropland - Secondary",-0.095009999,-0.161687752825,-0.029712134125,0.998166666666667,TRUE
+"Rufous","Tropical closed","Pasture - Secondary",-0.1011444045,-0.230373489725,0.0272938796674999,0.940666666666667,FALSE
+"Rufous","Tropical closed","Cropland - Plantation",-0.046998179,-0.1167800476,0.0197530368249999,0.918,FALSE
+"Rufous","Tropical closed","Pasture - Plantation",-0.0529204975,-0.1814913771,0.0746386475824999,0.786333333333333,FALSE
+"Rufous","Tropical closed","Pasture - Cropland",-0.00570458000000001,-0.13791109925,0.1301776316125,0.534166666666667,FALSE
+"Rufous","Temperate closed","Secondary - Primary vegetation",-0.0676108775,-0.1501148641,0.0165480271249999,0.942166666666667,FALSE
+"Rufous","Temperate closed","Plantation - Primary vegetation",-0.0760760055,-0.1937553822,0.0439120618,0.892833333333333,FALSE
+"Rufous","Temperate closed","Cropland - Primary vegetation",0.054029915,-0.0653699432749999,0.169925749225,0.82,FALSE
+"Rufous","Temperate closed","Pasture - Primary vegetation",0.045825305,-0.09240426475,0.18543344385,0.748333333333333,FALSE
+"Rufous","Temperate closed","Plantation - Secondary",-0.00982570570000003,-0.1492729876,0.134368903825,0.553833333333333,FALSE
+"Rufous","Temperate closed","Cropland - Secondary",0.120503785,-0.0261609494250001,0.260485457,0.949333333333333,FALSE
+"Rufous","Temperate closed","Pasture - Secondary",0.11327057595,-0.045445393375,0.27261974605,0.9145,FALSE
+"Rufous","Temperate closed","Cropland - Plantation",0.1308393735,-0.03199306875,0.2895201248,0.944833333333333,FALSE
+"Rufous","Temperate closed","Pasture - Plantation",0.12303744505,-0.0535202936999999,0.295976875,0.917,FALSE
+"Rufous","Temperate closed","Pasture - Cropland",-0.00675939499999998,-0.168990283615,0.155776134,0.529833333333333,FALSE
+"Rufous","Tropical open","Secondary - Primary vegetation",0.0265847375,-0.036929718275,0.08849643445,0.7965,FALSE
+"Rufous","Tropical open","Plantation - Primary vegetation",0.0421885125,-0.0324269198,0.118500202175,0.862333333333333,FALSE
+"Rufous","Tropical open","Cropland - Primary vegetation",0.114125005,-0.0133627526,0.24549329525,0.962333333333333,FALSE
+"Rufous","Tropical open","Pasture - Primary vegetation",0.128549755,-0.0645546802499999,0.31930335505,0.902,FALSE
+"Rufous","Tropical open","Plantation - Secondary",0.016161528,-0.059271376975,0.0910497226,0.665333333333333,FALSE
+"Rufous","Tropical open","Cropland - Secondary",0.0875930355,-0.038953639625,0.218607534375,0.908,FALSE
+"Rufous","Tropical open","Pasture - Secondary",0.100230291,-0.093543135375,0.295941272175,0.841666666666667,FALSE
+"Rufous","Tropical open","Cropland - Plantation",0.072517176,-0.0675834763999999,0.217526537425,0.836666666666667,FALSE
+"Rufous","Tropical open","Pasture - Plantation",0.085185837,-0.1175762698,0.286971294825,0.793333333333333,FALSE
+"Rufous","Tropical open","Pasture - Cropland",0.01267952,-0.2165343692,0.243553240325,0.543833333333333,FALSE
+"Yellow","Tropical closed","Secondary - Primary vegetation",-0.00957499769999999,-0.05799595435,0.0388498596,0.647333333333333,FALSE
+"Yellow","Tropical closed","Plantation - Primary vegetation",0.0150550785,-0.0310989878,0.06192918385,0.7355,FALSE
+"Yellow","Tropical closed","Cropland - Primary vegetation",-0.13681595,-0.199779973,-0.0764259408,1,TRUE
+"Yellow","Tropical closed","Pasture - Primary vegetation",0.0409818175,-0.079785545525,0.16121329425,0.743333333333333,FALSE
+"Yellow","Tropical closed","Plantation - Secondary",0.0242643812,-0.02922648057,0.08088627705,0.802,FALSE
+"Yellow","Tropical closed","Cropland - Secondary",-0.1278166665,-0.19160160678075,-0.0640650352,1,TRUE
+"Yellow","Tropical closed","Pasture - Secondary",0.049082785,-0.07418340335,0.1732862804945,0.777666666666667,FALSE
+"Yellow","Tropical closed","Cropland - Plantation",-0.15171824555,-0.2174302527345,-0.0852183845750001,1,TRUE
+"Yellow","Tropical closed","Pasture - Plantation",0.02527708,-0.097553202075,0.1519467701275,0.6555,FALSE
+"Yellow","Tropical closed","Pasture - Cropland",0.1771563365,0.04741460095,0.3051572385,0.9965,TRUE
+"Yellow","Temperate closed","Secondary - Primary vegetation",-0.064984806,-0.147022703245,0.013398738325,0.945833333333333,FALSE
+"Yellow","Temperate closed","Plantation - Primary vegetation",0.0807089335,-0.037369560525,0.1993106290025,0.908333333333333,FALSE
+"Yellow","Temperate closed","Cropland - Primary vegetation",0.02394113,-0.09283858405,0.136359788,0.648833333333333,FALSE
+"Yellow","Temperate closed","Pasture - Primary vegetation",-0.0495085305,-0.189852816275,0.0908653756749999,0.764666666666667,FALSE
+"Yellow","Temperate closed","Plantation - Secondary",0.14660721005,0.01356361197275,0.284853836075,0.983166666666667,TRUE
+"Yellow","Temperate closed","Cropland - Secondary",0.089430188,-0.0492508248925,0.2273140649975,0.9015,FALSE
+"Yellow","Temperate closed","Pasture - Secondary",0.01726819845,-0.1446673016875,0.178413498005,0.584166666666667,FALSE
+"Yellow","Temperate closed","Cropland - Plantation",-0.0591401996,-0.2166058057425,0.101852749775,0.759333333333333,FALSE
+"Yellow","Temperate closed","Pasture - Plantation",-0.13099532855,-0.3119785546,0.0436244165975,0.927,FALSE
+"Yellow","Temperate closed","Pasture - Cropland",-0.0715305965,-0.234485036825,0.0873156270798949,0.814833333333333,FALSE
+"Yellow","Tropical open","Secondary - Primary vegetation",-0.063049502,-0.1230278613,-0.00293102400050002,0.979666666666667,TRUE
+"Yellow","Tropical open","Plantation - Primary vegetation",0.04079705005,-0.0328578687,0.111697106665,0.8605,FALSE
+"Yellow","Tropical open","Cropland - Primary vegetation",-0.13461063925,-0.2570237219,-0.011530601,0.9835,TRUE
+"Yellow","Tropical open","Pasture - Primary vegetation",0.2376191205,0.04894965535,0.42404536955,0.993333333333333,TRUE
+"Yellow","Tropical open","Plantation - Secondary",0.10250378345,0.0317656486,0.1750521599325,0.996833333333333,TRUE
+"Yellow","Tropical open","Cropland - Secondary",-0.07096417505,-0.1951853975,0.0494662418999999,0.869,FALSE
+"Yellow","Tropical open","Pasture - Secondary",0.299659266,0.107248627175,0.4897750216125,0.999,TRUE
+"Yellow","Tropical open","Cropland - Plantation",-0.17412639225,-0.31426643485,-0.0392637817000002,0.995,TRUE
+"Yellow","Tropical open","Pasture - Plantation",0.197996185315,0.00128573318749997,0.3929705315725,0.975333333333333,TRUE
+"Yellow","Tropical open","Pasture - Cropland",0.37073789675,0.15533086625,0.58647272922875,0.9995,TRUE
+"Red","Tropical closed","Secondary - Primary vegetation",-0.038972158,-0.08664051815,0.00633671491999998,0.9505,FALSE
+"Red","Tropical closed","Plantation - Primary vegetation",-0.095642846,-0.1397603895,-0.0493508721500001,1,TRUE
+"Red","Tropical closed","Cropland - Primary vegetation",-0.0750133575,-0.13579431525,-0.01366728485,0.991,TRUE
+"Red","Tropical closed","Pasture - Primary vegetation",-0.130256525,-0.24762381675,-0.01318735695,0.986333333333333,TRUE
+"Red","Tropical closed","Plantation - Secondary",-0.056637341,-0.10982807633,-0.00245233169999999,0.978833333333333,TRUE
+"Red","Tropical closed","Cropland - Secondary",-0.03513667815,-0.10155181362675,0.02715356875,0.866666666666667,FALSE
+"Red","Tropical closed","Pasture - Secondary",-0.091203553,-0.21059074405,0.02880273895,0.9275,FALSE
+"Red","Tropical closed","Cropland - Plantation",0.020550603,-0.046764247925,0.086941618675,0.725666666666667,FALSE
+"Red","Tropical closed","Pasture - Plantation",-0.0344727255,-0.157870486825,0.0879236291724999,0.710166666666667,FALSE
+"Red","Tropical closed","Pasture - Cropland",-0.0557784435,-0.181820691025,0.0687834101499999,0.798333333333333,FALSE
+"Red","Temperate closed","Secondary - Primary vegetation",-0.000758815000000033,-0.07985027815,0.0787570726499999,0.506166666666667,FALSE
+"Red","Temperate closed","Plantation - Primary vegetation",-0.0930772572,-0.211692830925,0.0263145851999999,0.9355,FALSE
+"Red","Temperate closed","Cropland - Primary vegetation",-0.196819824,-0.3113396094,-0.0822147675750003,0.999333333333333,TRUE
+"Red","Temperate closed","Pasture - Primary vegetation",0.0273286015,-0.1100031379,0.161267606,0.651166666666667,FALSE
+"Red","Temperate closed","Plantation - Secondary",-0.09132723085,-0.232645005475,0.0450100605749998,0.904,FALSE
+"Red","Temperate closed","Cropland - Secondary",-0.19654910245,-0.3305410901,-0.0579281047,0.997166666666667,TRUE
+"Red","Temperate closed","Pasture - Secondary",0.0280707110049999,-0.1278857619,0.181485108265,0.6355,FALSE
+"Red","Temperate closed","Cropland - Plantation",-0.104504498,-0.261601692975,0.052663160225,0.9045,FALSE
+"Red","Temperate closed","Pasture - Plantation",0.119926441,-0.055345603925,0.2937464678775,0.911333333333333,FALSE
+"Red","Temperate closed","Pasture - Cropland",0.224249359,0.0628998232750001,0.3875141099,0.996166666666667,TRUE
+"Red","Tropical open","Secondary - Primary vegetation",0.0246267415,-0.03513751231,0.083581420775,0.784166666666667,FALSE
+"Red","Tropical open","Plantation - Primary vegetation",0.0305796475,-0.0401798253,0.10280897585,0.796666666666667,FALSE
+"Red","Tropical open","Cropland - Primary vegetation",0.293278385,0.17277118515,0.417611233825,1,TRUE
+"Red","Tropical open","Pasture - Primary vegetation",0.120372155,-0.0619370812,0.30252200225,0.9,FALSE
+"Red","Tropical open","Plantation - Secondary",0.00597121249999995,-0.0653993769025001,0.0780834693,0.567666666666667,FALSE
+"Red","Tropical open","Cropland - Secondary",0.26892965,0.1473196107,0.3974267046,1,TRUE
+"Red","Tropical open","Pasture - Secondary",0.096894338,-0.09212016335,0.279365273925,0.845333333333333,FALSE
+"Red","Tropical open","Cropland - Plantation",0.2631402645,0.128611919375,0.397112171875,1,TRUE
+"Red","Tropical open","Pasture - Plantation",0.0902602455,-0.10080115595,0.280463869775,0.820166666666667,FALSE
+"Red","Tropical open","Pasture - Cropland",-0.17315591355,-0.39174097495,0.0362071659075,0.946,FALSE
+"Green","Tropical closed","Secondary - Primary vegetation",-0.0280470625,-0.06869876295,0.0134223869,0.914333333333333,FALSE
+"Green","Tropical closed","Plantation - Primary vegetation",-0.0806868855,-0.11974139325,-0.04227124315,1,TRUE
+"Green","Tropical closed","Cropland - Primary vegetation",-0.03736439,-0.089114615025,0.0156303534,0.9185,FALSE
+"Green","Tropical closed","Pasture - Primary vegetation",-0.0762505785,-0.1791095755,0.0263399297499999,0.927333333333333,FALSE
+"Green","Tropical closed","Plantation - Secondary",-0.0526345425,-0.09862070283,-0.00827600275000008,0.991166666666667,TRUE
+"Green","Tropical closed","Cropland - Secondary",-0.00932750549999997,-0.06554684275,0.042996538395,0.6365,FALSE
+"Green","Tropical closed","Pasture - Secondary",-0.0482168885,-0.153463382525,0.0562921059099999,0.817666666666667,FALSE
+"Green","Tropical closed","Cropland - Plantation",0.0425998205,-0.014152562775,0.100903668675,0.934,FALSE
+"Green","Tropical closed","Pasture - Plantation",0.00454345249999999,-0.1026795639,0.11147216705,0.5315,FALSE
+"Green","Tropical closed","Pasture - Cropland",-0.0390054535,-0.15233875767,0.074791349795,0.747,FALSE
+"Green","Temperate closed","Secondary - Primary vegetation",-0.0187659645,-0.084896848,0.04747816938,0.708333333333333,FALSE
+"Green","Temperate closed","Plantation - Primary vegetation",0.000245698499999999,-0.098369415875,0.0996162902,0.501166666666667,FALSE
+"Green","Temperate closed","Cropland - Primary vegetation",-0.0195355155,-0.113336835725,0.074745319525,0.658833333333333,FALSE
+"Green","Temperate closed","Pasture - Primary vegetation",-0.0126046275,-0.13049749415,0.10543245895,0.586166666666667,FALSE
+"Green","Temperate closed","Plantation - Secondary",0.01876096181,-0.0967820168,0.136213249615,0.626666666666667,FALSE
+"Green","Temperate closed","Cropland - Secondary",-0.00098485139999999,-0.1133628703075,0.111588283,0.5075,FALSE
+"Green","Temperate closed","Pasture - Secondary",0.00514862199999997,-0.12778979975,0.136005030475,0.5305,FALSE
+"Green","Temperate closed","Cropland - Plantation",-0.0195415794999999,-0.152672057,0.110964327825,0.609,FALSE
+"Green","Temperate closed","Pasture - Plantation",-0.0140372365,-0.1626744778375,0.1371163923,0.572333333333333,FALSE
+"Green","Temperate closed","Pasture - Cropland",0.00695552659999998,-0.13444685858,0.14682419678,0.541,FALSE
+"Green","Tropical open","Secondary - Primary vegetation",-0.045055077,-0.096082324225,0.00723472399999995,0.9525,FALSE
+"Green","Tropical open","Plantation - Primary vegetation",-0.06687314615,-0.12908482245,-0.005141898725,0.982,TRUE
+"Green","Tropical open","Cropland - Primary vegetation",-0.1073569325,-0.209399934775,-0.00606695811750003,0.981666666666667,TRUE
+"Green","Tropical open","Pasture - Primary vegetation",-0.075851244,-0.233581837575,0.0786041290749999,0.824,FALSE
+"Green","Tropical open","Plantation - Secondary",-0.0225016965,-0.083579258435,0.0393315809425,0.753,FALSE
+"Green","Tropical open","Cropland - Secondary",-0.0623806741,-0.167730097324,0.0402695355022499,0.8845,FALSE
+"Green","Tropical open","Pasture - Secondary",-0.030726472165,-0.1907903609175,0.12618952095,0.645666666666667,FALSE
+"Green","Tropical open","Cropland - Plantation",-0.04027619738,-0.151936050525,0.0718856447425,0.755,FALSE
+"Green","Tropical open","Pasture - Plantation",-0.008302978005,-0.174179987425,0.15303761295,0.534833333333333,FALSE
+"Green","Tropical open","Pasture - Cropland",0.03151562455,-0.155257642925,0.2182784720575,0.630833333333333,FALSE
+"Blue","Tropical closed","Secondary - Primary vegetation",-0.0385120840000001,-0.0866693714250001,0.00959668626250004,0.940333333333333,FALSE
+"Blue","Tropical closed","Plantation - Primary vegetation",-0.0840869165,-0.13080239625,-0.0374852191250001,0.999833333333333,TRUE
+"Blue","Tropical closed","Cropland - Primary vegetation",0.083018429,0.02258998765,0.145775218,0.9965,TRUE
+"Blue","Tropical closed","Pasture - Primary vegetation",0.102425695,-0.015858148825,0.226197243,0.951666666666667,FALSE
+"Blue","Tropical closed","Plantation - Secondary",-0.0458522354999998,-0.099637356825,0.00845784480000005,0.9495,FALSE
+"Blue","Tropical closed","Cropland - Secondary",0.12152933015,0.0573057987249999,0.18606849065,0.999666666666667,TRUE
+"Blue","Tropical closed","Pasture - Secondary",0.1412669985,0.0170008396100001,0.269454408225,0.985333333333333,TRUE
+"Blue","Tropical closed","Cropland - Plantation",0.1675570125,0.101688797675,0.2336960935,1,TRUE
+"Blue","Tropical closed","Pasture - Plantation",0.18772654,0.0598375376999998,0.31603303845,0.997833333333333,TRUE
+"Blue","Tropical closed","Pasture - Cropland",0.0195262345000001,-0.107721084025,0.152301238475,0.607833333333333,FALSE
+"Blue","Temperate closed","Secondary - Primary vegetation",0.01049431,-0.0710810594750001,0.0940755229249998,0.605,FALSE
+"Blue","Temperate closed","Plantation - Primary vegetation",-0.0627511789999999,-0.180752163375,0.059487853225,0.830666666666667,FALSE
+"Blue","Temperate closed","Cropland - Primary vegetation",0.1738414155,0.056418251375,0.2887289886,0.998,TRUE
+"Blue","Temperate closed","Pasture - Primary vegetation",0.189493127,0.0496843175500001,0.326078711225,0.996833333333333,TRUE
+"Blue","Temperate closed","Plantation - Secondary",-0.0720899414999999,-0.2140665335,0.0727884733349998,0.837166666666667,FALSE
+"Blue","Temperate closed","Cropland - Secondary",0.1629544479,0.0205622210675001,0.30300225024,0.9885,TRUE
+"Blue","Temperate closed","Pasture - Secondary",0.17741446255,0.0200960427375001,0.33838301878775,0.9845,TRUE
+"Blue","Temperate closed","Cropland - Plantation",0.233862007,0.0667595739795249,0.395311275275,0.9975,TRUE
+"Blue","Temperate closed","Pasture - Plantation",0.2489664739,0.0695290992,0.4263467255,0.997166666666667,TRUE
+"Blue","Temperate closed","Pasture - Cropland",0.0156319035000001,-0.15038864785,0.17919602905,0.573333333333333,FALSE
+"Blue","Tropical open","Secondary - Primary vegetation",-0.000301312499999961,-0.063375812995,0.0642723325,0.5035,FALSE
+"Blue","Tropical open","Plantation - Primary vegetation",-0.0235873710000001,-0.0984047382250001,0.0529698248749999,0.737666666666667,FALSE
+"Blue","Tropical open","Cropland - Primary vegetation",0.0243518170000001,-0.099614477425,0.1481846224,0.649166666666667,FALSE
+"Blue","Tropical open","Pasture - Primary vegetation",0.0120463354999999,-0.177462222475,0.207094528275,0.5465,FALSE
+"Blue","Tropical open","Plantation - Secondary",-0.0236260300000001,-0.0980147648000002,0.0498068100249999,0.7345,FALSE
+"Blue","Tropical open","Cropland - Secondary",0.024577192,-0.104321877415,0.152145659475,0.647,FALSE
+"Blue","Tropical open","Pasture - Secondary",0.0120320585,-0.18249513685,0.212661614125,0.546833333333333,FALSE
+"Blue","Tropical open","Cropland - Plantation",0.0491310144999999,-0.0914780338249998,0.190338218185,0.749,FALSE
+"Blue","Tropical open","Pasture - Plantation",0.03599859,-0.166216881825,0.243653843875,0.638833333333333,FALSE
+"Blue","Tropical open","Pasture - Cropland",-0.0128888424999999,-0.2354937358,0.2180308622,0.546833333333333,FALSE

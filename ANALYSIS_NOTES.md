@@ -104,6 +104,24 @@ credible (the tropical-open biome slope, which is reported, holds). The Jetz run
 the A3 fits and results through symlinks in `runs/jetz/`, because post-hoc scripts and
 figures read them.
 
+**Assemblage colours (2026-11-24).** `scripts/cooney/A3b_colours.R` refits the A3b
+covariate model once per colour (nine colours; purple dropped), with the colour
+proportion logit-transformed after the Smithson-Verkuilen squeeze and z-scored across
+species, Gaussian, priors N(0,2) intercept, N(0,1) b, exponential(2) sd/sigma. Species
+are matched to Delhey on their BirdTree name (`jetz_sp` first): matching through the
+tree kept only 74% of records because many A3b species are not on BBtree2; the direct
+match keeps 23,407 of 24,614 records (1,254 species). All fits converge (max Rhat 1.008).
+Posterior predictive checks reproduce the spread of every colour but the skew only for
+black, white and grey; rufous, red, green and blue (absent from 24-59% of records) are
+also fitted as presence (Bernoulli). Of the 15 credible Gaussian contrasts against
+primary vegetation for those four colours, 12 keep their direction in the presence model
+and 8 are credible in both; the 3 reversals (blue and green, tropical closed plantation;
+red, temperate closed cropland) are flagged in Table S4. Pattern: tropical modified
+assemblages, mostly croplands, have more white (and grey in tropical closed) and less
+brown, rufous, red and yellow; tropical open croplands also more black and red, fewer
+green. Pseudo-replication (species repeated across sites) means the intervals are too
+narrow; report as patterns.
+
 ## What changed on 2026-08-11
 
 **The primary-vegetation filter now reaches the saved data.** `00_data_preparation.R`
